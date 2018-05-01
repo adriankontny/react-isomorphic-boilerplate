@@ -1,0 +1,6 @@
+/.vscode
+/node_modules
+/prod
+/dist
+package-lock.json
+npm-debug.log

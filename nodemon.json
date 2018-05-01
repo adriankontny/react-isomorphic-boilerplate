@@ -1,0 +1,13 @@
+{
+  "watchWorks": true,
+  "restartable": "rs",
+  "ignore": [],
+  "verbose": true,
+  "watch": [
+    "server.js",
+    "server/*",
+    "webpack.config.development.js",
+    "nodemon.json"
+  ],
+  "ext": "js jsx json"
+}
