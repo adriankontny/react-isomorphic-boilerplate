@@ -44,6 +44,7 @@ app.use((req, res, next) => {
                         <App initialData={res.initialData}/>
                     </Router> 
                 ),
+                script: require("./prod/webpack-assets.json").client.js,
                 initialData: JSON.stringify(res.initialData)
             });
         }

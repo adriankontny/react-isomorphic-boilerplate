@@ -1,4 +1,5 @@
 const path = require('path');
+const AssetsPlugin = require('assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
@@ -14,6 +15,10 @@ module.exports = [
         },
         devtool: 'inline-source-map',
         plugins: [
+            new AssetsPlugin({
+                fullPath: false,
+                path: path.join(__dirname, '/prod')
+            }),
             new CleanWebpackPlugin(['dist']),
             new webpack.HotModuleReplacementPlugin(),
             new webpack.NoEmitOnErrorsPlugin()
@@ -21,8 +26,8 @@ module.exports = [
         output: {
             path: path.join(__dirname, '/dist'),
             publicPath: '/',
-            filename: '[name].bundle.js',
-            sourceMapFilename: '[name].bundle.map'
+            filename: 'bundle.[hash].js',
+            sourceMapFilename: 'bundle.[hash].map'
         },
         module: {
             rules: [
