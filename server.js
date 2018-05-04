@@ -38,12 +38,14 @@ app.use((req, res, next) => {
             res.json(res.initialData);
         } else {
             const context = {};
-            res.render('index.ejs', {
-                staticContent: renderToString(
-                    <Router location={req.originalUrl} context={context}>
-                        <App initialData={res.initialData}/>
-                    </Router> 
-                ),
+            const app = renderToString(
+                <Router location={req.originalUrl} context={context}>
+                    <App initialData={res.initialData}/>
+                </Router> 
+            );
+            const status = context.statusCode || 200;
+            res.status(status).render('index.ejs', {
+                staticContent: app,
                 script: require("./prod/webpack-assets.json").client.js,
                 initialData: JSON.stringify(res.initialData)
             });
