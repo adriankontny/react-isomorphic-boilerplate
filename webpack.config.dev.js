@@ -10,7 +10,7 @@ module.exports = [
         entry: {
             client: [
                 './client.jsx',
-                'webpack-hot-middleware/client?path=/__what&timeout=2000&overlay=false'
+                'webpack-hot-middleware/client?path=/__what&timeout=500&overlay=false'
             ]
         },
         devtool: 'inline-source-map',
@@ -19,7 +19,7 @@ module.exports = [
                 fullPath: false,
                 path: path.join(__dirname, '/prod')
             }),
-            new CleanWebpackPlugin(['dist']),
+            new CleanWebpackPlugin(['dist', 'prod']),
             new webpack.HotModuleReplacementPlugin(),
             new webpack.NoEmitOnErrorsPlugin()
         ],

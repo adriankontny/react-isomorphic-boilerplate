@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(webpackHotMiddleware(compiler,{
         log: false,
         path: "/__what",
-        heartbeat: 1000
+        heartbeat: 250
     }));
     
 } else {
@@ -34,31 +34,26 @@ if (process.env.NODE_ENV === 'development') {
 app.set('view engine', 'ejs');
 app.use((req, res, next) => {
     res.react = () => {
-        if(req.lang === "json") {
-            res.json(res.initialData);
-        } else {
-            const context = {};
-            const app = renderToString(
-                <Router location={req.originalUrl} context={context}>
-                    <App initialData={res.initialData}/>
-                </Router> 
-            );
-            const status = context.statusCode || 200;
-            res.status(status).render('index.ejs', {
-                staticContent: app,
-                script: require("./prod/webpack-assets.json").client.js,
-                initialData: JSON.stringify(res.initialData)
-            });
-        }
+        const context = {};
+        const app = renderToString(
+            <Router location={req.originalUrl} context={context}>
+                <App initialData={res.initialData}/>
+            </Router> 
+        );
+        const status = context.statusCode || 200;
+        res.status(status).render('index.ejs', {
+            staticContent: app,
+            script: require("./prod/webpack-assets.json").client.js,
+            initialData: JSON.stringify(res.initialData)
+        });
     }
     next();
 })
 
-app.use('/static', express.static('static'));
 app.use(express.static('dist'));
 
-app.use(`/`, require('./server/routes/home.jsx'));
-app.use(`/contact`, require('./server/routes/contact.jsx'));
+app.use(`/`, require('./server/routes/home.js'));
+app.use(`/contact`, require('./server/routes/contact.js'));
 
 app.get('/*', (req, res, next) => {
     res.initialData = res.initialData || {ssr: `Server path: ${req.originalUrl}`}
