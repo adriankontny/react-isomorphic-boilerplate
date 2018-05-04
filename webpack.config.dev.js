@@ -3,47 +3,48 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
-module.exports = [
-    {
-        mode: 'development',
-        target: 'web',
-        entry: {
-            client: [
-                './client.jsx',
-                'webpack-hot-middleware/client?path=/__what&timeout=500&overlay=false'
-            ]
-        },
-        devtool: 'inline-source-map',
-        plugins: [
-            new AssetsPlugin({
-                fullPath: false,
-                path: path.join(__dirname, '/prod')
-            }),
-            new CleanWebpackPlugin(['dist', 'prod']),
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NoEmitOnErrorsPlugin()
+module.exports = {
+  mode: 'development',
+  target: 'web',
+  entry: {
+    client: [
+      './client.jsx',
+      'webpack-hot-middleware/client?path=/__what&timeout=500&overlay=false',
+    ],
+  },
+  devtool: 'inline-source-map',
+  plugins: [
+    new AssetsPlugin({
+      fullPath: false,
+      path: path.join(__dirname, '/prod'),
+    }),
+    new CleanWebpackPlugin(['dist', 'prod']),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
+  output: {
+    path: path.join(__dirname, '/dist'),
+    publicPath: '/',
+    filename: 'bundle.[hash].js',
+    sourceMapFilename: 'bundle.[hash].map',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
         ],
-        output: {
-            path: path.join(__dirname, '/dist'),
-            publicPath: '/',
-            filename: 'bundle.[hash].js',
-            sourceMapFilename: 'bundle.[hash].map'
+      },
+      {
+        test: /\.jsx?$/,
+        resolve: {
+          extensions: ['.js', '.jsx'],
         },
-        module: {
-            rules: [
-                {
-                    test: /\.(css|scss)$/,
-                    use: [
-                        'style-loader',
-                        'css-loader',
-                        'sass-loader'
-                    ]
-                },
-                {
-                    test: /\.jsx?$/,
-                    loader: 'babel-loader'
-                }
-            ]
-        }
-    }
-]
+        loader: 'babel-loader',
+      },
+    ],
+  },
+};
