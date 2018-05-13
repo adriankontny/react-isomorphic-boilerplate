@@ -1,6 +1,5 @@
 const path = require('path');
 const AssetsPlugin = require('assets-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -17,7 +16,6 @@ module.exports = {
       fullPath: false,
       path: path.join(__dirname, './prod'),
     }),
-    new CleanWebpackPlugin(['dist', 'prod']),
   ],
   output: {
     path: path.join(__dirname, '/dist'),
