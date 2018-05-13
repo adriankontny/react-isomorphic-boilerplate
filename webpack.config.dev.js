@@ -1,6 +1,5 @@
 const path = require('path');
 const AssetsPlugin = require('assets-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
   entry: {
     client: [
       './client.jsx',
-      'webpack-hot-middleware/client?path=/__what&timeout=500&overlay=false',
+      'webpack-hot-middleware/client?reload=true',
     ],
   },
   devtool: 'inline-source-map',
@@ -18,7 +17,6 @@ module.exports = {
       fullPath: false,
       path: path.join(__dirname, '/prod'),
     }),
-    new CleanWebpackPlugin(['dist', 'prod']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],

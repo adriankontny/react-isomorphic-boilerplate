@@ -11,22 +11,18 @@ import App from './client/App';
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-console
   console.info(`process.env is '${process.env.NODE_ENV}', connecting webpack middlewares.`);
-
   const compiler = webpack(webpackConfigDev);
   app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfigDev.output.publicPath,
   }));
-  app.use(webpackHotMiddleware(compiler, {
-    log: false,
-    path: '/__what',
-    heartbeat: 250,
-  }));
-} else {
-  console.info(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build' or run without client-side javascript.`);
+  app.use(webpackHotMiddleware(compiler));
+} else { // eslint-disable-next-line no-console
+  console.info(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }
 
+app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use((req, res, next) => {
   res.react = () => {
@@ -61,6 +57,6 @@ app.get('/*', (req, res) => {
 });
 
 app.set('port', process.env.PORT || 8000);
-app.listen(app.get('port'), () => {
+app.listen(app.get('port'), () => { // eslint-disable-next-line no-console
   console.log(`Express started on http://localhost:${app.get('port')}; press Ctrl-C to terminate.`);
 });
