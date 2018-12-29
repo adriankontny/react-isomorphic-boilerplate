@@ -41,7 +41,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/contact" component={Contact} />
-          <RouteWithStatus statusCode={403} component={NotFound} />
+          <RouteWithStatus statusCode={404} component={NotFound} />
         </Switch>
         <p>
           {JSON.stringify(initialData)}
