@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import debug from 'debug';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
@@ -7,19 +8,21 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
+import routes from './server/routes';
 import App from './client/App';
 
 const app = express();
+const logger = debug('server.js');
 
 if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-console
-  console.info(`process.env is '${process.env.NODE_ENV}', connecting webpack middlewares.`);
+  logger(`process.env is '${process.env.NODE_ENV}', connecting webpack middlewares.`);
   const compiler = webpack(webpackConfigDev);
   app.use(webpackDevMiddleware(compiler, {
     publicPath: webpackConfigDev.output.publicPath,
   }));
   app.use(webpackHotMiddleware(compiler));
 } else { // eslint-disable-next-line no-console
-  console.info(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
+  logger(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }
 
 app.set('views', './views');
@@ -48,8 +51,7 @@ app.use(morgan('combined'));
 
 app.use(express.static('dist'));
 
-app.use('/', require('./server/routes/home.js'));
-app.use('/contact', require('./server/routes/contact.js'));
+app.use('/', routes);
 
 app.get('/*', (req, res) => {
   res.initialData = res.initialData || { ssr: `Server path: ${req.originalUrl}` };

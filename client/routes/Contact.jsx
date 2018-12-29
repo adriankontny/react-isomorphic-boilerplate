@@ -6,6 +6,7 @@ class Contact extends Component {
     super(props);
     this.state = {};
   }
+
   render() {
     const { location } = this.props;
     delete location.key;

@@ -12,8 +12,8 @@ if (initialData.length > 0) {
 hydrate(
   <Router>
     <App initialData={initialData} />
-  </Router>
-  , document.getElementById('root'),
+  </Router>,
+  document.getElementById('root'),
 );
 
 if (module.hot) {

@@ -6,7 +6,6 @@ module.exports = {
   target: 'web',
   entry: {
     client: [
-      'babel-polyfill',
       './client.jsx',
     ],
   },
