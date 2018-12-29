@@ -5,21 +5,23 @@ import Home from './routes/Home';
 import Contact from './routes/Contact';
 import NotFound from './routes/NotFound';
 
-const RouteWithStatus = props => (
-  <Route
-    props={props}
-    render={({ staticContext }) => {
-      if (staticContext) { // eslint-disable-next-line no-param-reassign
-        staticContext.statusCode = props.statusCode;
-      }
-
-      return <props.component/>;
-    }}
-  />
-);
+const RouteWithStatus = (props) => {
+  const { children } = props;
+  return (
+    <Route
+      render={({ staticContext }) => {
+        if (staticContext) { // eslint-disable-next-line no-param-reassign
+          staticContext.statusCode = props.statusCode;
+        }
+        return children || <props.component />;
+      }}
+    />
+  );
+};
 RouteWithStatus.propTypes = {
   statusCode: PropTypes.number.isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.func,
+  children: PropTypes.element,
 };
 
 class App extends Component {
@@ -39,7 +41,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/contact" component={Contact} />
-          <RouteWithStatus statusCode={404} component={NotFound} />
+          <RouteWithStatus statusCode={403} component={NotFound} />
         </Switch>
         <p>
           {JSON.stringify(initialData)}
