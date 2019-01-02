@@ -6,22 +6,22 @@ import Contact from './routes/Contact';
 import NotFound from './routes/NotFound';
 
 const RouteWithStatus = (props) => {
-  const { children } = props;
+  const { children, component, statusCode } = props;
   return (
     <Route
       render={({ staticContext }) => {
         if (staticContext) { // eslint-disable-next-line no-param-reassign
-          staticContext.statusCode = props.statusCode;
+          staticContext.statusCode = statusCode;
         }
-        return children || <props.component />;
+        return children || component();
       }}
     />
   );
 };
 RouteWithStatus.propTypes = {
   statusCode: PropTypes.number.isRequired,
-  component: PropTypes.func,
-  children: PropTypes.element,
+  component: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 class App extends Component {
