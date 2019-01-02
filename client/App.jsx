@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import Home from './routes/Home';
-import Contact from './routes/Contact';
-import NotFound from './routes/NotFound';
+import Home from './app/Home';
+import Contact from './app/Contact';
+import NotFound from './app/NotFound';
 
 const RouteWithStatus = (props) => {
   const { children, component, statusCode } = props;
