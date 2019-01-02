@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node ./prod/server.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec npx babel-node server.js",
     "debug": "cross-env NODE_ENV=development DEBUG=*,-babel* nodemon --exec npx babel-node server.js",
-    "lint": "eslint --ext js,jsx --fix server.js client.jsx ./server/** ./client/**"
+    "lint": "eslint . --ext .js,.jsx --fix"
   },
   "author": "Adrian Kontny",
   "license": "ISC",
