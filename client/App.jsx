@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Home from './app/Home';
 import Contact from './app/Contact';
@@ -13,15 +13,19 @@ const RouteWithStatus = (props) => {
         if (staticContext) { // eslint-disable-next-line no-param-reassign
           staticContext.statusCode = statusCode;
         }
-        return children || component();
+        return component() || children;
       }}
     />
   );
 };
 RouteWithStatus.propTypes = {
   statusCode: PropTypes.number.isRequired,
-  component: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  component: PropTypes.func,
+  children: PropTypes.element,
+};
+RouteWithStatus.defaultProps = {
+  component: () => undefined,
+  children: <Fragment/>,
 };
 
 class App extends Component {
