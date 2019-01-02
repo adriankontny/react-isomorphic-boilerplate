@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --profile --colors && webpack --config webpack.config.node.js --progress --profile --colors",
-    "start": "cross-env NODE_ENV=production node ./prod/server.bundle.js",
-    "dev": "cross-env NODE_ENV=development DEBUG=*,-babel* nodemon --exec npx babel-node server.js",
+    "start": "cross-env NODE_ENV=production node ./prod/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec npx babel-node server.js",
+    "debug": "cross-env NODE_ENV=development DEBUG=*,-babel* nodemon --exec npx babel-node server.js",
     "lint": "eslint --ext js,jsx --fix server.js client.jsx ./server/** ./client/**"
   },
   "author": "Adrian Kontny",
@@ -16,6 +17,7 @@
     "debug": "^4.1.1",
     "ejs": "^2.5.8",
     "express": "^4.16.3",
+    "lodash": "^4.17.11",
     "morgan": "^1.9.0",
     "prop-types": "^15.6.2",
     "react": "^16.3.1",

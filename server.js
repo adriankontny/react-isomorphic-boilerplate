@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import debug from 'debug';
 import React from 'react';
+import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
 import webpack from 'webpack';
@@ -37,9 +38,10 @@ app.use((req, res, next) => {
       </Router>
     );
     const status = context.statusCode || 200;
+    const jsFiles = require('./prod/webpack-assets.json')
     res.status(status).render('index.ejs', {
       staticContent,
-      bundle: require('./prod/webpack-assets.json').client.js,
+      bundle: values(jsFiles, value => value).map(object => object.js),
       initialData: JSON.stringify(res.initialData),
     });
     /* eslint-enable */

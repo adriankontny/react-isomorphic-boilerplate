@@ -16,8 +16,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/prod'),
     publicPath: '/',
-    filename: '[name].bundle.js',
-    sourceMapFilename: '[name].bundle.map',
+    filename: '[name].js',
+    sourceMapFilename: '[name].map',
   },
   module: {
     rules: [

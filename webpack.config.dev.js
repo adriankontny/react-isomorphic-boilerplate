@@ -23,8 +23,13 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/',
-    filename: 'bundle.[hash].js',
-    sourceMapFilename: 'bundle.[hash].map',
+    filename: '[name].[hash].js',
+    sourceMapFilename: '[name].[hash].map',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   module: {
     rules: [
