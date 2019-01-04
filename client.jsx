@@ -1,18 +1,23 @@
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { hydrate } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './client/App';
+import reducers from './client/reducers';
 
-let initialData = document.getElementById('initial-data').textContent;
+let preloadedState = document.getElementById('preloaded-state').textContent;
 
-if (initialData.length > 0) {
-  initialData = JSON.parse(initialData);
+if (preloadedState.length > 0) {
+  preloadedState = JSON.parse(preloadedState);
 }
 
 hydrate(
-  <Router>
-    <App initialData={initialData} />
-  </Router>,
+  <Provider store={createStore(reducers, preloadedState)}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root'),
 );
 

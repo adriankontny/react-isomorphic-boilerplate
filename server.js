@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import debug from 'debug';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
@@ -11,6 +13,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
 import routes from './server/routes';
 import App from './client/App';
+import reducers from './client/reducers';
 
 const app = express();
 const logger = debug('server.js');
@@ -33,16 +36,18 @@ app.use((req, res, next) => {
     /* eslint-disable */
     const context = {};
     const staticContent = renderToString(
-      <Router location={req.originalUrl} context={context}>
-        <App initialData={res.initialData} />
-      </Router>
+      <Provider store={createStore(reducers, res.preloadedState)}>
+        <Router location={req.originalUrl} context={context}>
+          <App/>
+        </Router>
+      </Provider>
     );
     const status = context.statusCode || 200;
     const jsFiles = require('./prod/webpack-assets.json')
     res.status(status).render('index.ejs', {
       staticContent,
       bundle: values(jsFiles, value => value).map(object => object.js),
-      initialData: JSON.stringify(res.initialData),
+      preloadedState: JSON.stringify(res.preloadedState),
     });
     /* eslint-enable */
   };
@@ -56,7 +61,7 @@ app.use(express.static('dist'));
 app.use('/', routes);
 
 app.get('/*', (req, res) => {
-  res.initialData = res.initialData || { ssr: `Server path: ${req.originalUrl}` };
+  res.preloadedState = res.preloadedState || { ssr: `Server path: ${req.originalUrl}` };
   res.react();
 });
 

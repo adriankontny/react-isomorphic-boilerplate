@@ -1,25 +1,24 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
-class Contact extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { location } = this.props;
-    delete location.key;
-    return (
-      <div>
-        <p>Contact page</p>
-        <p>
-          {JSON.stringify(location)}
-        </p>
-      </div>
-    );
-  }
-}
+const Contact = ({ location, input, handleUpdate }) => {
+  const { pathname, search, hash } = location;
+  const viewLocation = { pathname, search, hash };
+  return (
+    <div>
+      <p>Contact page</p>
+      <p>
+        {JSON.stringify(viewLocation)}
+      </p>
+      <input
+        type="text"
+        value={input}
+        onChange={handleUpdate}
+      />
+    </div>
+  );
+};
 Contact.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
@@ -27,6 +26,21 @@ Contact.propTypes = {
     hash: PropTypes.string,
     key: PropTypes.string,
   }).isRequired,
+  input: PropTypes.string.isRequired,
+  handleUpdate: PropTypes.func.isRequired,
 };
 
-export default Contact;
+const mapStateToProps = state => ({
+  input: state.query.main,
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleUpdate: (event) => {
+    dispatch({ type: 'SET_QUERY', query: { type: 'main', value: event.target.value } });
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Contact);
