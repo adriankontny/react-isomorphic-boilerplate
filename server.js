@@ -32,11 +32,11 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
 app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use((req, res, next) => {
-  res.react = () => {
+  res.react = (preloadedState) => {
     /* eslint-disable */
     const context = {};
     const staticContent = renderToString(
-      <Provider store={createStore(reducers, res.preloadedState)}>
+      <Provider store={createStore(reducers, preloadedState)}>
         <Router location={req.originalUrl} context={context}>
           <App/>
         </Router>
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
     res.status(status).render('index.ejs', {
       staticContent,
       bundle: values(jsFiles, value => value).map(object => object.js),
-      preloadedState: JSON.stringify(res.preloadedState),
+      preloadedState: JSON.stringify(preloadedState),
     });
     /* eslint-enable */
   };
@@ -61,8 +61,8 @@ app.use(express.static('dist'));
 app.use('/', routes);
 
 app.get('/*', (req, res) => {
-  res.preloadedState = res.preloadedState || { ssr: `Server path: ${req.originalUrl}` };
-  res.react();
+  const preloadedState = { };
+  res.react(preloadedState);
 });
 
 app.set('port', process.env.PORT || 8000);
