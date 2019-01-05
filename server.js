@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import debug from 'debug';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
@@ -13,7 +12,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
 import routes from './server/routes';
 import App from './client/App';
-import reducers from './client/reducers';
+import createPreloadedStore from './client/root/store';
 
 const app = express();
 const logger = debug('server.js');
@@ -35,8 +34,9 @@ app.use((req, res, next) => {
   res.react = (preloadedState) => {
     /* eslint-disable */
     const context = {};
+    const store = createPreloadedStore(preloadedState);
     const staticContent = renderToString(
-      <Provider store={createStore(reducers, preloadedState)}>
+      <Provider store={store}>
         <Router location={req.originalUrl} context={context}>
           <App/>
         </Router>

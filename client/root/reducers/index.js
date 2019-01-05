@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import query from './query';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   query,
 });
 
-export default reducers;
+export default rootReducer;

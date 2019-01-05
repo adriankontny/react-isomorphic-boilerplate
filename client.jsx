@@ -1,10 +1,9 @@
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { hydrate } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './client/App';
-import reducers from './client/reducers';
+import createPreloadedStore from './client/root/store';
 
 let preloadedState = document.getElementById('preloaded-state').textContent;
 
@@ -12,8 +11,10 @@ if (preloadedState.length > 0) {
   preloadedState = JSON.parse(preloadedState);
 }
 
+const store = createPreloadedStore(preloadedState);
+
 hydrate(
-  <Provider store={createStore(reducers, preloadedState)}>
+  <Provider store={store}>
     <Router>
       <App />
     </Router>

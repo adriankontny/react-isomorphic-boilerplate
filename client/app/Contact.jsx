@@ -37,6 +37,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleUpdate: (event) => {
     dispatch({ type: 'SET_QUERY', query: { type: 'main', value: event.target.value } });
+    dispatch({ type: 'PING' });
   },
 });
 
