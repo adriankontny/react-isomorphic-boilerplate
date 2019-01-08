@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { setQuery } from '../root/actions/home-actions'
 
 const Home = ({ location, input, handleUpdate }) => {
   const { pathname, search, hash } = location;
@@ -31,12 +32,12 @@ Home.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  input: state.query.main,
+  input: state.homeReducer.query,
 });
 
 const mapDispatchToProps = dispatch => ({
   handleUpdate: (event) => {
-    dispatch({ type: 'SET_QUERY', query: { type: 'main', value: event.target.value } });
+    dispatch(setQuery(event.target.value))
     dispatch({ type: 'PING' });
   },
 });
