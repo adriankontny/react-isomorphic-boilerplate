@@ -6,6 +6,15 @@ import { Provider } from 'react-redux';
 import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
+import { SheetsRegistry } from 'jss';
+import JssProvider from 'react-jss/lib/JssProvider'
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  createGenerateClassName,
+} from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -32,21 +41,36 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use((req, res, next) => {
   res.react = (preloadedState) => {
-    /* eslint-disable */
-    const context = {};
+    const sheetsRegistry = new SheetsRegistry();
+    const sheetsManager = new Map();
+    const theme = createMuiTheme({
+      palette: {
+        primary: green,
+        accent: red,
+        type: 'light',
+      },
+    });
+    const generateClassName = createGenerateClassName();
     const store = createPreloadedStore(preloadedState);
+    const context = {};
+    /* eslint-disable */
     const staticContent = renderToString(
-      <Provider store={store}>
-        <Router location={req.originalUrl} context={context}>
-          <App/>
-        </Router>
-      </Provider>
+      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+          <Provider store={store}>
+            <Router location={req.originalUrl} context={context}>
+              <App />
+            </Router>
+          </Provider>
+        </MuiThemeProvider>
+      </JssProvider>
     );
     const status = context.statusCode || 200;
-    const jsFiles = require('./prod/webpack-assets.json')
+    const css = sheetsRegistry.toString();
     res.status(status).render('index.ejs', {
+      css,
       staticContent,
-      bundle: values(jsFiles, value => value).map(object => object.js),
+      bundle: values(require('./prod/webpack-assets.json'), value => value).map(object => object.js),
       preloadedState: JSON.stringify(preloadedState),
     });
     /* eslint-enable */
@@ -61,7 +85,7 @@ app.use(express.static('dist'));
 app.use('/', routes);
 
 app.get('/*', (req, res) => {
-  const preloadedState = { };
+  const preloadedState = {};
   res.react(preloadedState);
 });
 

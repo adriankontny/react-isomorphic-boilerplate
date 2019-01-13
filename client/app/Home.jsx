@@ -2,12 +2,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { setQuery } from '../root/actions/home-actions'
+import { withStyles } from '@material-ui/core/styles';
+
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const Home = ({ location, input, handleUpdate }) => {
   const { pathname, search, hash } = location;
   const viewLocation = { pathname, search, hash };
   return (
     <div>
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
       <p>Home page</p>
       <p>
         {JSON.stringify(viewLocation)}
@@ -42,7 +55,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(
+export default withStyles({})(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(Home));

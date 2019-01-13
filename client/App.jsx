@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Home from './app/Home';
 import Contact from './app/Contact';
@@ -28,18 +28,30 @@ RouteWithStatus.defaultProps = {
   children: <Fragment />,
 };
 
-const App = () => (
-  <div>
-    <Link to="/">Home</Link>
-    {' | '}
-    <Link to="/contact">Contact</Link>
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/contact" component={Contact} />
-      <RouteWithStatus statusCode={404} component={NotFound} />
-    </Switch>
-  </div>
-);
+class App extends Component {
+
+  componentDidMount() { // Remove the server-side injected CSS.
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Link to="/">Home</Link>
+        {' | '}
+        <Link to="/contact">Contact</Link>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/contact" component={Contact} />
+          <RouteWithStatus statusCode={404} component={NotFound} />
+        </Switch>
+      </div>
+    )
+  }
+}
 App.propTypes = {
 };
 
