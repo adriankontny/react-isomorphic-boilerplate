@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import Home from './app/Home';
+import Search from './app/Search';
 import Contact from './app/Contact';
 import NotFound from './app/NotFound';
 
@@ -39,16 +40,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <Link to="/">Home</Link>
+        {' | '}
+        <Link to="/search">Search</Link>
         {' | '}
         <Link to="/contact">Contact</Link>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/contact" component={Contact} />
+          <Route path="/search" component={Search} />
+          <Route path="/contact" component={Contact} />
           <RouteWithStatus statusCode={404} component={NotFound} />
         </Switch>
-      </div>
+      </Fragment>
     )
   }
 }

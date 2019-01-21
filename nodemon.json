@@ -6,6 +6,7 @@
   "watch": [
     "server.js",
     "server/*",
+    "client/root/*",
     "webpack.config.development.js",
     "nodemon.json"
   ],

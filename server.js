@@ -13,8 +13,7 @@ import {
   createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
+import { grey, blueGrey } from '@material-ui/core/colors';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -45,8 +44,8 @@ app.use((req, res, next) => {
     const sheetsManager = new Map();
     const theme = createMuiTheme({
       palette: {
-        primary: green,
-        accent: red,
+        primary: grey,
+        accent: blueGrey,
         type: 'light',
       },
     });

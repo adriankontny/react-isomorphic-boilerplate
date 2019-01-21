@@ -8,8 +8,7 @@ import {
   createMuiTheme,
   createGenerateClassName,
 } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
+import { blue, red } from '@material-ui/core/colors';
 import App from './client/App';
 import createPreloadedStore from './client/root/store';
 
@@ -20,7 +19,7 @@ if (preloadedState.length > 0) {
 
 const theme = createMuiTheme({
   palette: {
-    primary: green,
+    primary: blue,
     accent: red,
     type: 'light',
   },
