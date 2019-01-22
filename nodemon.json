@@ -1,7 +1,10 @@
 {
   "watchWorks": true,
   "restartable": "rs",
-  "ignore": [],
+  "ignore": [
+    "**/node_modules/**",
+    "client/root/**"
+  ],
   "verbose": true,
   "watch": [
     "server.js",

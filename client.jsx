@@ -27,19 +27,23 @@ const theme = createMuiTheme({
 const generateClassName = createGenerateClassName();
 const store = createPreloadedStore(preloadedState);
 
-hydrate(
-  <JssProvider generateClassName={generateClassName}>
-    <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
-        <Router>
-          <App />
-        </Router>
-      </Provider>
-    </MuiThemeProvider>
-  </JssProvider>,
-  document.getElementById('root'),
-);
+const renderApp = () => {
+  hydrate(
+    <JssProvider generateClassName={generateClassName}>
+      <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Router>
+            <App />
+          </Router>
+        </Provider>
+      </MuiThemeProvider>
+    </JssProvider>,
+    document.getElementById('root'),
+  );
+};
 
-if (module.hot) {
-  module.hot.accept();
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./client/App', renderApp);
 }
+
+renderApp();

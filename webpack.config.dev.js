@@ -8,7 +8,7 @@ module.exports = {
   entry: {
     client: [
       './client.jsx',
-      'webpack-hot-middleware/client?reload=true',
+      'webpack-hot-middleware/client?reload=true&overlay=false',
     ],
   },
   devtool: 'inline-source-map',
@@ -17,6 +17,7 @@ module.exports = {
       fullPath: false,
       path: path.join(__dirname, '/prod'),
     }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],
