@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import debug from 'debug';
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
@@ -56,18 +56,18 @@ app.use((req, res, next) => {
     const staticContent = renderToString(
       <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-          <Provider store={store}>
+          <ReduxProvider store={store}>
             <Router location={req.originalUrl} context={context}>
               <App />
             </Router>
-          </Provider>
+          </ReduxProvider>
         </MuiThemeProvider>
       </JssProvider>
     );
-    const status = context.statusCode || 200;
-    const css = sheetsRegistry.toString();
-    res.status(status).render('index.ejs', {
-      css,
+    res.status(context.statusCode || 200).render('index.ejs', {
+      lang: "en",
+      title: "React-Redux",
+      css: sheetsRegistry.toString(),
       staticContent,
       bundle: values(require('./prod/webpack-assets.json'), value => value).map(object => object.js),
       preloadedState: JSON.stringify(preloadedState),

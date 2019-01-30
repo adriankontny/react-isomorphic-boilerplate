@@ -1,8 +1,14 @@
+<!DOCTYPE html>
+<html lang="<%-lang%>">
+<head>
+    <title><%-title%></title>
+</head>
 <body>
-    <style id="jss-server-side"><%-css%></style>
-    <div id="root"><%-staticContent%></div>
-    <script id="preloaded-state" type="application/json"><%-preloadedState%></script>
-    <% for(var i = 0; i < bundle.length; i++) { %>
-        <script type="text/javascript" src="/<%-bundle[i]%>"></script>
-    <% } %>
 </body>
+<style id="jss-server-side"><%-css%></style>
+<div id="root"><%-staticContent%></div>
+<script id="preloaded-state" type="application/json"><%-preloadedState%></script>
+<% for(var i = 0; i < bundle.length; i++) { %>
+    <script type="text/javascript" src="/<%-bundle[i]%>"></script>
+<% } %>
+</html>

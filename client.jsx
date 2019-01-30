@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { hydrate } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import JssProvider from 'react-jss/lib/JssProvider';
@@ -31,11 +31,11 @@ const renderApp = () => {
   hydrate(
     <JssProvider generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
+        <ReduxProvider store={store}>
           <Router>
             <App />
           </Router>
-        </Provider>
+        </ReduxProvider>
       </MuiThemeProvider>
     </JssProvider>,
     document.getElementById('root'),
