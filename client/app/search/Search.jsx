@@ -1,28 +1,34 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { setSearch } from '../root/actions/search-actions'
 
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {
+  AppBar,
+  CssBaseline,
+  Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+  InputBase
+} from '@material-ui/core';
+
 import { withStyles } from '@material-ui/core/styles';
 
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import SearchIcon from '@material-ui/icons/Search';
+import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+
+import { updateSearch, toggleSidebarLeft } from '../../root/actions/search-actions'
+
+import SideBarLeft from './SideBarLeft.jsx'
 
 const drawerWidth = 240;
 
@@ -111,7 +117,7 @@ class Search extends React.Component {
   };
 
   render() {
-    const { classes, theme, search, handleUpdateSearch } = this.props;
+    const { classes, theme, search, handleUpdateSearch, handleToggleSidebarLeft } = this.props;
     const drawer = (
       <div> 
         <div className={classes.toolbar} />
@@ -144,7 +150,7 @@ class Search extends React.Component {
             <IconButton
               color="inherit"
               aria-label="Open drawer"
-              onClick={this.handleDrawerToggle}
+              onClick={handleToggleSidebarLeft}
               className={classes.menuButton}
             >
               <MenuIcon />
@@ -165,34 +171,7 @@ class Search extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        <nav className={classes.drawer}>
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css">
-            <Drawer
-              container={this.props.container}
-              variant="temporary"
-              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-              open={this.state.mobileOpen}
-              onClose={this.handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Drawer
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              variant="permanent"
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </nav>
+        <SideBarLeft/>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph>
@@ -241,9 +220,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleUpdateSearch: (event) => {
-    dispatch(setSearch(event.target.value))
+    dispatch(updateSearch(event.target.value))
     dispatch({ type: 'PING' });
   },
+  handleToggleSidebarLeft: () => {
+    dispatch(toggleSidebarLeft())
+  }
 });
 
 export default withStyles(styles, { withTheme: true })(connect(

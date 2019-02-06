@@ -1,14 +1,20 @@
-import { SET_SEARCH } from '../actions/search-actions'
+import {
+  UPDATE_SEARCH,
+  TOGGLE_SIDEBAR_LEFT
+} from '../actions/search-actions'
 
-export default function searchReducer (
+export default function searchReducer(
   state = {
     search: '',
+    sidebarLeftIsVisible: false
   },
   { type, payload }) { // action: { type, payload }
   switch (type) {
-    case SET_SEARCH:
+    case UPDATE_SEARCH:
       return { ...state, search: payload.search };
+    case TOGGLE_SIDEBAR_LEFT:
+      return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
     default:
-      return state;
+      return { ...state };
   }
 };

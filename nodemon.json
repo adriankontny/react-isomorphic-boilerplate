@@ -3,14 +3,13 @@
   "restartable": "rs",
   "ignore": [
     "**/node_modules/**",
-    "client/root/**"
+    "client/**"
   ],
   "verbose": true,
   "watch": [
     "server.js",
-    "server/*",
-    "client/root/*",
-    "webpack.config.development.js",
+    "server/**",
+    "webpack.config.dev.js",
     "nodemon.json"
   ],
   "ext": "js jsx json"

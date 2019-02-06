@@ -1,10 +1,20 @@
-export const SET_SEARCH = 'search:setSearch';
+export const UPDATE_SEARCH = 'search:updateSearch';
+export const TOGGLE_SIDEBAR_LEFT = 'search:toggleSidebarLeft';
 
-export function setSearch(newSearch) {
+export function updateSearch(value) {
   return {
-    type: SET_SEARCH,
+    type: UPDATE_SEARCH,
     payload: {
-      search: newSearch
+      search: value
+    }
+  }
+}
+
+export function toggleSidebarLeft(value) {
+  return {
+    type: TOGGLE_SIDEBAR_LEFT,
+    payload: {
+      sidebarLeftIsVisible: value
     }
   }
 }

@@ -43,7 +43,7 @@ const renderApp = () => {
 };
 
 if (process.env.NODE_ENV !== 'production' && module.hot) {
-  module.hot.accept('./client/App', renderApp);
+  module.hot.accept(['./client/App'], renderApp);
 }
 
 renderApp();
