@@ -1,0 +1,107 @@
+import { withStyles } from '@material-ui/core/styles';
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+} from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import MenuIcon from '@material-ui/icons/Menu';
+import React from 'react';
+import { connect } from 'react-redux';
+
+import TopBarSearch from './TopBarSearch'
+import { toggleSidebarLeft } from '../../root/actions/search-actions'
+
+const drawerWidth = 240;
+
+const styles = theme => ({
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 200,
+    },
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  menuButton: {
+    marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+class Search extends React.Component {
+
+  render() {
+    const { classes, handleToggleSidebarLeft } = this.props;
+
+    return (
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleToggleSidebarLeft}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <TopBarSearch />
+        </Toolbar>
+      </AppBar>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  state
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleToggleSidebarLeft: () => {
+    dispatch(toggleSidebarLeft())
+  }
+});
+
+export default withStyles(styles, { withTheme: true })(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Search));
