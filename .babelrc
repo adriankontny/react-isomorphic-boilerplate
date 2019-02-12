@@ -3,5 +3,5 @@
     "@babel/preset-react",
     "@babel/preset-env"
   ],
-  "plugins": ["react-hot-loader/babel"]
+  "plugins": ["@babel/plugin-transform-react-jsx"]
 }
