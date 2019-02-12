@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import morgan from 'morgan';
 import debug from 'debug';
 import React from 'react';
@@ -38,6 +39,7 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(compression());
 app.use((req, res, next) => {
   res.react = (preloadedState) => {
     const sheetsRegistry = new SheetsRegistry();
