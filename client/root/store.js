@@ -8,10 +8,11 @@ import rootEpic from './epics';
 
 // eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-const epicMiddleware = createEpicMiddleware();
 
 export default function createPreloadedStore(preloadedState) {
   
+  const epicMiddleware = createEpicMiddleware();
+
   const middlewares = [epicMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
