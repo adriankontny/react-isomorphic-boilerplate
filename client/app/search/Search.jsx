@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import SideBarLeft from './SideBarLeft.jsx'
 import TopBar from './TopBar.jsx'
 import Content from './Content.jsx'
+import Filters from './Filters.jsx'
+import Filter from './Filter.jsx'
 
 const styles = () => ({
   root: {
@@ -25,7 +27,9 @@ class Search extends React.Component {
         <CssBaseline />
         <TopBar />
         <SideBarLeft />
-        <Content />
+        <Filters>
+          <Filter></Filter>
+        </Filters>
       </div>
     );
   }
