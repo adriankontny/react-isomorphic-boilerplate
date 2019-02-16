@@ -31,13 +31,18 @@ const styles = {
   }
 };
 
+const window = window || {
+  innerWidth : 1000,
+  addEventListener: () => {},
+  removeEventListener: () => {},
+};
 class Filters extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
       index: 0,
-      windowWidth: (window && window.innerWidth) || 1000,
+      windowWidth: window.innerWidth,
       position: new Animated.Value(0)
     };
     this.updateDimensions = this.updateDimensions.bind(this)
