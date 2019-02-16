@@ -18,6 +18,9 @@ if (preloadedState.length > 0) {
 }
 
 const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
     primary: blue,
     accent: red,

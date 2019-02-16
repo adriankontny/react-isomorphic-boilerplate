@@ -45,6 +45,9 @@ app.use((req, res, next) => {
     const sheetsRegistry = new SheetsRegistry();
     const sheetsManager = new Map();
     const theme = createMuiTheme({
+      typography: {
+        useNextVariants: true,
+      },
       palette: {
         primary: grey,
         accent: blueGrey,

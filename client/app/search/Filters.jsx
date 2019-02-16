@@ -2,23 +2,23 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import SwipeableViews from "react-swipeable-views";
 import Animated from "animated/lib/targets/react-dom";
 
 const slides = [
-  { backgroundColor: "#fff" },
-  { backgroundColor: "#fff" },
-  { backgroundColor: "#fff" },
-  { backgroundColor: "#fff" },
-  { backgroundColor: "#fff" },
-  { backgroundColor: "#fff" }
+  { backgroundColor: "#ff0", id: "0" },
+  { backgroundColor: "#fff", id: "1" },
+  { backgroundColor: "#ff0", id: "2" },
+  { backgroundColor: "#fff", id: "3" },
+  { backgroundColor: "#ff0", id: "4" },
+  { backgroundColor: "#fff", id: "5" }
 ];
 
 const styles = {
   swipeableViews: {
-    padding: 80
+    padding: 80,
   },
   slide: {
     opacity: 0.3,
@@ -26,7 +26,7 @@ const styles = {
     padding: 25,
     animatedDiv: {
       minHeight: 400,
-      backgroundColor: "#bbb"
+      // backgroundColor: "#bbb",
     },
   }
 };
@@ -97,7 +97,7 @@ class Filters extends React.Component {
           const translateX = position.interpolate({
             inputRange,
             outputRange: inputRange.map(i => {
-              const halfPadding = styles.slide.padding / 2;
+              const halfPadding = styles.slide.padding / 4 +20;
               const translate = windowWidth / (halfPadding * styles.slide.scale) - halfPadding;
               if (i > slideIndex) {
                 return translate;
@@ -109,8 +109,8 @@ class Filters extends React.Component {
             })
           });
           return (
-            <div
-              style={{ padding: styles.slide.padding }}
+            <div key={slide.id}
+              style={{ padding: `${styles.slide.padding}px ${styles.slide.padding}px` }}
             >
               <Animated.div
                 key={String(slideIndex)}
