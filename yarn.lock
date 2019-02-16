@@ -314,13 +314,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-syntax-typescript@^7.2.0":
-  version "7.3.3"
-  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.3.3.tgz#a7cc3f66119a9f7ebe2de5383cce193473d65991"
-  integrity sha1-p8w/ZhGan36+LeU4PM4ZNHPWWZE=
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-
 "@babel/plugin-transform-arrow-functions@^7.2.0":
   version "7.2.0"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.2.0.tgz#9aeafbe4d6ffc6563bf8f8372091628f00779550"
@@ -566,14 +559,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-typescript@^7.3.2":
-  version "7.3.2"
-  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.3.2.tgz#59a7227163e55738842f043d9e5bd7c040447d96"
-  integrity sha1-WacicWPlVziELwQ9nlvXwEBEfZY=
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-syntax-typescript" "^7.2.0"
-
 "@babel/plugin-transform-unicode-regex@^7.2.0":
   version "7.2.0"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.2.0.tgz#4eb8db16f972f8abb5062c161b8b115546ade08b"
@@ -651,14 +636,6 @@
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
 
-"@babel/preset-typescript@^7.3.3":
-  version "7.3.3"
-  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/preset-typescript/-/preset-typescript-7.3.3.tgz#88669911053fa16b2b276ea2ede2ca603b3f307a"
-  integrity sha1-iGaZEQU/oWsrJ26i7eLKYDs/MHo=
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-transform-typescript" "^7.3.2"
-
 "@babel/register@^7.0.0":
   version "7.0.0"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@babel/register/-/register-7.0.0.tgz#fa634bae1bfa429f60615b754fc1f1d745edd827"
@@ -718,6 +695,18 @@
     esutils "^2.0.2"
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
+
+"@emotion/is-prop-valid@^0.7.3":
+  version "0.7.3"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@emotion/is-prop-valid/-/is-prop-valid-0.7.3.tgz#a6bf4fa5387cbba59d44e698a4680f481a8da6cc"
+  integrity sha1-pr9PpTh8u6WdROaYpGgPSBqNpsw=
+  dependencies:
+    "@emotion/memoize" "0.7.1"
+
+"@emotion/memoize@0.7.1":
+  version "0.7.1"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@emotion/memoize/-/memoize-0.7.1.tgz#e93c13942592cf5ef01aa8297444dc192beee52f"
+  integrity sha1-6TwTlCWSz17wGqgpdETcGSvu5S8=
 
 "@material-ui/core@^3.9.2":
   version "3.9.2"
@@ -779,6 +768,26 @@
     prop-types "^15.6.0"
     react-is "^16.6.3"
 
+"@popmotion/easing@^1.0.1":
+  version "1.0.1"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@popmotion/easing/-/easing-1.0.1.tgz#48336aea29542113df10aeb81b4fd10f0b95f937"
+  integrity sha1-SDNq6ilUIRPfEK64G0/RDwuV+Tc=
+
+"@popmotion/popcorn@^0.3.0":
+  version "0.3.1"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@popmotion/popcorn/-/popcorn-0.3.1.tgz#f0f33fbf7ff66f2cd0bf28be24bee0b1d46b65e8"
+  integrity sha1-8PM/v3/2byzQvyi+JL7gsdRrZeg=
+  dependencies:
+    "@popmotion/easing" "^1.0.1"
+    framesync "^4.0.1"
+    hey-listen "^1.0.5"
+    style-value-types "^3.0.7"
+
+"@types/invariant@^2.2.29":
+  version "2.2.29"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@types/invariant/-/invariant-2.2.29.tgz#aa845204cd0a289f65d47e0de63a6a815e30cc66"
+  integrity sha1-qoRSBM0KKJ9l1H4N5jpqgV4wzGY=
+
 "@types/jss@^9.5.6":
   version "9.5.7"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@types/jss/-/jss-9.5.7.tgz#fa57a6d0b38a3abef8a425e3eb6a53495cb9d5a0"
@@ -786,6 +795,11 @@
   dependencies:
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
+
+"@types/node@^10.0.5":
+  version "10.12.26"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/@types/node/-/node-10.12.26.tgz#2dec19f1f7981c95cb54bab8f618ecb5dc983d0e"
+  integrity sha1-LewZ8feYHJXLVLq49hjstdyYPQ4=
 
 "@types/prop-types@*":
   version "15.5.9"
@@ -2633,6 +2647,13 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
+framesync@^4.0.0, framesync@^4.0.1:
+  version "4.0.2"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/framesync/-/framesync-4.0.2.tgz#b03b62852f12b0d80086b60834b089718f03cda5"
+  integrity sha1-sDtihS8SsNgAhrYINLCJcY8DzaU=
+  dependencies:
+    hey-listen "^1.0.5"
+
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
@@ -2864,6 +2885,11 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
+
+hey-listen@^1.0.4, hey-listen@^1.0.5:
+  version "1.0.5"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/hey-listen/-/hey-listen-1.0.5.tgz#6d0a3a2f60177f65bc4404d571a00025bf5dc20e"
+  integrity sha1-bQo6L2AXf2W8RATVcaAAJb9dwg4=
 
 history@^4.7.2:
   version "4.7.2"
@@ -4417,10 +4443,46 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
+popmotion-pose@^3.4.0:
+  version "3.4.6"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/popmotion-pose/-/popmotion-pose-3.4.6.tgz#872ceb776204164a5f6492acd36ca5dc96671b91"
+  integrity sha1-hyzrd2IEFkpfZJKs02yl3JZnG5E=
+  dependencies:
+    "@popmotion/easing" "^1.0.1"
+    hey-listen "^1.0.5"
+    popmotion "^8.6.2"
+    pose-core "^2.1.0"
+    style-value-types "^3.0.6"
+    ts-essentials "^1.0.3"
+    tslib "^1.9.1"
+
+popmotion@^8.6.2:
+  version "8.6.2"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/popmotion/-/popmotion-8.6.2.tgz#9066f0b33c5aa03783dc5af55143f6ac5b5d4a49"
+  integrity sha1-kGbwszxaoDeD3Fr1UUP2rFtdSkk=
+  dependencies:
+    "@popmotion/easing" "^1.0.1"
+    "@popmotion/popcorn" "^0.3.0"
+    framesync "^4.0.0"
+    hey-listen "^1.0.5"
+    style-value-types "^3.0.6"
+    stylefire "^2.3.4"
+    tslib "^1.9.1"
+
 popper.js@^1.14.1:
   version "1.14.7"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/popper.js/-/popper.js-1.14.7.tgz#e31ec06cfac6a97a53280c3e55e4e0c860e7738e"
   integrity sha1-4x7AbPrGqXpTKAw+VeTgyGDnc44=
+
+pose-core@^2.1.0:
+  version "2.1.0"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/pose-core/-/pose-core-2.1.0.tgz#653c85a9a06f924611b909b4a2180ce102bbb258"
+  integrity sha1-ZTyFqaBvkkYRuQm0ohgM4QK7slg=
+  dependencies:
+    "@types/invariant" "^2.2.29"
+    "@types/node" "^10.0.5"
+    hey-listen "^1.0.5"
+    tslib "^1.9.1"
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -4647,6 +4709,16 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
+
+react-pose@^4.0.7:
+  version "4.0.7"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/react-pose/-/react-pose-4.0.7.tgz#8573b7d1bc3d03d0b758e5fa07d841484ad8d25d"
+  integrity sha1-hXO30bw9A9C3WOX6B9hBSErY0l0=
+  dependencies:
+    "@emotion/is-prop-valid" "^0.7.3"
+    hey-listen "^1.0.5"
+    popmotion-pose "^3.4.0"
+    tslib "^1.9.1"
 
 react-redux@^6.0.0:
   version "6.0.0"
@@ -5396,6 +5468,20 @@ strip-json-comments@^2.0.1, strip-json-comments@~2.0.1:
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
+style-value-types@^3.0.6, style-value-types@^3.0.7:
+  version "3.0.7"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/style-value-types/-/style-value-types-3.0.7.tgz#6e7a22cc8b1a4465193268ed66ad5f2a82579054"
+  integrity sha1-bnoizIsaRGUZMmjtZq1fKoJXkFQ=
+
+stylefire@^2.3.4:
+  version "2.4.0"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/stylefire/-/stylefire-2.4.0.tgz#1c52b82d951ac9f5046dbb359af7229d10c59007"
+  integrity sha1-HFK4LZUayfUEbbs1mvcinRDFkAc=
+  dependencies:
+    framesync "^4.0.0"
+    hey-listen "^1.0.4"
+    style-value-types "^3.0.6"
+
 supports-color@^5.2.0, supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -5560,7 +5646,12 @@ trim-right@^1.0.1:
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-tslib@^1.9.0:
+ts-essentials@^1.0.3:
+  version "1.0.4"
+  resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/ts-essentials/-/ts-essentials-1.0.4.tgz#ce3b5dade5f5d97cf69889c11bf7d2da8555b15a"
+  integrity sha1-zjtdreX12Xz2mInBG/fS2oVVsVo=
+
+tslib@^1.9.0, tslib@^1.9.1:
   version "1.9.3"
   resolved "https://mmrepo.jfrog.io/mmrepo/api/npm/npm-virtual/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha1-1+TdeSRdhUKMTX5IIqeZF5VMooY=

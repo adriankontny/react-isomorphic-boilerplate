@@ -9,6 +9,7 @@ import SideBarLeft from './SideBarLeft.jsx'
 import TopBar from './TopBar.jsx'
 import Content from './Content.jsx'
 import Filters from './Filters.jsx'
+import Filters2 from './Filters2.jsx'
 import Filter from './Filter.jsx'
 
 const styles = () => ({
@@ -27,9 +28,8 @@ class Search extends React.Component {
         <CssBaseline />
         <TopBar />
         <SideBarLeft />
-        <Filters>
-          <Filter></Filter>
-        </Filters>
+        <Filters2>
+        </Filters2>
       </div>
     );
   }
