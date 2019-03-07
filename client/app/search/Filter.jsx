@@ -76,7 +76,6 @@ class RecipeReviewCard extends React.Component {
         />
         <CardMedia
           className={classes.media}
-          image="/paella.jpeg"
           title="Paella dish"
         />
         <CardContent>

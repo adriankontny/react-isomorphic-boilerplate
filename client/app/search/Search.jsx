@@ -7,12 +7,14 @@ import { connect } from 'react-redux';
 
 import SideBarLeft from './SideBarLeft.jsx'
 import TopBar from './TopBar.jsx'
-import Content from './Content.jsx'
-import Filters from './Filters.jsx'
-import Filters2 from './Filters2.jsx'
-import Filter from './Filter.jsx'
+import Filters from './filters/Filters.jsx'
 
-const styles = () => ({
+const styles = theme => ({
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
   root: {
     display: 'flex',
   },
@@ -21,22 +23,26 @@ const styles = () => ({
 class Search extends React.Component {
 
   render() {
-    const { classes } = this.props;
+    
+    const { classes, filters } = this.props;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
         <TopBar />
         <SideBarLeft />
-        <Filters2>
-        </Filters2>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Filters item={filters}>
+          </Filters>
+        </main>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  state,
+  filters: state.filterReducer,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -47,3 +53,18 @@ export default withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Search));
+
+/*
+import Content from './Content.jsx'
+import Filters from './Filters.jsx'
+import Filters2 from './Filters2.jsx'
+import Filter from './Filter.jsx'
+
+        <Filters>
+          <Filter>
+          </Filter>
+        </Filters>
+
+        <Filters2>
+        </Filters2>
+*/
