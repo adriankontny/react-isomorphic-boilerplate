@@ -120,7 +120,7 @@ const _rootFilters = (parentItem) => {
       },
     )
 
-    item.filters = [...item.filters, ...parentItem.filters];
+    item.filters = [...parentItem.filters, ...item.filters];
     _rootFilters(item)
   });
 };

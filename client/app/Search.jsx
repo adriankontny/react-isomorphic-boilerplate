@@ -5,9 +5,9 @@ import {
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SideBarLeft from './SideBarLeft.jsx'
-import TopBar from './TopBar.jsx'
-import Filters from './filters/Filters.jsx'
+import SideBarLeft from './search/SideBarLeft.jsx'
+import TopBar from './search/TopBar.jsx'
+import Filters from './search/Filters.jsx'
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -56,14 +56,14 @@ export default withStyles(styles, { withTheme: true })(connect(
 
 /*
 import Content from './Content.jsx'
-import Filters from './Filters.jsx'
+import Filters1 from './Filters1.jsx'
 import Filters2 from './Filters2.jsx'
-import Filter from './Filter.jsx'
+import Filter1 from './Filter1.jsx'
 
-        <Filters>
-          <Filter>
-          </Filter>
-        </Filters>
+        <Filters1>
+          <Filter1>
+          </Filter1>
+        </Filters1>
 
         <Filters2>
         </Filters2>

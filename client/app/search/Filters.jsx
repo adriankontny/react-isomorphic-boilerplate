@@ -1,144 +1,106 @@
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Typography,
-} from '@material-ui/core';
-import React from 'react';
+import classNames from 'classnames';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import SwipeableViews from "react-swipeable-views";
-import Animated from "animated/lib/targets/react-dom";
+import { find } from 'lodash';
+import { selectDropdown } from '../../root/actions/filter-actions';
 
-const slides = [
-  { backgroundColor: "#ff0", id: "0" },
-  { backgroundColor: "#fff", id: "1" },
-  { backgroundColor: "#ff0", id: "2" },
-  { backgroundColor: "#fff", id: "3" },
-  { backgroundColor: "#ff0", id: "4" },
-  { backgroundColor: "#fff", id: "5" }
-];
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const styles = {
-  swipeableViews: {
-    padding: 80,
+const styles = theme => ({
+  margin: {
+    margin: theme.spacing.unit,
   },
-  slide: {
-    opacity: 0.3,
-    scale: 0.8,
-    padding: 25,
-    animatedDiv: {
-      minHeight: 400,
-      // backgroundColor: "#bbb",
-    },
-  }
-};
-
-const window = window || {
-  innerWidth : 1000,
-  addEventListener: () => {},
-  removeEventListener: () => {},
-};
-class Filters extends React.Component {
-
-  constructor(props){
-    super(props)
-    this.state = {
-      index: 0,
-      windowWidth: window.innerWidth,
-      position: new Animated.Value(0)
-    };
-    this.updateDimensions = this.updateDimensions.bind(this)
-    this.handleChangeIndex = this.handleChangeIndex.bind(this)
-    this.handleSwitch = this.handleSwitch.bind(this)
-  }
-
-  updateDimensions() {
-    this.setState({ windowWidth: window.innerWidth });
-  };
-  componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions);
-  };
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  };
-  handleChangeIndex(index) {
-    this.setState({ index });
-  };
-  handleSwitch(index, type) {
-    if (type === "end") {
-      Animated.spring(this.state.position, { toValue: index }).start();
-      return;
-    }
-    this.state.position.setValue(index);
-  };
-
-  render() {
-    const { index, position, windowWidth } = this.state;
-    return (
-      <SwipeableViews
-        enableMouseEvents
-        style={styles.swipeableViews}
-        onChangeIndex={this.handleChangeIndex}
-        onSwitching={this.handleSwitch}
-      >
-        {slides.map((slide, slideIndex) => {
-          const inputRange = slides.map((_, i) => i);
-          const scale = position.interpolate({
-            inputRange,
-            outputRange: inputRange.map(i => {
-              return slideIndex === i ? 1 : styles.slide.scale;
-            })
-          });
-          const opacity = position.interpolate({
-            inputRange,
-            outputRange: inputRange.map(i => {
-              return slideIndex === i ? 1 : styles.slide.opacity;
-            })
-          });
-          const translateX = position.interpolate({
-            inputRange,
-            outputRange: inputRange.map(i => {
-              const halfPadding = styles.slide.padding / 4 +20;
-              const translate = windowWidth / (halfPadding * styles.slide.scale) - halfPadding;
-              if (i > slideIndex) {
-                return translate;
-              } else if (i < slideIndex) {
-                return -translate;
-              } else {
-                return 0;
-              }
-            })
-          });
-          return (
-            <div key={slide.id}
-              style={{ padding: `${styles.slide.padding}px ${styles.slide.padding}px` }}
-            >
-              <Animated.div
-                key={String(slideIndex)}
-                style={{
-                    opacity,
-                    transform: [{ scale }, { translateX }],
-                    ...styles.slide.animatedDiv,
-                  }}
-              >
-                {this.props.children}
-              </Animated.div>
-            </div>
-          );
-        })}
-      </SwipeableViews>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  state,
+  textField: {
+    width: 200,
+    flexBasis: 200,
+  },
+  menu: {
+    width: 200,
+  },
 });
 
+const Category = props => {
+  const { item, classes, handleSelectDropdown } = props
+  const { labelDropdown, path, items, select } = item;
+
+  return (
+    <Fragment>
+      {!!items.length &&
+        <TextField
+          key={'id__0' + path.join('')}
+          select
+          className={classNames(classes.margin, classes.textField)}
+          variant="outlined"
+          label={labelDropdown}
+          value={select}
+          onChange={handleSelectDropdown(item)}
+        >
+          {items.map(item =>
+            <MenuItem key={item.value} value={item.value}>
+              {item.label}
+            </MenuItem>
+          )}
+        </TextField>
+      }
+    </Fragment>
+  )
+}
+
+const Filter = props => {
+  const { item, classes } = props
+  const { label, select } = item;
+  return (
+    <TextField
+      key={label}
+      className={classNames(classes.margin, classes.textField)}
+      variant="outlined"
+      label={label}
+      value={select}
+      // onChange={handleSelectDropdown(item)}
+    />
+  )
+}
+
+const Filters = props => {
+  const { item } = props
+  const { items, select, filters } = item;
+
+  const itemSelected = find(items, item => item.value === select);
+  return (
+    <Fragment>
+      <Category {...props}></Category>
+      {
+        itemSelected
+          ?
+          <Fragment>
+            {items.map((item, index) => index === select &&
+              <Filters key={item.label} {...{ ...props, item }}>
+              </Filters>
+            )}
+          </Fragment>
+          :
+          <Fragment>
+            <hr />
+            {filters.map(item =>
+              <Filter key={item.label} {...{ ...props, item }}>
+              </Filter>
+            )}
+          </Fragment>
+      }
+    </Fragment>
+  )
+}
+
+
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  handleSelectDropdown: item => event => {
+    dispatch(selectDropdown(item, event.target.value));
+  }
 });
 
 export default withStyles(styles, { withTheme: true })(connect(
-  mapStateToProps,
+  () => {return {}},
   mapDispatchToProps,
 )(Filters));
