@@ -22,7 +22,13 @@ const filters = {
   label: "Category",
   labelDropdown: "Category",
   type: "dropdown",
-  isSelected: true,
+  filters: [
+    {
+      label: "Price",
+      field: "price",
+      type: "filter"
+    },
+  ],
   items: [
     {
       label: "All",
@@ -38,6 +44,13 @@ const filters = {
         {
           label: "Cars",
           type: "value",
+          filters: [
+            {
+              label: "Milage",
+              field: "milage",
+              type: "filter"
+            }
+          ]
         },
         {
           label: "Bikes",
@@ -48,6 +61,7 @@ const filters = {
     {
       label: "Real Estate",
       labelDropdown: "Subcategory",
+      type: "dropdown",
     },
   ],
 }
@@ -81,10 +95,33 @@ const _applyFiltersDefaults = (item) => {
   Object.assign(item, {
     type: item.type || "input",
     items: item.items || [],
+    filters: item.filters || [],
     path: item.path || [],
+    root: item.root || [],
   });
   item.items.forEach((item) => {
     _applyFiltersDefaults(item)
+  });
+};
+
+const _rootFilters = (parentItem) => {
+  (parentItem.items || []).forEach(item => {
+
+    const itemProps = { ...item };
+    delete itemProps.root;
+
+    Object.assign(
+      item,
+      {
+        root: { ...parentItem.root, ...item.root  },
+      },
+      {
+        ...{ ...parentItem.root, ...itemProps }
+      },
+    )
+
+    item.filters = [...item.filters, ...parentItem.filters];
+    _rootFilters(item)
   });
 };
 
@@ -92,6 +129,8 @@ const paths = {};
 _indexFiltersPaths(filters, paths);
 _indexDropdownItems(filters);
 _applyFiltersDefaults(filters);
+_rootFilters(filters);
+
 
 // console.log(paths)
 
@@ -103,7 +142,7 @@ export default function filterReducer(
   let newState;
   switch (type) {
     case SELECT_DROPDOWN:
-    console.log(state)
+    //console.log(state)
       newState = immer(state, paths[payload.item.field], (draftState, draftItem) => {
         draftItem.select = payload.value || '';
       });
