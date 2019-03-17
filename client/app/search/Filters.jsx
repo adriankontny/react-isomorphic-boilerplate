@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
-import { selectDropdown } from '../../root/actions/filter-actions';
+import { selectCategory, updateInput } from '../../root/actions/filter-actions';
 
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -22,8 +22,8 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { item, classes, handleSelectDropdown } = props
-  const { labelDropdown, path, items, select } = item;
+  const { category, classes, handleSelectCategory } = props
+  const { labelDropdown, path, items, select } = category;
 
   return (
     <Fragment>
@@ -35,11 +35,11 @@ const Category = props => {
           variant="outlined"
           label={labelDropdown}
           value={select}
-          onChange={handleSelectDropdown(item)}
+          onChange={handleSelectCategory(category)}
         >
-          {items.map(item =>
-            <MenuItem key={item.value} value={item.value}>
-              {item.label}
+          {items.map(category =>
+            <MenuItem key={category.value} value={category.value}>
+              {category.label}
             </MenuItem>
           )}
         </TextField>
@@ -49,25 +49,25 @@ const Category = props => {
 }
 
 const Filter = props => {
-  const { item, classes } = props
-  const { label, select } = item;
+  const { category, filterValues, classes, handleUpdateInput } = props
+  const { label, field } = category;
   return (
     <TextField
       key={label}
       className={classNames(classes.margin, classes.textField)}
       variant="outlined"
       label={label}
-      value={select}
-      // onChange={handleSelectDropdown(item)}
+      value={filterValues[field] || ''}
+      onChange={handleUpdateInput(category)}
     />
   )
 }
 
 const Filters = props => {
-  const { item } = props
-  const { items, select, filters } = item;
+  const { category } = props
+  const { items, select, filters } = category;
 
-  const itemSelected = find(items, item => item.value === select);
+  const itemSelected = find(items, category => category.value === select);
   return (
     <Fragment>
       <Category {...props}></Category>
@@ -75,16 +75,16 @@ const Filters = props => {
         itemSelected
           ?
           <Fragment>
-            {items.map((item, index) => index === select &&
-              <Filters key={item.label} {...{ ...props, item }}>
+            {items.map((category, index) => index === select &&
+              <Filters key={category.label} {...{ ...props, category }}>
               </Filters>
             )}
           </Fragment>
           :
           <Fragment>
             <hr />
-            {filters.map(item =>
-              <Filter key={item.label} {...{ ...props, item }}>
+            {filters.map(category =>
+              <Filter key={category.label} {...{ ...props, category }}>
               </Filter>
             )}
           </Fragment>
@@ -93,10 +93,12 @@ const Filters = props => {
   )
 }
 
-
 const mapDispatchToProps = dispatch => ({
-  handleSelectDropdown: item => event => {
-    dispatch(selectDropdown(item, event.target.value));
+  handleSelectCategory: category => event => {
+    dispatch(selectCategory(category, event.target.value));
+  },
+  handleUpdateInput: category => event => {
+    dispatch(updateInput(category, event.target.value));
   }
 });
 

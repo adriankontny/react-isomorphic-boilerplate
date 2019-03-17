@@ -23,9 +23,9 @@ const styles = theme => ({
 class Search extends React.Component {
 
   render() {
-    
-    const { classes, filters } = this.props;
 
+    const { classes, category, filterValues } = this.props;
+    
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -33,7 +33,7 @@ class Search extends React.Component {
         <SideBarLeft />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Filters item={filters}>
+          <Filters category={category} filterValues={filterValues}>
           </Filters>
         </main>
       </div>
@@ -42,7 +42,8 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  filters: state.filterReducer,
+  category: state.filterReducer.category,
+  filterValues: state.filterReducer.filterValues,
 });
 
 const mapDispatchToProps = dispatch => ({

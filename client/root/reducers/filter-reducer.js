@@ -1,13 +1,13 @@
 import {
-  SELECT_DROPDOWN
+  SELECT_CATEGORY, UPDATE_INPUT
 } from '../actions/filter-actions'
 import { produce, original } from 'immer';
 import { get } from 'lodash';
 
-const getItem = (draftState, path) => {
+const getItem = (filters, path) => {
   return !path.length
-    ? draftState
-    : get(draftState, `items[${path.join('].items[')}]`);
+    ? filters
+    : get(filters, `items[${path.join('].items[')}]`);
 };
 
 const immer = (state, paths = [[]], cb) => {
@@ -18,10 +18,9 @@ const immer = (state, paths = [[]], cb) => {
   });
 }
 
-const filters = {
+const category = {
   label: "Category",
   labelDropdown: "Category",
-  type: "dropdown",
   filters: [
     {
       label: "Price",
@@ -36,14 +35,12 @@ const filters = {
     {
       label: "Automotive",
       labelDropdown: "Subcategory",
-      type: "dropdown",
       items: [
         {
           label: "All",
         },
         {
           label: "Cars",
-          type: "value",
           filters: [
             {
               label: "Milage",
@@ -54,14 +51,12 @@ const filters = {
         },
         {
           label: "Bikes",
-          type: "value",
         },
       ]
     },
     {
       label: "Real Estate",
       labelDropdown: "Subcategory",
-      type: "dropdown",
     },
   ],
 }
@@ -79,15 +74,10 @@ const _indexFiltersPaths = (item, paths, parentPath = []) => {
 };
 
 const _indexDropdownItems = (item, index, isDropdownItem = false) => {
-  if (isDropdownItem) {
-    item.value = index; //`${index}`;
-  }
-  const isDropdown = item.type === 'dropdown';
-  if (isDropdown) {
-    item.select = '';
-  }
+  item.value = index;
+  item.select = '';
   (item.items || []).forEach((item, index) => {
-    _indexDropdownItems(item, index, isDropdown)
+    _indexDropdownItems(item, index)
   });
 };
 
@@ -126,30 +116,29 @@ const _rootFilters = (parentItem) => {
 };
 
 const paths = {};
-_indexFiltersPaths(filters, paths);
-_indexDropdownItems(filters);
-_applyFiltersDefaults(filters);
-_rootFilters(filters);
-
-
-// console.log(paths)
+_indexFiltersPaths(category, paths);
+_indexDropdownItems(category);
+_applyFiltersDefaults(category);
+_rootFilters(category);
 
 export default function filterReducer(
   state = {
-    ...filters
+    category,
+    filterValues: {},
   },
   { type, payload }) { // action: { type, payload }
-  let newState;
+  let category;
   switch (type) {
-    case SELECT_DROPDOWN:
-    //console.log(state)
-      newState = immer(state, paths[payload.item.field], (draftState, draftItem) => {
+    case SELECT_CATEGORY:
+      category = immer(state.category, paths[payload.item.field], (draftState, draftItem) => {
         draftItem.select = payload.value || '';
       });
-      // return newState;
-      // console.log(payload.item)
-      // console.log(payload.value)
-      return newState;
+      return { ...state, category };
+    case UPDATE_INPUT:
+      return { ...state, filterValues: {
+        ...state.filterValues,
+        [payload.item.field]: payload.value
+      }};
     default:
       return { ...state };
   }
