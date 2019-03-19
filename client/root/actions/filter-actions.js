@@ -1,19 +1,19 @@
 export const SELECT_CATEGORY = 'filter:selectCategory';
-export function selectCategory(item, value) {
+export function selectCategory(category, value) {
   return {
     type: SELECT_CATEGORY,
     payload: {
-      item, value
+      category, value
     }
   }
 }
 
 export const UPDATE_INPUT = 'filter:updateInput';
-export function updateInput(item, value) {
+export function updateInput(field, value) {
   return {
     type: UPDATE_INPUT,
     payload: {
-      item, value
+      field, value
     }
   }
 }

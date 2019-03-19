@@ -3,19 +3,15 @@ import {
   Divider,
   Drawer,
   Hidden,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText
 } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { toggleSidebarLeft } from '../../root/actions/search-actions'
+import { toggleSidebarLeft } from '../../root/actions/search-actions';
 
-const drawerWidth = 240;
+import Filters from './Filters.jsx';
+
+const drawerWidth = 260;
 
 const styles = theme => ({
   drawer: {
@@ -28,33 +24,24 @@ const styles = theme => ({
     width: drawerWidth,
   },
   toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class SideBarLeft extends React.Component {
 
   render() {
-    const { classes, theme, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
+    const { classes, theme, category, filterValues, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <main className={classes.content}>
+          <Filters category={category} filterValues={filterValues}>
+          </Filters>
+        </main>
       </div>
     );
     return (
@@ -91,6 +78,8 @@ class SideBarLeft extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  category: state.filterReducer.category,
+  filterValues: state.filterReducer.filterValues,
   sidebarLeftIsVisible: state.searchReducer.sidebarLeftIsVisible,
 });
 

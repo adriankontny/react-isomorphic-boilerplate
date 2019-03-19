@@ -7,7 +7,7 @@ import { get } from 'lodash';
 const getItem = (filters, path) => {
   return !path.length
     ? filters
-    : get(filters, `items[${path.join('].items[')}]`);
+    : get(filters, `categories[${path.join('].categories[')}]`);
 };
 
 const immer = (state, paths = [[]], cb) => {
@@ -23,19 +23,19 @@ const category = {
   labelDropdown: "Category",
   filters: [
     {
-      label: "Price",
-      field: "price",
-      type: "filter"
+      type: "pair",
+      label: ["from", "to"],
+      field: ["pricef", "pricet"],
     },
   ],
-  items: [
+  categories: [
     {
       label: "All",
     },
     {
       label: "Automotive",
       labelDropdown: "Subcategory",
-      items: [
+      categories: [
         {
           label: "All",
         },
@@ -61,57 +61,57 @@ const category = {
   ],
 }
 
-const _indexFiltersPaths = (item, paths, parentPath = []) => {
-  (item.items || []).forEach((item, index) => {
-    item.path = [...parentPath, index]
-    item.field = item.field || item.label
-    !item.field && console.warn(`Filter with undefined field at filters.items[${item.path.join('].items[')}]`)
-    if (item.field) {
-      paths[item.field] = [...(paths[item.field] || []), item.path] // `items[${path.join('].items[')}]`]
+const _indexFiltersPaths = (category, paths, parentPath = []) => {
+  (category.categories || []).forEach((category, index) => {
+    category.path = [...parentPath, index]
+    category.field = category.field || category.label
+    !category.field && console.warn(`Filter with undefined field at filters.categories[${category.path.join('].categories[')}]`)
+    if (category.field) {
+      paths[category.field] = [...(paths[category.field] || []), category.path] // `categories[${path.join('].categories[')}]`]
     }
-    _indexFiltersPaths(item, paths, item.path)
+    _indexFiltersPaths(category, paths, category.path)
   });
 };
 
-const _indexDropdownItems = (item, index, isDropdownItem = false) => {
-  item.value = index;
-  item.select = '';
-  (item.items || []).forEach((item, index) => {
-    _indexDropdownItems(item, index)
+const _indexDropdownItems = (category, index, isDropdownItem = false) => {
+  category.value = index;
+  category.select = '';
+  (category.categories || []).forEach((category, index) => {
+    _indexDropdownItems(category, index)
   });
 };
 
-const _applyFiltersDefaults = (item) => {
-  Object.assign(item, {
-    type: item.type || "input",
-    items: item.items || [],
-    filters: item.filters || [],
-    path: item.path || [],
-    root: item.root || [],
+const _applyFiltersDefaults = (category) => {
+  Object.assign(category, {
+    type: category.type || "input",
+    categories: category.categories || [],
+    filters: category.filters || [],
+    path: category.path || [],
+    root: category.root || [],
   });
-  item.items.forEach((item) => {
-    _applyFiltersDefaults(item)
+  category.categories.forEach((category) => {
+    _applyFiltersDefaults(category)
   });
 };
 
 const _rootFilters = (parentItem) => {
-  (parentItem.items || []).forEach(item => {
+  (parentItem.categories || []).forEach(category => {
 
-    const itemProps = { ...item };
+    const itemProps = { ...category };
     delete itemProps.root;
 
     Object.assign(
-      item,
+      category,
       {
-        root: { ...parentItem.root, ...item.root  },
+        root: { ...parentItem.root, ...category.root  },
       },
       {
         ...{ ...parentItem.root, ...itemProps }
       },
     )
 
-    item.filters = [...parentItem.filters, ...item.filters];
-    _rootFilters(item)
+    category.filters = [...parentItem.filters, ...category.filters];
+    _rootFilters(category)
   });
 };
 
@@ -130,14 +130,14 @@ export default function filterReducer(
   let category;
   switch (type) {
     case SELECT_CATEGORY:
-      category = immer(state.category, paths[payload.item.field], (draftState, draftItem) => {
+      category = immer(state.category, paths[payload.category.field], (draftState, draftItem) => {
         draftItem.select = payload.value || '';
       });
       return { ...state, category };
     case UPDATE_INPUT:
       return { ...state, filterValues: {
         ...state.filterValues,
-        [payload.item.field]: payload.value
+        [payload.field]: payload.value
       }};
     default:
       return { ...state };
