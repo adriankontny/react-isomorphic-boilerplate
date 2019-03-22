@@ -4,8 +4,10 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../../root/actions/filter-actions';
 
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
+import {
+  TextField,
+  MenuItem
+} from '@material-ui/core';
 
 const styles = theme => ({
   margin: {

@@ -31,7 +31,10 @@ const Filter = props => {
     case "pair":
       return (
         <Fragment>
-          <Typography variant="h6" component="h2">
+          <Typography 
+            className={classes.margin}
+            variant="subtitle1"
+          >
             Price
           </Typography>
           <Grid
