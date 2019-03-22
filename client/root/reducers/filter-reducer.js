@@ -23,9 +23,9 @@ const category = {
   labelDropdown: "Category",
   filters: [
     {
-      type: "pair",
-      label: ["from", "to"],
-      field: ["pricef", "pricet"],
+      type: "range",
+      label: "Price",
+      field: "price",
     },
   ],
   categories: [

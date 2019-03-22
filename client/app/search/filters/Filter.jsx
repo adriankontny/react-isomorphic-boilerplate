@@ -28,7 +28,7 @@ const Filter = props => {
   const { label, field, type } = filter;
 
   switch (type) {
-    case "pair":
+    case "range":
       return (
         <Fragment>
           <Typography 
@@ -42,28 +42,40 @@ const Filter = props => {
             alignItems="center"
             justify="space-between"
           >
-            <Grid xs={6} key={field[0]} item>
+            <Grid xs={5} key={'from'} item>
               <TextField
                 fullWidth
                 className={classes.margin}
                 //variant="outlined"
-                label={label[0]}
-                value={filterValues[field[0]] || ''}
-                onChange={handleUpdateInput(field[0])}
+                label={'from'}
+                value={filterValues[`${field}:from`] || ''}
+                onChange={handleUpdateInput(`${field}:from`)}
               />
             </Grid>
-            <Grid xs={6} key={field[1]} item>
+            <Grid xs={5} key={'to'} item>
               <TextField
                 fullWidth
                 className={classes.margin}
                 //variant="outlined"
-                label={label[1]}
-                value={filterValues[field[1]] || ''}
-                onChange={handleUpdateInput(field[1])}
+                label={'to'}
+                value={filterValues[`${field}:to`] || ''}
+                onChange={handleUpdateInput(`${field}:to`)}
               />
             </Grid>
           </Grid>
         </Fragment>
+      )
+    case "multiselect":
+      return (
+        <TextField
+          fullWidth
+          key={label}
+          className={classes.margin}
+          //variant="outlined"
+          label={label}
+          value={filterValues[field] || ''}
+          onChange={handleUpdateInput(filter)}
+        />
       )
     default:
       return (
