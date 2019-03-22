@@ -39,11 +39,14 @@ const Category = props => {
           value={select}
           onChange={handleSelectCategory(category)}
         >
-          {categories.map(category =>
+          {[<MenuItem key={'empty'} value="">
+              <em>None</em>
+            </MenuItem>,
+            ...categories.map(category =>
             <MenuItem key={category.value} value={category.value}>
               {category.label}
             </MenuItem>
-          )}
+          )]}
         </TextField>
       }
     </Fragment>

@@ -30,15 +30,9 @@ const category = {
   ],
   categories: [
     {
-      label: "All",
-    },
-    {
       label: "Automotive",
       labelDropdown: "Subcategory",
       categories: [
-        {
-          label: "All",
-        },
         {
           label: "Cars",
           filters: [
@@ -131,7 +125,7 @@ export default function filterReducer(
   switch (type) {
     case SELECT_CATEGORY:
       category = immer(state.category, paths[payload.category.field], (draftState, draftItem) => {
-        draftItem.select = payload.value || '';
+        draftItem.select = payload.value;
       });
       return { ...state, category };
     case UPDATE_INPUT:
