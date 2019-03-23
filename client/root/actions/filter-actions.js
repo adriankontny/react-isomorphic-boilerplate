@@ -1,9 +1,19 @@
 export const SELECT_CATEGORY = 'filter:selectCategory';
-export function selectCategory(category, value) {
+export function selectCategory(field, value) {
   return {
     type: SELECT_CATEGORY,
     payload: {
-      category, value
+      field, value
+    }
+  }
+}
+
+export const SELECT_MULTISELECT = 'filter:selectMultiselect';
+export function selectMultiselect(filter, value) {
+  return {
+    type: SELECT_MULTISELECT,
+    payload: {
+      filter, value
     }
   }
 }

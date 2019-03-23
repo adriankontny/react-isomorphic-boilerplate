@@ -1,7 +1,7 @@
 
 const category = {
     label: "Category",
-    labelDropdown: "Category",
+    labelCategories: "Category",
     filters: [
       {
         label: "Price",
@@ -15,7 +15,7 @@ const category = {
       },
       {
         label: "Automotive",
-        labelDropdown: "Subcategory",
+        labelCategories: "Subcategory",
         items: [
           {
             label: "All",
@@ -37,7 +37,7 @@ const category = {
       },
       {
         label: "Real Estate",
-        labelDropdown: "Subcategory",
+        labelCategories: "Subcategory",
       },
     ],
   }

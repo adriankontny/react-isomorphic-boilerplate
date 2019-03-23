@@ -1,13 +1,13 @@
 import {
-  SELECT_CATEGORY, UPDATE_INPUT
+  SELECT_CATEGORY, UPDATE_INPUT, SELECT_MULTISELECT
 } from '../actions/filter-actions'
 import { produce, original } from 'immer';
 import { get } from 'lodash';
 
-const getItem = (filters, path) => {
+const getItem = (filters, path = []) => {
   return !path.length
     ? filters
-    : get(filters, `categories[${path.join('].categories[')}]`);
+    : get(filters, `categories[${path.join('].categories[')}]`) || filters;
 };
 
 const immer = (state, paths = [[]], cb) => {
@@ -20,7 +20,7 @@ const immer = (state, paths = [[]], cb) => {
 
 const category = {
   label: "Category",
-  labelDropdown: "Category",
+  labelCategories: "Category",
   filters: [
     {
       type: "range",
@@ -31,15 +31,41 @@ const category = {
   categories: [
     {
       label: "Automotive",
-      labelDropdown: "Subcategory",
+      labelCategories: "Subcategory",
       categories: [
         {
           label: "Cars",
+          labelCategories: "Subcategory",
+          categories: [
+            {
+              label: "Sedan",
+            },
+            {
+              label: "SUV",
+            }
+          ],
           filters: [
             {
-              label: "Milage",
-              field: "milage",
-              type: "filter"
+              label: "Extras",
+              field: "extras",
+              type: "multiselect",
+              items: [{
+                value: 0,
+                label: "ABS",
+                field: "abs",
+              },{
+                value: 1,
+                label: "ESP",
+                field: "esp",
+              },{
+                value: 2,
+                label: "Steering Assistance",
+                field: "sa",
+              },{
+                value: 3,
+                label: "Bluetooth",
+                field: "bt",
+              }]
             }
           ]
         },
@@ -50,7 +76,7 @@ const category = {
     },
     {
       label: "Real Estate",
-      labelDropdown: "Subcategory",
+      labelCategories: "Subcategory",
     },
   ],
 }
@@ -61,7 +87,7 @@ const _indexFiltersPaths = (category, paths, parentPath = []) => {
     category.field = category.field || category.label
     !category.field && console.warn(`Filter with undefined field at filters.categories[${category.path.join('].categories[')}]`)
     if (category.field) {
-      paths[category.field] = [...(paths[category.field] || []), category.path] // `categories[${path.join('].categories[')}]`]
+      paths[category.field] = category.path // `categories[${path.join('].categories[')}]`]
     }
     _indexFiltersPaths(category, paths, category.path)
   });
@@ -122,9 +148,11 @@ export default function filterReducer(
   },
   { type, payload }) { // action: { type, payload }
   let category;
+  let field;
   switch (type) {
     case SELECT_CATEGORY:
-      category = immer(state.category, paths[payload.category.field], (draftState, draftItem) => {
+      category = produce(state.category, draftState => {
+        const draftItem = getItem(draftState, paths[payload.field]);
         draftItem.select = payload.value;
       });
       return { ...state, category };
@@ -132,6 +160,12 @@ export default function filterReducer(
       return { ...state, filterValues: {
         ...state.filterValues,
         [payload.field]: payload.value
+      }};
+    case SELECT_MULTISELECT:
+      field = payload.filter.items[payload.value].field;
+      return { ...state, filterValues: {
+        ...state.filterValues,
+        [field]: state.filterValues[field] ? undefined : true
       }};
     default:
       return { ...state };

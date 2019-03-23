@@ -23,7 +23,7 @@ const styles = theme => ({
 
 const Category = props => {
   const { category, classes, handleSelectCategory } = props
-  const { labelDropdown, path, categories, select } = category;
+  const { labelCategories, path, categories, select, field } = category;
 
   return (
     <Fragment>
@@ -35,9 +35,9 @@ const Category = props => {
           select
           className={classNames(classes.margin, classes.textField)}
           //variant="outlined"
-          label={labelDropdown}
+          label={labelCategories}
           value={select}
-          onChange={handleSelectCategory(category)}
+          onChange={handleSelectCategory(field)}
         >
           {[<MenuItem key={'empty'} value="">
               <em>None</em>
@@ -54,8 +54,8 @@ const Category = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSelectCategory: category => event => {
-    dispatch(selectCategory(category, event.target.value));
+  handleSelectCategory: field => event => {
+    dispatch(selectCategory(field, event.target.value));
   }
 });
 
