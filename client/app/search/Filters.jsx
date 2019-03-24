@@ -37,7 +37,6 @@ const Filters = props => {
           </Fragment>
           :
           <Fragment>
-            <Divider />
             {filters.map(filter => 
               <Filter key={filter.label} {...{ ...props, filter }}>
               </Filter>

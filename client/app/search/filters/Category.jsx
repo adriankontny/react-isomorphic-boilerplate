@@ -1,5 +1,4 @@
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../../root/actions/filter-actions';
@@ -12,12 +11,6 @@ import {
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
-  },
-  textField: {
-    flexBasis: 200,
-  },
-  menu: {
-    width: 200,
   },
 });
 
@@ -33,7 +26,7 @@ const Category = props => {
           cols={2}
           key={'id__0' + path.join('')}
           select
-          className={classNames(classes.margin, classes.textField)}
+          className={classes.margin}
           //variant="outlined"
           label={labelCategories}
           value={select}

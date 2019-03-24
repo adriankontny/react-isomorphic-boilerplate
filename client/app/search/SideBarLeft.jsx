@@ -11,7 +11,7 @@ import { toggleSidebarLeft } from '../../root/actions/search-actions';
 
 import Filters from './Filters.jsx';
 
-const drawerWidth = 260;
+const drawerWidth = 280;
 
 const styles = theme => ({
   drawer: {
@@ -26,7 +26,7 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 2,
   },
 });
 

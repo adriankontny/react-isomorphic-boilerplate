@@ -20,12 +20,6 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
-  menu: {
-    width: 200,
-  },
-  paper: {
-    textAlign: 'center'
-  },
   chips: {
     display: 'flex',
     flexWrap: 'wrap',
