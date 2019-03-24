@@ -5,13 +5,11 @@ import { selectCategory } from '../../../root/actions/filter-actions';
 
 import {
   TextField,
-  MenuItem
+  MenuItem,
+  ExpansionPanel
 } from '@material-ui/core';
 
 const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
 });
 
 const Category = props => {
@@ -52,7 +50,9 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
-  () => {return {}},
-  mapDispatchToProps,
-)(Category));
+export default // withStyles(styles, { withTheme: true })(
+  connect(
+    () => { return {} },
+    mapDispatchToProps,
+  )(Category)
+// );
