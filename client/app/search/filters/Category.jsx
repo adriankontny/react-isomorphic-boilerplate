@@ -10,6 +10,12 @@ import {
 } from '@material-ui/core';
 
 const styles = theme => ({
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  menu: {
+    width: 200,
+  }
 });
 
 const Category = props => {
@@ -50,9 +56,7 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default // withStyles(styles, { withTheme: true })(
-  connect(
-    () => { return {} },
-    mapDispatchToProps,
-  )(Category)
-// );
+export default withStyles(styles, { withTheme: true })(connect(
+  () => { return {} },
+  mapDispatchToProps,
+)(Category));

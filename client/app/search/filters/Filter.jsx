@@ -20,6 +20,9 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
+  menu: {
+    width: 200,
+  },
   chips: {
     display: 'flex',
     flexWrap: 'wrap',
