@@ -30,7 +30,6 @@ const Category = props => {
           cols={2}
           key={'id__0' + path.join('')}
           select
-          className={classes.margin}
           //variant="outlined"
           label={labelCategories}
           value={select}

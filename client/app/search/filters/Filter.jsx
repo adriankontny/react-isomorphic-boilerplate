@@ -41,7 +41,6 @@ const Filter = props => {
       return (
         <Fragment>
           <Typography
-            className={classes.margin}
             variant="subtitle1"
           >
             Price
@@ -54,7 +53,6 @@ const Filter = props => {
             <Grid xs={5} key={'from'} item>
               <TextField
                 fullWidth
-                className={classes.margin}
                 //variant="outlined"
                 label={'from'}
                 value={filterValues[`${field}:from`] || ''}
@@ -64,7 +62,6 @@ const Filter = props => {
             <Grid xs={5} key={'to'} item>
               <TextField
                 fullWidth
-                className={classes.margin}
                 //variant="outlined"
                 label={'to'}
                 value={filterValues[`${field}:to`] || ''}
@@ -78,7 +75,8 @@ const Filter = props => {
       return (
         <div className={classes.root}>
           <FormControl 
-          fullWidth className={classes.margin} >
+            fullWidth
+          >
             <InputLabel 
             htmlFor="select-multiple-chip">{label}</InputLabel>
             <Select 
@@ -110,7 +108,6 @@ const Filter = props => {
         <TextField
           fullWidth
           key={label}
-          className={classes.margin}
           //variant="outlined"
           label={label}
           value={filterValues[field] || ''}
