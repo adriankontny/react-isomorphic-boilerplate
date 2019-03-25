@@ -2,6 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   Divider,
   Drawer,
+  SwipeableDrawer,
   Hidden,
 } from '@material-ui/core';
 import React from 'react';
@@ -48,18 +49,18 @@ class SideBarLeft extends React.Component {
       <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <Drawer
+          <SwipeableDrawer
             container={this.props.container}
-            variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={sidebarLeftIsVisible}
+            onOpen={handleToggleSidebarLeft}
             onClose={handleToggleSidebarLeft}
             classes={{
               paper: classes.drawerPaper,
             }}
           >
             {drawer}
-          </Drawer>
+          </SwipeableDrawer>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer

@@ -30,6 +30,15 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing.unit / 4,
   },
+  marginTop: {
+    margin: `${theme.spacing.unit}px 0 0 0`,
+  },
+  marginBottom: {
+    margin: `0 0 ${theme.spacing.unit}px 0`,
+  },
+  marginTopBottom: {
+    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
+  },
 });
 
 const Filter = props => {
@@ -41,6 +50,7 @@ const Filter = props => {
       return (
         <Fragment>
           <Typography
+            className={classes.marginTop}
             variant="subtitle1"
           >
             Price
@@ -53,6 +63,7 @@ const Filter = props => {
             <Grid xs={5} key={'from'} item>
               <TextField
                 fullWidth
+                className={classes.marginBottom}
                 //variant="outlined"
                 label={'from'}
                 value={filterValues[`${field}:from`] || ''}
@@ -62,6 +73,7 @@ const Filter = props => {
             <Grid xs={5} key={'to'} item>
               <TextField
                 fullWidth
+                className={classes.marginBottom}
                 //variant="outlined"
                 label={'to'}
                 value={filterValues[`${field}:to`] || ''}
@@ -75,8 +87,7 @@ const Filter = props => {
       return (
         <div className={classes.root}>
           <FormControl 
-            fullWidth
-          >
+            fullWidth className={classes.marginTopBottom} >
             <InputLabel 
             htmlFor="select-multiple-chip">{label}</InputLabel>
             <Select 
@@ -109,6 +120,7 @@ const Filter = props => {
           fullWidth
           key={label}
           //variant="outlined"
+          className={classes.marginBottom}
           label={label}
           value={filterValues[field] || ''}
           onChange={handleUpdateInput(filter)}

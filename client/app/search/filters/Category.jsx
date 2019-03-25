@@ -15,7 +15,10 @@ const styles = theme => ({
   },
   menu: {
     width: 200,
-  }
+  },
+  marginTopBottom: {
+    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
+  },
 });
 
 const Category = props => {
@@ -30,6 +33,7 @@ const Category = props => {
           cols={2}
           key={'id__0' + path.join('')}
           select
+          className={classes.marginTopBottom}
           //variant="outlined"
           label={labelCategories}
           value={select}
