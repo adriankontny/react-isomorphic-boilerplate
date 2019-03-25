@@ -1,4 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../../root/actions/filter-actions';
@@ -22,7 +23,7 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { category, classes, handleSelectCategory } = props
+  const { category, classes, handleSelectCategory, location, history } = props
   const { labelCategories, path, categories, select, field } = category;
 
   return (
@@ -37,7 +38,7 @@ const Category = props => {
           //variant="outlined"
           label={labelCategories}
           value={select}
-          onChange={handleSelectCategory(field)}
+          onChange={handleSelectCategory(field, location, history)}
         >
           {[<MenuItem key={'empty'} value="">
               <em>None</em>
@@ -54,12 +55,12 @@ const Category = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSelectCategory: field => event => {
-    dispatch(selectCategory(field, event.target.value));
+  handleSelectCategory: (field, location, history) => event => {
+    dispatch(selectCategory(field, event.target.value, location, history));
   }
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default withRouter(withStyles(styles, { withTheme: true })(connect(
   () => { return {} },
   mapDispatchToProps,
-)(Category));
+)(Category)));

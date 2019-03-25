@@ -3,7 +3,7 @@ export function selectCategory(field, value) {
   return {
     type: SELECT_CATEGORY,
     payload: {
-      field, value
+      field, value, location, history
     }
   }
 }
@@ -13,7 +13,7 @@ export function selectMultiselect(filter, value) {
   return {
     type: SELECT_MULTISELECT,
     payload: {
-      filter, value
+      filter, value, location, history
     }
   }
 }
@@ -23,7 +23,7 @@ export function updateInput(field, value) {
   return {
     type: UPDATE_INPUT,
     payload: {
-      field, value
+      field, value, location, history
     }
   }
 }

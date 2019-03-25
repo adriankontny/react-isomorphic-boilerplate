@@ -27,6 +27,7 @@
     "morgan": "^1.9.0",
     "popmotion": "^8.6.2",
     "prop-types": "^15.7.2",
+    "qs": "^6.7.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-jss": "^8.6.1",

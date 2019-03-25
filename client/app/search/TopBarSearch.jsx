@@ -1,4 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import {
   InputBase
 } from '@material-ui/core';
@@ -51,11 +52,10 @@ const styles = theme => ({
   },
 });
 
-class Search extends React.Component {
+class TopBarSearch extends React.Component {
 
   render() {
-    const { classes, search, handleUpdateSearch } = this.props;
-
+    const { classes, search, handleUpdateSearch, location, history } = this.props;
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -64,7 +64,7 @@ class Search extends React.Component {
         <InputBase
           placeholder="Search…"
           value={search}
-          onChange={handleUpdateSearch}
+          onChange={handleUpdateSearch(location, history)}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -80,13 +80,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateSearch: (event) => {
-    dispatch(updateSearch(event.target.value))
+  handleUpdateSearch: (location, history) => (event) => {
+    dispatch(updateSearch(event.target.value, location, history))
     dispatch({ type: 'PING' });
   },
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default withRouter(withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Search));
+)(TopBarSearch)));

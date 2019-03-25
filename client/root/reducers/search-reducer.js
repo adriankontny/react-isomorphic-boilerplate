@@ -11,7 +11,7 @@ export default function searchReducer(
   { type, payload }) { // action: { type, payload }
   switch (type) {
     case UPDATE_SEARCH:
-      return { ...state, search: payload.search };
+      return { ...state, search: payload.value };
     case TOGGLE_SIDEBAR_LEFT:
       return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
     default:

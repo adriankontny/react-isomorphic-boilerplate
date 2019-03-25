@@ -1,4 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -42,7 +43,7 @@ const styles = theme => ({
 });
 
 const Filter = props => {
-  const { filters, filter, filterValues, classes, handleUpdateInput } = props
+  const { filters, filter, filterValues, classes, handleUpdateInput, location, history } = props
   const { label, field, type, items, value } = filter;
 
   switch (type) {
@@ -67,7 +68,7 @@ const Filter = props => {
                 //variant="outlined"
                 label={'from'}
                 value={filterValues[`${field}:from`] || ''}
-                onChange={handleUpdateInput(`${field}:from`)}
+                onChange={handleUpdateInput(`${field}:from`, location, history)}
               />
             </Grid>
             <Grid xs={5} key={'to'} item>
@@ -77,7 +78,7 @@ const Filter = props => {
                 //variant="outlined"
                 label={'to'}
                 value={filterValues[`${field}:to`] || ''}
-                onChange={handleUpdateInput(`${field}:to`)}
+                onChange={handleUpdateInput(`${field}:to`, location, history)}
               />
             </Grid>
           </Grid>
@@ -103,7 +104,7 @@ const Filter = props => {
               //variant="outlined"
               label={label}
               value={filterValues[field] || []}
-              onChange={handleUpdateInput(field)}
+              onChange={handleUpdateInput(field, location, history)}
             >
               {items.map(item =>
                 <MenuItem key={item.value} value={item.label}>
@@ -123,7 +124,7 @@ const Filter = props => {
           className={classes.marginBottom}
           label={label}
           value={filterValues[field] || ''}
-          onChange={handleUpdateInput(filter)}
+          onChange={handleUpdateInput(filter, location, history)}
         />
       )
   }
@@ -134,12 +135,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: field => event => {
-    dispatch(updateInput(field, event.target.value));
+  handleUpdateInput: (field, location, history) => event => {
+    dispatch(updateInput(field, event.target.value, location, history));
   },
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default withRouter(withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Filter));
+)(Filter)));

@@ -10,14 +10,6 @@ const getItem = (filters, path = []) => {
     : get(filters, `categories[${path.join('].categories[')}]`) || filters;
 };
 
-const immer = (state, paths = [[]], cb) => {
-  return produce(state, draftState => {
-    paths.forEach((path) => {
-      cb(draftState, getItem(draftState, path));
-    });
-  });
-}
-
 const category = {
   label: "Category",
   labelCategories: "Category",
@@ -93,11 +85,11 @@ const _indexFiltersPaths = (category, paths, parentPath = []) => {
   });
 };
 
-const _indexDropdownItems = (category, index, isDropdownItem = false) => {
+const _indexCategories = (category, index) => {
   category.value = index;
   category.select = '';
   (category.categories || []).forEach((category, index) => {
-    _indexDropdownItems(category, index)
+    _indexCategories(category, index)
   });
 };
 
@@ -137,7 +129,7 @@ const _rootFilters = (parentItem) => {
 
 const paths = {};
 _indexFiltersPaths(category, paths);
-_indexDropdownItems(category);
+_indexCategories(category);
 _applyFiltersDefaults(category);
 _rootFilters(category);
 
@@ -155,6 +147,11 @@ export default function filterReducer(
         const draftItem = getItem(draftState, paths[payload.field]);
         draftItem.select = payload.value;
       });
+
+      // url = produce(state.url, draftState => {
+        // const draftItem = getItem(state, paths[payload.field])
+        // console.log(payload.location)
+      // })
       return { ...state, category };
     case UPDATE_INPUT:
       return { ...state, filterValues: {
