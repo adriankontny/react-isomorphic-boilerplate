@@ -1,0 +1,13 @@
+{
+  "watchWorks": true,
+  "restartable": "rs",
+  "ignore": [
+    "**/node_modules/**"
+  ],
+  "verbose": true,
+  "watch": [
+    "./client/root/reducers/filter-reducer-data/data/**",
+    "nodemon.data.json"
+  ],
+  "ext": "js jsx json"
+}
