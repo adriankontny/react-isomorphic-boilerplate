@@ -6,7 +6,7 @@
   ],
   "verbose": true,
   "watch": [
-    "./client/root/reducers/filter-reducer-data/data/**",
+    "./client/root/reducers/filter-reducer-data/data-initializers/**",
     "nodemon.data.json"
   ],
   "ext": "js jsx json"
