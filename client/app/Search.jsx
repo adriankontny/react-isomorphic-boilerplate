@@ -33,7 +33,10 @@ class Search extends React.Component {
         <SideBarLeft />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Filters category={category} filterValues={filterValues}>
+          <Filters 
+            upload
+            category={category} 
+            filterValues={filterValues}>
           </Filters>
         </main>
       </div>
