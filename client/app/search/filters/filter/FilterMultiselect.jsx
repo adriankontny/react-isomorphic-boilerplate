@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { updateInput, selectMultiselect } from '../../../../root/actions/filter-actions';
+import { updateInput } from '../../../../root/actions/filter-actions';
 
 import {
   MenuItem,
@@ -63,8 +63,8 @@ const FilterMultiselect = props => {
             value={filterValues[field] || []}
             onChange={handleUpdateInput(field, location, history)}
           >
-            {items.map(item =>
-              <MenuItem key={item.value} value={item.label}>
+            {items.map((item, index) =>
+              <MenuItem key={index} value={item.label}>
                 {item.label}
               </MenuItem>
             )}

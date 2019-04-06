@@ -1,5 +1,5 @@
 export const SELECT_CATEGORY = 'filter:selectCategory';
-export function selectCategory(field, value) {
+export function selectCategory(field, value, location, history) {
   return {
     type: SELECT_CATEGORY,
     payload: {
@@ -8,18 +8,8 @@ export function selectCategory(field, value) {
   }
 }
 
-export const SELECT_MULTISELECT = 'filter:selectMultiselect';
-export function selectMultiselect(filter, value) {
-  return {
-    type: SELECT_MULTISELECT,
-    payload: {
-      filter, value, location, history
-    }
-  }
-}
-
 export const UPDATE_INPUT = 'filter:updateInput';
-export function updateInput(field, value) {
+export function updateInput(field, value, location, history) {
   return {
     type: UPDATE_INPUT,
     payload: {

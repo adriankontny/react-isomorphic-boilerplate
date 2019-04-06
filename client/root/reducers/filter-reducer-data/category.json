@@ -26,10 +26,10 @@
                   "field": "extras",
                   "type": "multiselect",
                   "items": [
-                    { "value": 0, "label": "ABS", "field": "abs" },
-                    { "value": 1, "label": "ESP", "field": "esp" },
-                    { "value": 2, "label": "Steering Assistance", "field": "sa" },
-                    { "value": 3, "label": "Bluetooth", "field": "bt" }
+                    { "label": "ABS", "field": "abs" },
+                    { "label": "ESP", "field": "esp" },
+                    { "label": "Steering Assistance", "field": "sa" },
+                    { "label": "Bluetooth", "field": "bt" }
                   ]
                 }
               ],
@@ -50,10 +50,10 @@
                   "field": "extras",
                   "type": "multiselect",
                   "items": [
-                    { "value": 0, "label": "ABS", "field": "abs" },
-                    { "value": 1, "label": "ESP", "field": "esp" },
-                    { "value": 2, "label": "Steering Assistance", "field": "sa" },
-                    { "value": 3, "label": "Bluetooth", "field": "bt" }
+                    { "label": "ABS", "field": "abs" },
+                    { "label": "ESP", "field": "esp" },
+                    { "label": "Steering Assistance", "field": "sa" },
+                    { "label": "Bluetooth", "field": "bt" }
                   ]
                 }
               ],
@@ -67,10 +67,10 @@
               "field": "extras",
               "type": "multiselect",
               "items": [
-                { "value": 0, "label": "ABS", "field": "abs" },
-                { "value": 1, "label": "ESP", "field": "esp" },
-                { "value": 2, "label": "Steering Assistance", "field": "sa" },
-                { "value": 3, "label": "Bluetooth", "field": "bt" }
+                { "label": "ABS", "field": "abs" },
+                { "label": "ESP", "field": "esp" },
+                { "label": "Steering Assistance", "field": "sa" },
+                { "label": "Bluetooth", "field": "bt" }
               ]
             }
           ],

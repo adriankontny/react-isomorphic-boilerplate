@@ -30,19 +30,15 @@ export default {
                 field: "extras",
                 type: "multiselect",
                 items: [{
-                  value: 0,
                   label: "ABS",
                   field: "abs",
                 },{
-                  value: 1,
                   label: "ESP",
                   field: "esp",
                 },{
-                  value: 2,
                   label: "Steering Assistance",
                   field: "sa",
                 },{
-                  value: 3,
                   label: "Bluetooth",
                   field: "bt",
                 }]
