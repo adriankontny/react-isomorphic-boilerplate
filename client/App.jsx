@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { Home, Search, Contact, NotFound } from './app';
+import { initializeFilters } from './root/actions/filter-actions';
 
 const RouteWithStatus = (props) => {
   const { children, component, statusCode } = props;
@@ -33,6 +35,8 @@ class App extends Component {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+    const { handleInitializeFilters, location, history } = this.props;
+    handleInitializeFilters( location, history );
   }
 
   render() {
@@ -53,7 +57,17 @@ class App extends Component {
     )
   }
 }
-App.propTypes = {
-};
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  handleInitializeFilters: (history, location) => {
+    dispatch(initializeFilters(history, location));
+  },
+});
+
+const mapStateToProps = () => ({
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App));

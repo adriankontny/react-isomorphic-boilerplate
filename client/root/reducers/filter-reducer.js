@@ -1,5 +1,7 @@
 import {
-  SELECT_CATEGORY, UPDATE_INPUT
+  INITIALIZE_FILTERS,
+  SELECT_CATEGORY,
+  UPDATE_INPUT
 } from '../actions/filter-actions'
 import {category, paths} from './filter-reducer-data/';
 import {
@@ -17,8 +19,7 @@ import {
 } from './filter-reducer-helpers/';
 import qs from 'qs';
 import { produce, original } from 'immer';
-import { get, keys, some } from 'lodash';
-
+import { get, keys, some, toPairs } from 'lodash';
 
 const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, categoriesArray = []) => {
   if ( draftItem.select !== '' ) {
@@ -37,7 +38,6 @@ const filtersArraysFromReduxState = (draftState) => {
   const categoriesArray = _categoriesArrayFromReduxState(draftState.category);
   const terminalCategory = categoriesArray[categoriesArray.length -1] || {};
   const draftItem = getItem(draftState.category, paths[terminalCategory.field]);
-  //const draftItemFilters = draftItem.filters.map(filter => filter.field);
 
   const filtersArray = keys(draftState.filterValues)
     .map(filter => {return{field: filter, value: draftState.filterValues[filter]}})
@@ -69,8 +69,38 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], location, hi
   return newState;
 };
 
+const _categoriesArrayFromUrl = (category, path = [], categoriesArray = []) => {
+  categoriesArray = [getItem(category, path), ...categoriesArray];
+  const newPath = path.slice(0, -1) || [];
+  if ( newPath && newPath.length ) {
+    return _categoriesArrayFromUrl(category, newPath, categoriesArray);
+  }
+  return categoriesArray.map(item => { return {field: item.field, key: item.value } });
+}
+
+const filtersArraysFromUrl = (state, search) => {
+  const searchObject = qs.parse(search, { ignoreQueryPrefix: true });
+  const path = paths[searchObject.c];
+  delete searchObject.c;
+
+  const filtersArray = toPairs(searchObject)
+    .map(item => {
+      return { 
+        field: item[0],
+        value: (item[1].split(',').length === 1 
+        ? item[1] 
+        : item[1].split(',')) 
+      };
+    }) || [];
+  const categoriesArray = _categoriesArrayFromUrl(state.category, path);
+
+  return [categoriesArray, filtersArray];
+}
+
 const updateUrl = (state, location, history) => {
   const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state);
+  console.log(categoriesArray)
+  console.log(filtersArray)
   return filtersArraysToUrl(state, [categoriesArray, filtersArray], location, history);
 };
 
@@ -83,6 +113,13 @@ export default function filterReducer(
   { type, payload }) { // action: { type, payload }
   let newState;
   switch (type) {
+    case INITIALIZE_FILTERS:
+      const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, payload.location.search);
+      console.log(categoriesArray)
+      console.log(filtersArray)
+      // newState = filtersArraysToReduxState(state, [filtersArray, filtersArrayExternal]);
+      // newState = updateUrl(newState, payload.history, payload.location);
+      return state;
     case SELECT_CATEGORY:
       newState = selectCategory(state, payload.field, payload.value);
       newState = updateUrl(newState, payload.location, payload.history);
