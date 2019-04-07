@@ -1,18 +1,24 @@
 import {
   SELECT_CATEGORY, UPDATE_INPUT
 } from '../actions/filter-actions'
+import {category, paths} from './filter-reducer-data/';
+import {
+  getItem,
+  selectCategory,
+  // setFilters,
+  // setFiltersExternal,
+  // toggleExpander,
+  // searchItems,
+  updateInput,
+  // filtersArraysFromUrl,
+  // filtersArraysToUrl,
+  // filtersArraysFromReduxState,
+  // filtersArraysToReduxState,
+} from './filter-reducer-helpers/';
 import qs from 'qs';
 import { produce, original } from 'immer';
-import { get, keys } from 'lodash';
+import { get, keys, some } from 'lodash';
 
-const getItem = (filters, path = []) => {
-  return !path.length
-    ? filters
-    : get(filters, `categories[${path.join('].categories[')}]`) || filters;
-};
-
-import category from './filter-reducer-data/category.json'
-import paths from './filter-reducer-data/paths.json'
 
 const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, categoriesArray = []) => {
   if ( draftItem.select !== '' ) {
@@ -27,10 +33,26 @@ const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, cate
   return categoriesArray;
 };
 
+const filtersArraysFromReduxState = (draftState) => {
+  const categoriesArray = _categoriesArrayFromReduxState(draftState.category);
+  const terminalCategory = categoriesArray[categoriesArray.length -1] || {};
+  const draftItem = getItem(draftState.category, paths[terminalCategory.field]);
+  //const draftItemFilters = draftItem.filters.map(filter => filter.field);
+
+  const filtersArray = keys(draftState.filterValues)
+    .map(filter => {return{field: filter, value: draftState.filterValues[filter]}})
+    .filter(filter => filter.value)
+    .filter(filter => some(draftItem.filters, ['field', filter.field.split(':')[0]]))
+  return [categoriesArray, filtersArray];
+};
+
 const filtersArraysToUrl = (state, [categoriesArray, filtersArray], location, history ) => {
-  
   const newState = produce(state, draftState => {
     draftState.location.search = {};
+    const categoriesLength = categoriesArray.length;
+    if (categoriesLength > 0) {
+      draftState.location.search.c = categoriesArray[categoriesLength-1].field;
+    }
     filtersArray.forEach(item => {
       draftState.location.search[item.field] = Array.isArray(item.value) ? item.value.join(',') : item.value;
     });
@@ -47,37 +69,10 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], location, hi
   return newState;
 };
 
-const filtersArraysFromReduxState = (draftState) => {
-  const categoriesArray = _categoriesArrayFromReduxState(draftState.category);
-  const filtersArray = keys(draftState.filterValues)
-    .map(filter => {return{field: filter, value: draftState.filterValues[filter]}})
-    .filter(filter => filter.value);
-  return [categoriesArray, filtersArray];
-};
-
 const updateUrl = (state, location, history) => {
   const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state);
   return filtersArraysToUrl(state, [categoriesArray, filtersArray], location, history);
 };
-
-const selectCategory = (state, field, value) => {
-  const category = produce(state.category, draftState => {
-    const draftItem = getItem(draftState, paths[field]);
-    draftItem.select = value;
-  });
-  return { ...state, category }
-}
-
-const updateInput = (state, field, value) => {
-  const filterValues = produce(state.filterValues, draftState => { 
-    if (value.length === 0) {
-      delete draftState[field];
-    } else {
-      draftState[field] = value;
-    }
-  });
-  return { ...state, filterValues }
-}
 
 export default function filterReducer(
   state = {
@@ -86,7 +81,6 @@ export default function filterReducer(
     filterValues: {},
   },
   { type, payload }) { // action: { type, payload }
-  let field;
   let newState;
   switch (type) {
     case SELECT_CATEGORY:
