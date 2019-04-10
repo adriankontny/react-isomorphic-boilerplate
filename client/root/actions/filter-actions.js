@@ -1,29 +1,29 @@
 export const INITIALIZE_FILTERS = 'filters:initializeFilters';
-export const initializeFilters = (location, history) => {
+export const initializeFilters = (history, location) => {
   return {
     type: INITIALIZE_FILTERS,
     payload: {
-      location, history
+      history, location
     }
   };
 };
 
 export const SELECT_CATEGORY = 'filter:selectCategory';
-export function selectCategory(field, value, location, history) {
+export function selectCategory(field, value, history, location) {
   return {
     type: SELECT_CATEGORY,
     payload: {
-      field, value, location, history
+      field, value, history, location
     }
   }
 }
 
 export const UPDATE_INPUT = 'filter:updateInput';
-export function updateInput(field, value, location, history) {
+export function updateInput(field, value, history, location) {
   return {
     type: UPDATE_INPUT,
     payload: {
-      field, value, location, history
+      field, value, history, location
     }
   }
 }

@@ -38,7 +38,7 @@ const styles = theme => ({
 });
 
 const FilterMultiselect = props => {
-  const { filter, filterValues, upload, classes, handleUpdateInput, location, history } = props
+  const { filter, filterValues, upload, classes, handleUpdateInput, history, location } = props
   const { label, field, type, items, value } = filter;
 
   return (
@@ -61,7 +61,7 @@ const FilterMultiselect = props => {
             //variant="outlined"
             label={label}
             value={filterValues[field] || []}
-            onChange={handleUpdateInput(field, location, history)}
+            onChange={handleUpdateInput(field, history, location)}
           >
             {items.map((item, index) =>
               <MenuItem key={index} value={item.label}>
@@ -80,8 +80,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, location, history) => event => {
-    dispatch(updateInput(field, event.target.value, location, history));
+  handleUpdateInput: (field, history, location) => event => {
+    dispatch(updateInput(field, event.target.value, history, location));
   },
 });
 

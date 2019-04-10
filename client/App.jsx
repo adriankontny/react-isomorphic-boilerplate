@@ -35,8 +35,8 @@ class App extends Component {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    const { handleInitializeFilters, location, history } = this.props;
-    handleInitializeFilters( location, history );
+    const { handleInitializeFilters, history, location } = this.props;
+    handleInitializeFilters( history, location );
   }
 
   render() {
@@ -59,8 +59,8 @@ class App extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleInitializeFilters: (history, location) => {
-    dispatch(initializeFilters(history, location));
+  handleInitializeFilters: ( history, location ) => {
+    dispatch(initializeFilters( history, location ));
   },
 });
 

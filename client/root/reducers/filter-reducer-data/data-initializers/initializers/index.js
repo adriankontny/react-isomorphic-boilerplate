@@ -10,7 +10,7 @@ export const _indexFiltersPaths = (category, paths, parentPath = []) => {
   });
 };
 
-export const _indexCategories = (category, index) => {
+export const _indexCategories = (category, index = '') => {
   category.value = index;
   category.select = '';
   (category.categories || []).forEach((category, index) => {

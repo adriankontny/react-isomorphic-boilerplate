@@ -5,8 +5,8 @@ import selectCategory from './selectCategory';
 // import toggleExpander from './toggleExpander';
 // import searchItems from './searchItems';
 import updateInput from './updateInput';
-// import { filtersArraysFromUrl, filtersArraysToUrl } from './filtersArraysUrl';
-// import { filtersArraysFromReduxState, filtersArraysToReduxState } from './filtersArraysReduxState';
+import { filtersArraysFromUrl, filtersArraysToUrl } from './filters-arrays-url';
+import { filtersArraysFromReduxState, filtersArraysToReduxState } from './filters-arrays-redux-state';
 
 export {
   getItem,
@@ -17,8 +17,8 @@ export {
   // toggleExpander,
   // searchItems,
   updateInput,
-  // filtersArraysFromUrl,
-  // filtersArraysToUrl,
-  // filtersArraysFromReduxState,
-  // filtersArraysToReduxState,
+  filtersArraysFromUrl,
+  filtersArraysToUrl,
+  filtersArraysFromReduxState,
+  filtersArraysToReduxState,
 };

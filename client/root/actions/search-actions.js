@@ -1,11 +1,11 @@
 export const UPDATE_SEARCH = 'search:updateSearch';
 export const TOGGLE_SIDEBAR_LEFT = 'search:toggleSidebarLeft';
 
-export function updateSearch(value, location, history) {
+export function updateSearch(value, history, location) {
   return {
     type: UPDATE_SEARCH,
     payload: {
-      value, location, history
+      value, history, location
     }
   }
 }
