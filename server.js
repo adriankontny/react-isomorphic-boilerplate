@@ -2,6 +2,7 @@ import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
 import debug from 'debug';
+import qs from 'qs';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { values } from 'lodash';
@@ -21,7 +22,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
 import routes from './server/routes';
 import App from './client/App';
-import createPreloadedStore from './client/root/store';
+import createPreloadedStore, { createPreloadedState } from './client/root/store';
 
 const app = express();
 const logger = debug('server.js');
@@ -89,8 +90,10 @@ app.use(express.static('dist'));
 app.use('/', routes);
 
 app.get('/*', (req, res) => {
-  const preloadedState = {};
-  res.react(preloadedState);
+  const location = {
+    search: '?' + qs.stringify({ ...req.query }, { encode: false })
+  }
+  res.react(createPreloadedState(location));
 });
 
 app.set('port', process.env.PORT || 8000);

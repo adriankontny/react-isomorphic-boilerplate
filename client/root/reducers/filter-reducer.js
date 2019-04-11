@@ -27,19 +27,25 @@ const updateUrl = (state, history, location) => {
   return filtersArraysToUrl(state, [categoriesArray, filtersArray], history, location);
 };
 
-export default function filterReducer(
-  state = {
+export const createFilterReducerPreloadedState = (location) => {
+  const state = {
     category,
     location: {},
     filterValues: {},
-  },
+  }
+  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, location.search);
+  const newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
+  return newState;
+}
+
+export function filterReducer(
+  state = {},
   { type, payload }) { // action: { type, payload }
   let newState;
   switch (type) {
     case INITIALIZE_FILTERS:
-      const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, payload.location.search);
-      newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
-      return newState;
+      // todo: check cache, etc 
+      return state;
     case SELECT_CATEGORY:
       newState = selectCategory(state, payload.field, payload.value);
       newState = updateUrl(newState, payload.history, payload.location);

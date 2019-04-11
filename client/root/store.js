@@ -3,11 +3,13 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import rootReducer from './reducers';
+import rootReducer, { createPreloadedState } from './reducers';
 import rootEpic from './epics';
 
 // eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+export { createPreloadedState };
 
 export default function createPreloadedStore(preloadedState) {
   
