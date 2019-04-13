@@ -1,4 +1,4 @@
-import category from './category.json';
+import filterObject from './filterObject.json';
 import paths from './paths.json';
 
-export { category, paths };
+export { filterObject, paths };

@@ -17,9 +17,9 @@ const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, cate
 };
 
 const filtersArraysFromReduxState = (draftState) => {
-  const categoriesArray = _categoriesArrayFromReduxState(draftState.category);
+  const categoriesArray = _categoriesArrayFromReduxState(draftState.filterObject);
   const terminalCategory = categoriesArray[categoriesArray.length - 1] || {};
-  const draftItem = getItem(draftState.category, paths[terminalCategory.field]);
+  const draftItem = getItem(draftState.filterObject, paths[terminalCategory.field]);
 
   const filtersArray = keys(draftState.filterValues)
     .map(filter => { return { field: filter, value: draftState.filterValues[filter] } })
@@ -31,7 +31,7 @@ const filtersArraysFromReduxState = (draftState) => {
 const _categoriesArrayToReduxState = (draftState, categoriesArray, _count = 0) => {
   const path = categoriesArray.map(category => category.key).slice(0, _count + 1);
 
-  const draftItem = getItem(draftState.category, path.slice(0, -1));
+  const draftItem = getItem(draftState.filterObject, path.slice(0, -1));
   draftItem.select = path.slice(-1)[0];
 
   if (_count < categoriesArray.length - 1) {

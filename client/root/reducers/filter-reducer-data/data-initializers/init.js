@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import JSONbeautify from 'json-beautify';
-import category from './data'
+import filterObject from './data'
 
 import {
   _indexFiltersPaths,
@@ -11,16 +11,16 @@ import {
 } from './initializers';
 
 const paths = {};
-_indexFiltersPaths(category, paths);
-_indexCategories(category);
-_applyFiltersDefaults(category);
-_rootFilters(category);
+_indexFiltersPaths(filterObject, paths);
+_indexCategories(filterObject);
+_applyFiltersDefaults(filterObject);
+_rootFilters(filterObject);
 
-fs.writeFileSync(path.resolve(__dirname, '../category.json'), JSONbeautify(category, null, 2, 100), function(err) {
+fs.writeFileSync(path.resolve(__dirname, '../filterObject.json'), JSONbeautify(filterObject, null, 2, 100), function(err) {
   if (err) {
     return console.log(err);
   }
-  console.log('The file "../category.json"  was updated!');
+  console.log('The file "../filterObject.json"  was updated!');
 });
 
 fs.writeFileSync(path.resolve(__dirname, '../paths.json'), JSONbeautify(paths, null, 2, 100), function(err) {

@@ -3,11 +3,11 @@ import getItem from './getItem';
 import { paths } from './../filter-reducer-data';
 
 const selectCategory = (state, field, value) => {
-  const category = produce(state.category, draftState => {
+  const filterObject = produce(state.filterObject, draftState => {
     const draftItem = getItem(draftState, paths[field]);
     draftItem.select = value;
   });
-  return { ...state, category };
+  return { ...state, filterObject };
 }
 
 export default selectCategory;

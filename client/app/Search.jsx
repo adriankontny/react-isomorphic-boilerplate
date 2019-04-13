@@ -24,7 +24,7 @@ class Search extends React.Component {
 
   render() {
 
-    const { classes, category, filterValues } = this.props;
+    const { classes, filterObject, filterValues } = this.props;
     
     return (
       <div className={classes.root}>
@@ -35,7 +35,7 @@ class Search extends React.Component {
           <div className={classes.toolbar} />
           <Filters 
             upload
-            category={category} 
+            category={filterObject} 
             filterValues={filterValues}>
           </Filters>
         </main>
@@ -45,7 +45,7 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  category: state.filterReducer.category,
+  filterObject: state.filterReducer.filterObject,
   filterValues: state.filterReducer.filterValues,
 });
 

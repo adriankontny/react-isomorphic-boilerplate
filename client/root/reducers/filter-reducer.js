@@ -3,7 +3,7 @@ import {
   SELECT_CATEGORY,
   UPDATE_INPUT
 } from '../actions/filter-actions'
-import { category, paths } from './filter-reducer-data/';
+import { filterObject, paths } from './filter-reducer-data/';
 import {
   getItem,
   selectCategory,
@@ -29,7 +29,7 @@ const updateUrl = (state, history, location) => {
 
 export const createFilterReducerPreloadedState = (location) => {
   const state = {
-    category,
+    filterObject,
     location: {},
     filterValues: {},
   }

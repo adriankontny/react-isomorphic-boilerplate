@@ -28,7 +28,7 @@ const filtersArraysFromUrl = (state, search) => {
           : item[1].split(','))
       };
     }) || [];
-  const categoriesArray = _categoriesArrayFromUrl(state.category, path);
+  const categoriesArray = _categoriesArrayFromUrl(state.filterObject, path);
 
   return [categoriesArray, filtersArray];
 }
