@@ -36,7 +36,7 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterValues, upload, classes, handleUpdateInput, history, location } = props
+  const { filter, filterValues, upload, classes, handleUpdateInput, history, location, filtersObjectPath } = props
   const { label, field, type, items, value } = filter;
 
   switch (upload) {
@@ -49,7 +49,7 @@ const FilterRange = props => {
           className={classes.marginBottom}
           label={label}
           value={filterValues[field] || ''}
-          onChange={handleUpdateInput(field, history, location)}
+          onChange={handleUpdateInput(field, history, location, filtersObjectPath)}
         />
       )
 
@@ -74,7 +74,7 @@ const FilterRange = props => {
                 //variant="outlined"
                 label={'from'}
                 value={filterValues[`${field}:from`] || ''}
-                onChange={handleUpdateInput(`${field}:from`, history, location)}
+                onChange={handleUpdateInput(`${field}:from`, history, location, filtersObjectPath)}
               />
             </Grid>
             <Grid xs={5} key={'to'} item>
@@ -84,7 +84,7 @@ const FilterRange = props => {
                 //variant="outlined"
                 label={'to'}
                 value={filterValues[`${field}:to`] || ''}
-                onChange={handleUpdateInput(`${field}:to`, history, location)}
+                onChange={handleUpdateInput(`${field}:to`, history, location, filtersObjectPath)}
               />
             </Grid>
           </Grid>
@@ -98,8 +98,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, history, location) => event => {
-    dispatch(updateInput(field, event.target.value, history, location));
+  handleUpdateInput: (field, history, location, filtersObjectPath) => event => {
+    dispatch(updateInput(field, event.target.value, history, location, filtersObjectPath));
   },
 });
 

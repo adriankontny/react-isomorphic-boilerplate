@@ -55,7 +55,7 @@ const styles = theme => ({
 class TopBarSearch extends React.Component {
 
   render() {
-    const { classes, search, handleUpdateSearch, history, location } = this.props;
+    const { classes, search, handleUpdateSearch, history, location, filtersObjectPath } = this.props;
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -64,7 +64,7 @@ class TopBarSearch extends React.Component {
         <InputBase
           placeholder="Search…"
           value={search}
-          onChange={handleUpdateSearch(history, location)}
+          onChange={handleUpdateSearch(history, location, filtersObjectPath)}
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
@@ -80,8 +80,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateSearch: (history, location) => (event) => {
-    dispatch(updateSearch(event.target.value, history, location))
+  handleUpdateSearch: (history, location, filtersObjectPath) => (event) => {
+    dispatch(updateSearch(event.target.value, history, location, filtersObjectPath))
     dispatch({ type: 'PING' });
   },
 });

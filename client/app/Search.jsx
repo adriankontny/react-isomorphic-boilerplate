@@ -36,7 +36,7 @@ class Search extends React.Component {
           <Filters 
             upload
             category={filterObject} 
-            filterValues={filterValues}>
+          >
           </Filters>
         </main>
       </div>
