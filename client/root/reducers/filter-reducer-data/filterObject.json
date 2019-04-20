@@ -1,20 +1,19 @@
 {
   "label": "Category",
-  "labelCategories": "Category",
   "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
   "categories": [
     {
       "label": "Automotive",
-      "labelCategories": "Subcategory",
+      "field": "automotive",
       "categories": [
         {
           "label": "Cars",
-          "labelCategories": "Subcategory",
+          "field": "cars",
           "categories": [
             {
               "label": "Sedan",
+              "field": "sedan",
               "path": [ 0, 0, 0 ],
-              "field": "Sedan",
               "value": 0,
               "select": "",
               "type": "input",
@@ -37,8 +36,8 @@
             },
             {
               "label": "SUV",
+              "field": "suv",
               "path": [ 0, 0, 1 ],
-              "field": "SUV",
               "value": 1,
               "select": "",
               "type": "input",
@@ -75,7 +74,6 @@
             }
           ],
           "path": [ 0, 0 ],
-          "field": "Cars",
           "value": 0,
           "select": "",
           "type": "input",
@@ -83,8 +81,8 @@
         },
         {
           "label": "Bikes",
+          "field": "bikes",
           "path": [ 0, 1 ],
-          "field": "Bikes",
           "value": 1,
           "select": "",
           "type": "input",
@@ -94,7 +92,6 @@
         }
       ],
       "path": [ 0 ],
-      "field": "Automotive",
       "value": 0,
       "select": "",
       "type": "input",
@@ -103,9 +100,8 @@
     },
     {
       "label": "Real Estate",
-      "labelCategories": "Subcategory",
+      "field": "real-estate",
       "path": [ 1 ],
-      "field": "Real Estate",
       "value": 1,
       "select": "",
       "type": "input",

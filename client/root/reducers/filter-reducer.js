@@ -47,12 +47,12 @@ export function filterReducer(
       // todo: check cache, etc 
       return state;
     case SELECT_CATEGORY:
-      console.log(payload.filtersObjectPath)
+      // console.log(payload.filtersObjectPath)
       newState = selectCategory(state, payload.field, payload.value);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     case UPDATE_INPUT:
-      console.log(payload.filtersObjectPath)
+      // console.log(payload.filtersObjectPath)
       newState = updateInput(state, payload.field, payload.value)
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;

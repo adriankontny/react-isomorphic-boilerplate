@@ -24,7 +24,7 @@ const styles = theme => ({
 
 const Category = props => {
   const { category, classes, handleSelectCategory, history, location, filtersObjectPath } = props
-  const { labelCategories, path, categories, select, field } = category;
+  const { label, path, categories, select, field } = category;
 
   return (
     <Fragment>
@@ -36,7 +36,7 @@ const Category = props => {
           select
           className={classes.marginTopBottom}
           //variant="outlined"
-          label={labelCategories}
+          label={`Category${field ? ` in ${label}`: ''}`}
           value={select}
           onChange={handleSelectCategory(field, history, location, filtersObjectPath)}
         >

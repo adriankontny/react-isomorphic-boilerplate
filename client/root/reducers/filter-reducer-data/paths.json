@@ -1,8 +1,8 @@
 {
-  "Automotive": [ 0 ],
-  "Cars": [ 0, 0 ],
-  "Sedan": [ 0, 0, 0 ],
-  "SUV": [ 0, 0, 1 ],
-  "Bikes": [ 0, 1 ],
-  "Real Estate": [ 1 ]
+  "automotive": [ 0 ],
+  "cars": [ 0, 0 ],
+  "sedan": [ 0, 0, 0 ],
+  "suv": [ 0, 0, 1 ],
+  "bikes": [ 0, 1 ],
+  "real-estate": [ 1 ]
 }

@@ -1,6 +1,5 @@
 export default {
     label: "Category",
-    labelCategories: "Category",
     filters: [
       {
         type: "range",
@@ -11,17 +10,19 @@ export default {
     categories: [
       {
         label: "Automotive",
-        labelCategories: "Subcategory",
+        field: "automotive",
         categories: [
           {
             label: "Cars",
-            labelCategories: "Subcategory",
+            field: "cars",
             categories: [
               {
                 label: "Sedan",
+                field: "sedan",
               },
               {
                 label: "SUV",
+                field: "suv",
               }
             ],
             filters: [
@@ -47,12 +48,13 @@ export default {
           },
           {
             label: "Bikes",
+            field: "bikes",
           },
         ]
       },
       {
         label: "Real Estate",
-        labelCategories: "Subcategory",
+        field: "real-estate",
       },
     ],
   }
