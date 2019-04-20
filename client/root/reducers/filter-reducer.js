@@ -45,7 +45,11 @@ export function filterReducer(
   switch (type) {
     case INITIALIZE_FILTERS:
       // todo: check cache, etc 
-      return state;
+      if (process.env.NODE_ENV !== 'production' && module.hot) { 
+        return { ...state, filterObject }; // HMR filterObject
+      } else {
+        return state;
+      }
     case SELECT_CATEGORY:
       // console.log(payload.filtersObjectPath)
       newState = selectCategory(state, payload.field, payload.value);
