@@ -46,7 +46,14 @@ export function filterReducer(
     case INITIALIZE_FILTERS:
       // todo: check cache, etc 
       if (process.env.NODE_ENV !== 'production' && module.hot) { 
-        return { ...state, filterObject }; // HMR filterObject
+        newState = {
+          filterObject,
+          location: {},
+          filterValues: {},
+        }
+        const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, location.search);
+        newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
+        return newState;
       } else {
         return state;
       }
