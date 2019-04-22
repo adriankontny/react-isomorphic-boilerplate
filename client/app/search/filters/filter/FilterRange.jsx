@@ -36,11 +36,11 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterValues, upload, classes, handleUpdateInput, history, location, filtersObjectPath } = props
+  const { filter, filterValues, classes, handleUpdateInput, history, location, filtersObjectPath } = props
   const { label, field, type, items, value } = filter;
 
-  switch (upload) {
-    case true:
+  switch (filtersObjectPath) {
+    case 'upload':
       return (
         <TextField
           fullWidth

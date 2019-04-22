@@ -41,7 +41,7 @@ class SideBarLeft extends React.Component {
         <Divider />
         <main className={classes.content}>
           <Filters
-            filtersObjectPath={'search'}
+            filtersObjectPath={'feed'}
             category={filterObject}
           >
           </Filters>

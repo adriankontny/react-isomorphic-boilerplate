@@ -32,6 +32,14 @@ export const createFilterReducerPreloadedState = (location) => {
     filterObject,
     location: {},
     filterValues: {},
+    // filters: {
+    //   search: {
+    //     filterValues: {},
+    //   },
+    //   upload: {
+    //     filterValues: {},
+    //   }
+    // },
   }
   const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, location.search);
   const newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
@@ -45,26 +53,19 @@ export function filterReducer(
   switch (type) {
     case INITIALIZE_FILTERS:
       // todo: check cache, etc 
-      if (process.env.NODE_ENV !== 'production' && module.hot) { 
-        newState = {
-          filterObject,
-          location: {},
-          filterValues: {},
-        }
-        const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, location.search);
-        newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
-        return newState;
+      if (process.env.NODE_ENV !== 'production' && module.hot) {
+        return createFilterReducerPreloadedState(payload.location);
       } else {
         return state;
       }
     case SELECT_CATEGORY:
-      // console.log(payload.filtersObjectPath)
-      newState = selectCategory(state, payload.field, payload.value);
+      newState = state;
+      newState = selectCategory(newState, payload.field, payload.value, payload.filtersObjectPath);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     case UPDATE_INPUT:
-      // console.log(payload.filtersObjectPath)
-      newState = updateInput(state, payload.field, payload.value)
+      newState = state;
+      newState = updateInput(newState, payload.field, payload.value, payload.filtersObjectPath)
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     default:

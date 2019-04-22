@@ -3,21 +3,21 @@ import FilterRange from './filter/FilterRange'
 import FilterMultiselect from './filter/FilterMultiselect'
 
 const Filter = props => {
-  const { filter, upload, filtersObjectPath } = props
+  const { filter, filtersObjectPath } = props
   const { type } = filter;
 
   switch (type) {
     case "range":
       return (
         <FilterRange
-          {...{ filter, upload, filtersObjectPath }}
+          {...{ filter, filtersObjectPath }}
         ></FilterRange>
       )
 
     case "multiselect":
       return (
         <FilterMultiselect
-          {...{ filter, upload, filtersObjectPath }}
+          {...{ filter, filtersObjectPath }}
         ></FilterMultiselect>
       )
 
