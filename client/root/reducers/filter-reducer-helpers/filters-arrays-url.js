@@ -1,5 +1,5 @@
 
-import { paths } from '../filter-reducer-data/';
+import { filterBlueprintPaths } from '../filter-reducer-data/';
 import getItem from './getItem';
 import qs from 'qs';
 import { produce } from 'immer';
@@ -16,7 +16,7 @@ const _categoriesArrayFromUrl = (category, path = [], categoriesArray = []) => {
 
 const filtersArraysFromUrl = (state, search) => {
   const searchObject = qs.parse(search, { ignoreQueryPrefix: true });
-  const path = paths[searchObject.c];
+  const path = filterBlueprintPaths[searchObject.c];
   delete searchObject.c;
 
   const filtersArray = toPairs(searchObject)

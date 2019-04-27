@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { category, classes, handleSelectCategory, history, location, filtersObjectPath } = props
+  const { category, classes, handleSelectCategory, history, location, filtersObjectPath } = props;
   const { label, path, categories, select, field } = category;
 
   return (

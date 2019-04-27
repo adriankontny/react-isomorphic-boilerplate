@@ -1,4 +1,4 @@
-import { paths } from '../filter-reducer-data/';
+import { filterBlueprintPaths } from '../filter-reducer-data/';
 import getItem from './getItem';
 import { produce } from 'immer';
 import { keys, some } from 'lodash';
@@ -19,7 +19,7 @@ const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, cate
 const filtersArraysFromReduxState = (draftState) => {
   const categoriesArray = _categoriesArrayFromReduxState(draftState.filterObject);
   const terminalCategory = categoriesArray[categoriesArray.length - 1] || {};
-  const draftItem = getItem(draftState.filterObject, paths[terminalCategory.field]);
+  const draftItem = getItem(draftState.filterObject, filterBlueprintPaths[terminalCategory.field]);
 
   const filtersArray = keys(draftState.filterValues)
     .map(filter => { return { field: filter, value: draftState.filterValues[filter] } })

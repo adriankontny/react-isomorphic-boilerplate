@@ -1,4 +1,4 @@
-import filterObject from './filterObject.json';
-import paths from './paths.json';
+import filterBlueprint from './filterBlueprint.json';
+import filterBlueprintPaths from './filterBlueprintPaths.json';
 
-export { filterObject, paths };
+export { filterBlueprint, filterBlueprintPaths };

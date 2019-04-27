@@ -36,8 +36,9 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterValues, classes, handleUpdateInput, history, location, filtersObjectPath } = props
-  const { label, field, type, items, value } = filter;
+  const { filter, filterReducer, classes, handleUpdateInput, history, location, filtersObjectPath } = props
+  const { label, field } = filter;
+  const filterValues = filterReducer[filtersObjectPath].filterValues;
 
   switch (filtersObjectPath) {
     case 'upload':
@@ -94,7 +95,7 @@ const FilterRange = props => {
 }
 
 const mapStateToProps = state => ({
-  filterValues: state.filterReducer.filterValues,
+  filterReducer: state.filterReducer,
 })
 
 const mapDispatchToProps = dispatch => ({

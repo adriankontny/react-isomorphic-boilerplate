@@ -35,7 +35,6 @@ class Search extends React.Component {
           <div className={classes.toolbar} />
           <Filters 
             filtersObjectPath={'upload'}
-            category={filterObject} 
           >
           </Filters>
         </main>

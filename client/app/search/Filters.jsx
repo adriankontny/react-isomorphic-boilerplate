@@ -4,6 +4,7 @@ import {
 } from '@material-ui/core';
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { find } from 'lodash';
 
 import Category from './filters/Category.jsx'
@@ -19,13 +20,14 @@ const styles = theme => ({
 });
 
 const Filters = props => {
-  const { classes, category } = props
+  const category = props.category ? props.category : props.filterReducer[props.filtersObjectPath].filterObject;
+  const { classes } = props;
   const { categories, select, filters } = category;
 
   const categorySelected = find(categories, category => category.value === select);
   return (
     <Fragment>
-      <Category {...props}></Category>
+      <Category {...{...props, category}}></Category>
       {
         categorySelected
           ?
@@ -47,4 +49,14 @@ const Filters = props => {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(Filters);
+const mapStateToProps = state => ({
+  filterReducer: state.filterReducer,
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+export default withStyles(styles, { withTheme: true })(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Filters));

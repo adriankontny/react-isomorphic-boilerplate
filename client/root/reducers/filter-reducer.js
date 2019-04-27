@@ -3,7 +3,7 @@ import {
   SELECT_CATEGORY,
   UPDATE_INPUT
 } from '../actions/filter-actions'
-import { filterObject, paths } from './filter-reducer-data/';
+import { filterBlueprint, filterBlueprintPaths } from './filter-reducer-data/';
 import {
   getItem,
   selectCategory,
@@ -23,27 +23,32 @@ import { get, keys, some, toPairs } from 'lodash';
 
 
 const updateUrl = (state, history, location) => {
-  const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state);
-  return filtersArraysToUrl(state, [categoriesArray, filtersArray], history, location);
+  const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state['feed']);
+  const feedState = filtersArraysToUrl(state['feed'], [categoriesArray, filtersArray], history, location);
+  return { ...state, feed: feedState }
 };
+
+const filtersObjectPaths = ['feed', 'upload'];
 
 export const createFilterReducerPreloadedState = (location) => {
   const state = {
-    filterObject,
+    filterObject: filterBlueprint,
     location: {},
     filterValues: {},
-    // filters: {
-    //   search: {
-    //     filterValues: {},
-    //   },
-    //   upload: {
-    //     filterValues: {},
-    //   }
-    // },
+    feed: {
+      filterObject: filterBlueprint,
+      location: {},
+      filterValues: {},
+    },
+    upload: {
+      filterObject: filterBlueprint,
+      location: {},
+      filterValues: {},
+    }
   }
-  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state, location.search);
-  const newState = filtersArraysToReduxState(state, [categoriesArray, filtersArray]);
-  return newState;
+  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['feed'], location.search);
+  const feedState = filtersArraysToReduxState(state['feed'], [categoriesArray, filtersArray]);
+  return { ...state, feed: feedState }
 }
 
 export function filterReducer(
