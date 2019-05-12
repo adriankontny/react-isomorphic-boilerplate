@@ -70,7 +70,7 @@ export function filterReducer(
       return newState;
     case UPDATE_INPUT:
       newState = state;
-      newState = updateInput(newState, payload.field, payload.value, payload.filtersObjectPath)
+      newState = updateInput(newState, payload.field, payload.value, payload.filtersObjectPath);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     default:

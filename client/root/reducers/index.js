@@ -6,11 +6,9 @@ import { filterReducer, createFilterReducerPreloadedState } from './filter-reduc
 export default combineReducers({
   homeReducer,
   searchReducer,
-  filterReducer
+  filterReducer,
 });
 
-export const createPreloadedState = (location) => {
-  return {
-    filterReducer: createFilterReducerPreloadedState(location)
-  }
-}
+export const createPreloadedState = location => ({
+  filterReducer: createFilterReducerPreloadedState(location),
+});

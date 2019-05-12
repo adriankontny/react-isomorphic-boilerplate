@@ -87,12 +87,12 @@ app.use(morgan('combined'));
 
 app.use(express.static('dist'));
 
-app.use('/', routes);
+// app.use('/', routes);
 
 app.get('/*', (req, res) => {
   const location = {
-    search: '?' + qs.stringify({ ...req.query }, { encode: false })
-  }
+    search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
+  };
   res.react(createPreloadedState(location));
 });
 
