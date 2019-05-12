@@ -1,0 +1,118 @@
+{
+  "label": "Category",
+  "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
+  "categories": [
+    {
+      "label": "Automotive",
+      "field": "automotive",
+      "categories": [
+        {
+          "label": "Cars",
+          "field": "cars",
+          "categories": [
+            {
+              "label": "Sedan",
+              "field": "sedan",
+              "path": [ 0, 0, 0 ],
+              "value": 0,
+              "select": "",
+              "type": "input",
+              "categories": [],
+              "filters": [
+                { "type": "range", "label": "Price", "field": "price" },
+                {
+                  "label": "Extras",
+                  "field": "extras",
+                  "type": "multiselect",
+                  "items": [
+                    { "label": "ABS", "field": "abs" },
+                    { "label": "ESP", "field": "esp" },
+                    { "label": "Steering Assistance", "field": "sa" },
+                    { "label": "Bluetooth", "field": "bt" }
+                  ]
+                }
+              ],
+              "root": {}
+            },
+            {
+              "label": "SUV",
+              "field": "suv",
+              "path": [ 0, 0, 1 ],
+              "value": 1,
+              "select": "",
+              "type": "input",
+              "categories": [],
+              "filters": [
+                { "type": "range", "label": "Price", "field": "price" },
+                {
+                  "label": "Extras",
+                  "field": "extras",
+                  "type": "multiselect",
+                  "items": [
+                    { "label": "ABS", "field": "abs" },
+                    { "label": "ESP", "field": "esp" },
+                    { "label": "Steering Assistance", "field": "sa" },
+                    { "label": "Bluetooth", "field": "bt" }
+                  ]
+                }
+              ],
+              "root": {}
+            }
+          ],
+          "filters": [
+            { "type": "range", "label": "Price", "field": "price" },
+            {
+              "label": "Extras",
+              "field": "extras",
+              "type": "multiselect",
+              "items": [
+                { "label": "ABS", "field": "abs" },
+                { "label": "ESP", "field": "esp" },
+                { "label": "Steering Assistance", "field": "sa" },
+                { "label": "Bluetooth", "field": "bt" }
+              ]
+            }
+          ],
+          "path": [ 0, 0 ],
+          "value": 0,
+          "select": "",
+          "type": "input",
+          "root": {}
+        },
+        {
+          "label": "Bikes",
+          "field": "bikes",
+          "path": [ 0, 1 ],
+          "value": 1,
+          "select": "",
+          "type": "input",
+          "categories": [],
+          "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
+          "root": {}
+        }
+      ],
+      "path": [ 0 ],
+      "value": 0,
+      "select": "",
+      "type": "input",
+      "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
+      "root": {}
+    },
+    {
+      "label": "Real Estate",
+      "field": "real-estate",
+      "path": [ 1 ],
+      "value": 1,
+      "select": "",
+      "type": "input",
+      "categories": [],
+      "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
+      "root": {}
+    }
+  ],
+  "value": "",
+  "select": "",
+  "type": "input",
+  "path": [],
+  "root": []
+}

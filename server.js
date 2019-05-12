@@ -1,18 +1,28 @@
 import express from 'express';
+import compression from 'compression';
 import morgan from 'morgan';
 import debug from 'debug';
+import qs from 'qs';
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
+import { SheetsRegistry } from 'jss';
+import JssProvider from 'react-jss/lib/JssProvider'
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  createGenerateClassName,
+} from '@material-ui/core/styles';
+import { grey, blueGrey } from '@material-ui/core/colors';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
 import routes from './server/routes';
 import App from './client/App';
-import createPreloadedStore from './client/root/store';
+import createPreloadedStore, { createPreloadedState } from './client/root/store';
 
 const app = express();
 const logger = debug('server.js');
@@ -30,23 +40,42 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(compression());
 app.use((req, res, next) => {
   res.react = (preloadedState) => {
-    /* eslint-disable */
-    const context = {};
+    const sheetsRegistry = new SheetsRegistry();
+    const sheetsManager = new Map();
+    const theme = createMuiTheme({
+      typography: {
+        useNextVariants: true,
+      },
+      palette: {
+        primary: grey,
+        accent: blueGrey,
+        type: 'light',
+      },
+    });
+    const generateClassName = createGenerateClassName();
     const store = createPreloadedStore(preloadedState);
+    const context = {};
+    /* eslint-disable */
     const staticContent = renderToString(
-      <Provider store={store}>
-        <Router location={req.originalUrl} context={context}>
-          <App/>
-        </Router>
-      </Provider>
+      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+          <ReduxProvider store={store}>
+            <Router location={req.originalUrl} context={context}>
+              <App />
+            </Router>
+          </ReduxProvider>
+        </MuiThemeProvider>
+      </JssProvider>
     );
-    const status = context.statusCode || 200;
-    const jsFiles = require('./prod/webpack-assets.json')
-    res.status(status).render('index.ejs', {
+    res.status(context.statusCode || 200).render('index.ejs', {
+      lang: "en",
+      title: "React-Redux",
+      css: sheetsRegistry.toString(),
       staticContent,
-      bundle: values(jsFiles, value => value).map(object => object.js),
+      bundle: values(require('./prod/webpack-assets.json'), value => value).map(object => object.js),
       preloadedState: JSON.stringify(preloadedState),
     });
     /* eslint-enable */
@@ -61,8 +90,10 @@ app.use(express.static('dist'));
 app.use('/', routes);
 
 app.get('/*', (req, res) => {
-  const preloadedState = { };
-  res.react(preloadedState);
+  const location = {
+    search: '?' + qs.stringify({ ...req.query }, { encode: false })
+  }
+  res.react(createPreloadedState(location));
 });
 
 app.set('port', process.env.PORT || 8000);

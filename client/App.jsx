@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
-import Home from './app/Home';
-import Contact from './app/Contact';
-import NotFound from './app/NotFound';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
+import { Home, Search, Contact, NotFound } from './app';
+import { initializeFilters } from './root/actions/filter-actions';
 
 const RouteWithStatus = (props) => {
   const { children, component, statusCode } = props;
@@ -28,19 +28,46 @@ RouteWithStatus.defaultProps = {
   children: <Fragment />,
 };
 
-const App = () => (
-  <div>
-    <Link to="/">Home</Link>
-    {' | '}
-    <Link to="/contact">Contact</Link>
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/contact" component={Contact} />
-      <RouteWithStatus statusCode={404} component={NotFound} />
-    </Switch>
-  </div>
-);
-App.propTypes = {
-};
+class App extends Component {
 
-export default App;
+  componentDidMount() { // Remove the server-side injected CSS.
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+    const { handleInitializeFilters, history, location } = this.props;
+    handleInitializeFilters( history, location );
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <Link to="/">Home</Link>
+        {' | '}
+        <Link to="/search">Search</Link>
+        {' | '}
+        <Link to="/contact">Contact</Link>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/search" component={Search} />
+          <Route path="/contact" component={Contact} />
+          <RouteWithStatus statusCode={404} component={NotFound} />
+        </Switch>
+      </Fragment>
+    )
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  handleInitializeFilters: ( history, location ) => {
+    dispatch(initializeFilters( history, location ));
+  },
+});
+
+const mapStateToProps = () => ({
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App));

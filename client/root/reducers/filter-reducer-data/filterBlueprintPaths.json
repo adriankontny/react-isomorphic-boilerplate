@@ -1,0 +1,8 @@
+{
+  "automotive": [ 0 ],
+  "cars": [ 0, 0 ],
+  "sedan": [ 0, 0, 0 ],
+  "suv": [ 0, 0, 1 ],
+  "bikes": [ 0, 1 ],
+  "real-estate": [ 1 ]
+}

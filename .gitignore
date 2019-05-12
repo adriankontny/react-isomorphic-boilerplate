@@ -3,5 +3,5 @@
 /prod
 /dist
 .npmrc
-package-lock.json
+yarn-lock.json
 npm-debug.log
