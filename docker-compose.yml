@@ -1,0 +1,44 @@
+version: "2"
+
+services:
+  web:
+    build: .
+    environment:
+      - PORT=8000
+      - ENV=local
+      - NODE_ENV=production
+      - STATSD_ENABLED=false
+      - STATSD_HOST=datadog
+      - STATSD_PORT=8125
+      - PRODUCT=jor
+      - COMPONENT_NAME=jor-subscriber
+      - ELASTICSEARCH_URL=http://elastic:changeme@elasticsearch:9200
+      - ELASTICSEARCH_INDIVIDUALS_INDEX=individuals
+      - ELASTICSEARCH_DEALS_INDEX=deals
+      - ELASTICSEARCH_COMPANIES_INDEX=companies
+      - GLOBAL_AGENT_KEEP_ALIVE=true
+      - GLOBAL_AGENT_MAX_SOCKETS=50
+      - GLOBAL_AGENT_KEEP_ALIVE_MSECS=30000
+    ports:
+      - "8000:8000"
+    links:
+      - elasticsearch
+
+  elasticsearch:
+    image: elasticsearch:6.7.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: kibana:6.7.2
+    links:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=changeme
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - 5601:5601
