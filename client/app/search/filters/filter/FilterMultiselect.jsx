@@ -9,7 +9,8 @@ import {
   Select,
   Chip,
   FormControl,
-  InputLabel
+  InputLabel,
+  Checkbox
 } from '@material-ui/core';
 
 const styles = theme => ({
@@ -38,20 +39,21 @@ const styles = theme => ({
 });
 
 const mapLabelsToFields = (labels = [], items = []) => {
-  const fields = labels.map(label => items.filter(item => item.label === label)).map(item => (item[0] || []).field)
-  return fields
-}
+  const fields = labels.map(label => items.filter(item => item.label === label)).map(item => (item[0] || []).field);
+  return fields;
+};
 
 const mapFieldsToLabels = (fields = [], items = []) => {
   if (!Array.isArray(fields)) {
-    return fields
+    return fields;
   }
-  const labels = fields.map(field => items.filter(item => item.field === field)).map(item => (item[0] || []).label)
-  return labels
-}
+  const labels = fields.map(field => items.filter(item => item.field === field)).map(item => (item[0] || []).label);
+  return labels;
+};
 
 const FilterMultiselect = props => {
-  const { filter, filterReducer, classes, handleUpdateInput, history, location, filtersObjectPath } = props
+  console.log('render')
+  const { filter, filterReducer, classes, handleUpdateInput, history, location, filtersObjectPath } = props;
   const { label, field, items } = filter;
   const filterValues = filterReducer[filtersObjectPath].filterValues;
 
@@ -67,9 +69,9 @@ const FilterMultiselect = props => {
             multiple
             renderValue={selected => (
               <div className={classes.chips}>
-                {selected.map(value => (
+                {selected.map(value => 
                   <Chip key={value} label={value} className={classes.chip} />
-                ))}
+                )}
               </div>
             )}
             fullWidth
@@ -78,8 +80,11 @@ const FilterMultiselect = props => {
             value={filterValue}
             onChange={handleUpdateInput(field, history, location, filtersObjectPath, items)}
           >
-            {items.map((item, index) =>
+            {items.map((item, index) => 
               <MenuItem key={index} value={item.label}>
+                <Checkbox
+                  checked={filterValue.indexOf(item.label) >= 0}
+                />
                 {item.label}
               </MenuItem>
             )}
@@ -96,7 +101,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleUpdateInput: (field, history, location, filtersObjectPath, items) => event => {
-    const value = mapLabelsToFields(event.target.value, items)
+    const value = mapLabelsToFields(event.target.value, items);
     dispatch(updateInput(field, value, history, location, filtersObjectPath));
   },
 });

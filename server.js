@@ -9,7 +9,7 @@ import { values } from 'lodash';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
 import { SheetsRegistry } from 'jss';
-import JssProvider from 'react-jss/lib/JssProvider'
+import JssProvider from 'react-jss/lib/JssProvider';
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -20,7 +20,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfigDev from './webpack.config.dev';
-import routes from './server/routes';
+// import routes from './server/routes';
 import App from './client/App';
 import createPreloadedStore, { createPreloadedState } from './client/root/store';
 
@@ -88,6 +88,17 @@ app.use(morgan('combined'));
 app.use(express.static('dist'));
 
 // app.use('/', routes);
+
+app.get('/api', (req, res) => {
+  console.log('>> api get');
+  setTimeout(() => {
+    res.send('{"test api": "get"}');
+  }, 1000)
+});
+app.post('/api', (req, res) => {
+  console.log('>> api post');
+  res.send('{"test api": "post"}');
+});
 
 app.get('/*', (req, res) => {
   const location = {

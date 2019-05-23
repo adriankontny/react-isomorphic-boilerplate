@@ -51,8 +51,8 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, loc
     ...newState.location.search
   };
 
-  search = qs.stringify({ ...search }, { encode: true });
-  history.replace({ search });
+  let searchString = qs.stringify({ ...search }, { encode: true });
+  history.replace({ search: searchString });
 
   return newState;
 };

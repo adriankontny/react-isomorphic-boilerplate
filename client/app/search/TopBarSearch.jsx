@@ -82,7 +82,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleUpdateSearch: (history, location, filtersObjectPath) => (event) => {
     dispatch(updateSearch(event.target.value, history, location, filtersObjectPath))
-    dispatch({ type: 'PING' });
   },
 });
 

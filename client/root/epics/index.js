@@ -1,8 +1,8 @@
 import { combineEpics } from 'redux-observable';
-import homeEpics from './home-epics';
+import searchEpics from './search-epics';
 
 const rootEpic = combineEpics(
-  homeEpics,
+  searchEpics,
 );
 
 export default rootEpic;
