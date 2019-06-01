@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import TopBarSearch from './TopBarSearch'
 import { toggleSidebarLeft } from '../../root/actions/search-actions'
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const styles = theme => ({
   appBar: {

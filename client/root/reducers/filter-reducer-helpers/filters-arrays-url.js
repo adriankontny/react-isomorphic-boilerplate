@@ -23,9 +23,7 @@ const filtersArraysFromUrl = (state, search) => {
     .map(item => {
       return {
         field: item[0],
-        value: (item[1].split(',').length === 1
-          ? item[1]
-          : item[1].split(','))
+        value: item[1].split(',')
       };
     }) || [];
   const categoriesArray = _categoriesArrayFromUrl(state.filterObject, path);
