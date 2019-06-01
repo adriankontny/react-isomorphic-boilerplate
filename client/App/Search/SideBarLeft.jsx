@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import { toggleSidebarLeft } from '../../root/actions/search-actions';
 
-import Filters from './Filters.jsx';
+import Filters from './Filters';
 
 const drawerWidth = 280;
 

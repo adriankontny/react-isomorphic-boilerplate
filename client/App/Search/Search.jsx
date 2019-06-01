@@ -5,9 +5,7 @@ import {
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SideBarLeft from './search/SideBarLeft.jsx'
-import TopBar from './search/TopBar.jsx'
-import Filters from './search/Filters.jsx'
+import { SideBarLeft, TopBar, Filters } from './index'
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,

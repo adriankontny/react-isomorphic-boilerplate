@@ -7,8 +7,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
-import Category from './filters/Category.jsx'
-import Filter from './filters/Filter.jsx'
+import { Category, Filter } from './index'
 
 const styles = theme => ({
   margin: {

@@ -1,6 +1,5 @@
 import React from 'react';
-import FilterRange from './filter/FilterRange'
-import FilterMultiselect from './filter/FilterMultiselect'
+import { FilterRange, FilterMultiselect } from './index';
 
 const Filter = props => {
   const { filter, filtersObjectPath } = props

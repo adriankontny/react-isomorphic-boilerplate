@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
-import { Home, Search, Contact, NotFound } from './app';
-import { initializeFilters } from './root/actions/filter-actions';
+import { Home, Search, Contact, NotFound } from './index';
+import { initializeFilters } from '../root/actions/filter-actions';
 
 const RouteWithStatus = (props) => {
   const { children, component, statusCode } = props;
