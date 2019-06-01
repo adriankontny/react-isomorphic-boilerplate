@@ -2,12 +2,12 @@ import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { hydrate } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import JssProvider from 'react-jss/lib/JssProvider';
 import {
-  MuiThemeProvider,
   createMuiTheme,
-  createGenerateClassName,
 } from '@material-ui/core/styles';
+import {
+  ThemeProvider,
+} from '@material-ui/styles';
 import { blue, red } from '@material-ui/core/colors';
 import App from './client/App';
 import createPreloadedStore from './client/root/store';
@@ -17,6 +17,7 @@ if (preloadedState.length > 0) {
   preloadedState = JSON.parse(preloadedState);
 }
 
+const store = createPreloadedStore(preloadedState);
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -27,20 +28,16 @@ const theme = createMuiTheme({
     type: 'light',
   },
 });
-const generateClassName = createGenerateClassName();
-const store = createPreloadedStore(preloadedState);
 
 const renderApp = () => {
   hydrate(
-    <JssProvider generateClassName={generateClassName}>
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <ReduxProvider store={store}>
           <Router>
             <App />
           </Router>
         </ReduxProvider>
-      </MuiThemeProvider>
-    </JssProvider>,
+      </ThemeProvider>,
     document.getElementById('root'),
   );
 };
