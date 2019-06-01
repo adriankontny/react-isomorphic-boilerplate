@@ -11,27 +11,11 @@ import {
 } from '@material-ui/core';
 
 const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  menu: {
-    width: 200,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: theme.spacing.unit / 4,
-  },
   marginTop: {
     margin: `${theme.spacing.unit}px 0 0 0`,
   },
   marginBottom: {
     margin: `0 0 ${theme.spacing.unit}px 0`,
-  },
-  marginTopBottom: {
-    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
   },
 });
 

@@ -22,7 +22,7 @@ class Search extends React.Component {
 
   render() {
 
-    const { classes, filterObject, filterValues } = this.props;
+    const { classes } = this.props;
     
     return (
       <div className={classes.root}>

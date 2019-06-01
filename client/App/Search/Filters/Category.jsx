@@ -7,16 +7,9 @@ import { selectCategory } from '../../../root/actions/filter-actions';
 import {
   TextField,
   MenuItem,
-  ExpansionPanel
 } from '@material-ui/core';
 
 const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  menu: {
-    width: 200,
-  },
   marginTopBottom: {
     margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
   },

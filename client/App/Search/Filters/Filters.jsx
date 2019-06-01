@@ -1,7 +1,4 @@
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Divider,
-} from '@material-ui/core';
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -10,12 +7,6 @@ import { find } from 'lodash';
 import { Category, Filter } from './index'
 
 const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  menu: {
-    width: 200,
-  }
 });
 
 const Filters = props => {
