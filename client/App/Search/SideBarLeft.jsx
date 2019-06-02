@@ -1,10 +1,10 @@
-import { withStyles } from '@material-ui/core/styles';
-import {
-  Divider,
-  Drawer,
-  SwipeableDrawer,
-  Hidden,
-} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Hidden from '@material-ui/core/Hidden';
+
 import React from 'react';
 import { connect } from 'react-redux';
 

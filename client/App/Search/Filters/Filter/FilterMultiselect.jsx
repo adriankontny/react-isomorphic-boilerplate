@@ -1,17 +1,17 @@
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateInput } from '../../../../root/actions/filter-actions';
 
-import {
-  MenuItem,
-  Select,
-  Chip,
-  FormControl,
-  InputLabel,
-  Checkbox
-} from '@material-ui/core';
 
 const styles = theme => ({
   chips: {

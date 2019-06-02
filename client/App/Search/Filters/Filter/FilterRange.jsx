@@ -1,14 +1,13 @@
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateInput } from '../../../../root/actions/filter-actions';
-
-import {
-  TextField,
-  Grid,
-  Typography
-} from '@material-ui/core';
 
 const styles = theme => ({
   marginTop: {

@@ -1,11 +1,11 @@
-import { withStyles } from '@material-ui/core/styles';
-import {
-  CssBaseline,
-} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { SideBarLeft, TopBar, Filters } from './index'
+import { SideBarLeft, TopBar, Filters, Content } from './index'
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -31,10 +31,7 @@ class Search extends React.Component {
         <SideBarLeft />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Filters 
-            filtersObjectPath={'upload'}
-          >
-          </Filters>
+          <Content />
         </main>
       </div>
     );
@@ -56,7 +53,12 @@ export default withStyles(styles, { withTheme: true })(connect(
 )(Search));
 
 /*
-import Content from './Content.jsx'
+
+          <Filters 
+            filtersObjectPath={'upload'}
+          >
+          </Filters>
+
 import Filters1 from './Filters1.jsx'
 import Filters2 from './Filters2.jsx'
 import Filter1 from './Filter1.jsx'

@@ -1,5 +1,6 @@
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
+
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { find } from 'lodash';

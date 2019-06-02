@@ -1,13 +1,13 @@
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../../root/actions/filter-actions';
 
-import {
-  TextField,
-  MenuItem,
-} from '@material-ui/core';
 
 const styles = theme => ({
   marginTopBottom: {

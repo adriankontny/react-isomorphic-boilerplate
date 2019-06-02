@@ -5,9 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   createMuiTheme,
 } from '@material-ui/core/styles';
-import {
-  ThemeProvider,
-} from '@material-ui/styles';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { blue, red } from '@material-ui/core/colors';
 import App from './client/App';
 import createPreloadedStore from './client/root/store';
