@@ -1,15 +1,15 @@
 import { produce } from 'immer';
 import { get, set } from 'lodash';
 
-const updateInput = (state, field, value, filtersObjectPath) => {
-  const filterValues = produce(state[filtersObjectPath].filterValues, draftState => {
+const updateInput = (state, field, value, filterOrigin) => {
+  const filterValues = produce(state[filterOrigin].filterValues, draftState => {
     if (value.length === 0) {
       delete draftState[field];
     } else {
       draftState[field] = value;
     }
   });
-  return { ...state, [filtersObjectPath]: { ...state[filtersObjectPath], filterValues} };
+  return { ...state, [filterOrigin]: { ...state[filterOrigin], filterValues} };
 }
 
 export default updateInput

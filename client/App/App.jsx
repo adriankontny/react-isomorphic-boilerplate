@@ -55,13 +55,14 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  state
+});
+
 const mapDispatchToProps = dispatch => ({
   handleInitializeFilters: ( history, location ) => {
     dispatch(initializeFilters( history, location ));
   },
-});
-
-const mapStateToProps = () => ({
 });
 
 export default withRouter(connect(

@@ -23,29 +23,29 @@ import { get, keys, some, toPairs } from 'lodash';
 
 
 const updateUrl = (state, history, location) => {
-  const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state['feed']);
-  const feedState = filtersArraysToUrl(state['feed'], [categoriesArray, filtersArray], history, location);
-  return { ...state, feed: feedState };
+  const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state['searchFilter']);
+  const searchFilterState = filtersArraysToUrl(state['searchFilter'], [categoriesArray, filtersArray], history, location);
+  return { ...state, searchFilter: searchFilterState };
 };
 
-const filtersObjectPaths = ['feed', 'upload'];
+const filterOrigins = ['searchFilter', 'uploadFilter'];
 
-export const createFilterReducerPreloadedState = (location) => {
+export const createFilterReducerPreloadedState = (location, response) => {
   const state = {
-    feed: {
+    searchFilter: {
       filterObject: filterBlueprint,
       location: {},
       filterValues: {},
     },
-    upload: {
+    uploadFilter: {
       filterObject: filterBlueprint,
       location: {},
       filterValues: {},
     },
   };
-  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['feed'], location.search);
-  const feedState = filtersArraysToReduxState(state['feed'], [categoriesArray, filtersArray]);
-  return { ...state, feed: feedState };
+  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['searchFilter'], location.search);
+  const searchFilterState = filtersArraysToReduxState(state['searchFilter'], [categoriesArray, filtersArray]);
+  return { ...state, searchFilter: searchFilterState };
 };
 
 export function filterReducer(
@@ -65,12 +65,12 @@ export function filterReducer(
       return state;
     case SELECT_CATEGORY:
       newState = state;
-      newState = selectCategory(newState, payload.field, payload.value, payload.filtersObjectPath);
+      newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     case UPDATE_INPUT:
       newState = state;
-      newState = updateInput(newState, payload.field, payload.value, payload.filtersObjectPath);
+      newState = updateInput(newState, payload.field, payload.value, payload.filterOrigin);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
     default:

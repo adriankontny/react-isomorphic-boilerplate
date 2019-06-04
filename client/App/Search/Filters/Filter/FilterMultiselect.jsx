@@ -41,9 +41,9 @@ const mapFieldsToLabels = (fields = [], items = []) => {
 
 const FilterMultiselect = props => {
   console.log('render')
-  const { filter, filterReducer, classes, handleUpdateInput, history, location, filtersObjectPath } = props;
+  const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
-  const filterValues = filterReducer[filtersObjectPath].filterValues;
+  const filterValues = filterReducer[filterOrigin].filterValues;
 
   const filterValue = mapFieldsToLabels(filterValues[field] || [], items);
   return (
@@ -66,7 +66,7 @@ const FilterMultiselect = props => {
             //variant="outlined"
             label={label}
             value={filterValue}
-            onChange={handleUpdateInput(field, history, location, filtersObjectPath, items)}
+            onChange={handleUpdateInput(field, history, location, filterOrigin, items)}
           >
             {items.map((item, index) => 
               <MenuItem key={index} value={item.label}>
@@ -88,9 +88,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, history, location, filtersObjectPath, items) => event => {
+  handleUpdateInput: (field, history, location, filterOrigin, items) => event => {
     const value = mapLabelsToFields(event.target.value, items);
-    dispatch(updateInput(field, value, history, location, filtersObjectPath));
+    dispatch(updateInput(field, value, history, location, filterOrigin));
   },
 });
 

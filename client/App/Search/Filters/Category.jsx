@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { category, classes, handleSelectCategory, history, location, filtersObjectPath } = props;
+  const { category, classes, handleSelectCategory, history, location, filterOrigin } = props;
   const { label, path, categories, select, field } = category;
 
   return (
@@ -31,7 +31,7 @@ const Category = props => {
           //variant="outlined"
           label={`Category${field ? ` in ${label}`: ''}`}
           value={select}
-          onChange={handleSelectCategory(field, history, location, filtersObjectPath)}
+          onChange={handleSelectCategory(field, history, location, filterOrigin)}
         >
           {[<MenuItem key={'empty'} value="">
               <em>None</em>
@@ -48,8 +48,8 @@ const Category = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSelectCategory: (field, history, location, filtersObjectPath) => event => {
-    dispatch(selectCategory(field, event.target.value, history, location, filtersObjectPath));
+  handleSelectCategory: (field, history, location, filterOrigin) => event => {
+    dispatch(selectCategory(field, event.target.value, history, location, filterOrigin));
   }
 });
 

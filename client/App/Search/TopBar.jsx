@@ -47,7 +47,7 @@ class Search extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <TopBarSearch filtersObjectPath={"feed"}/>
+          <TopBarSearch filterOrigin={"searchFilter"}/>
         </Toolbar>
       </AppBar>
     );

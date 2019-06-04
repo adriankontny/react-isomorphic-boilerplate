@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import homeReducer from './home-reducer';
-import searchReducer from './search-reducer';
+import { searchReducer, createSearchReducerPreloadedState } from './search-reducer';
 import { filterReducer, createFilterReducerPreloadedState } from './filter-reducer';
 
 export default combineReducers({
@@ -9,6 +9,7 @@ export default combineReducers({
   filterReducer,
 });
 
-export const createPreloadedState = location => ({
-  filterReducer: createFilterReducerPreloadedState(location),
+export const createPreloadedState = (location, response) => ({
+  searchReducer: createSearchReducerPreloadedState(location, response),
+  filterReducer: createFilterReducerPreloadedState(location, response),
 });

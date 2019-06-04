@@ -17,7 +17,15 @@ const updateUrl = (state, history, location) => {
   return state;
 }
 
-export default function searchReducer(
+export const createSearchReducerPreloadedState = (location, response) => {
+  return {
+    page: 0,
+    total: response.results.length,
+    results: response.results
+  };
+};
+
+export function searchReducer(
   state = {
     search: '',
     sidebarLeftIsVisible: false
@@ -32,5 +40,5 @@ export default function searchReducer(
       return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
     default:
       return { ...state };
-  }
+  };
 };

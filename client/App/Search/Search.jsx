@@ -3,7 +3,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { loadMore } from '../../root/actions/search-actions'
+import { Waypoint } from 'react-waypoint';
 
 import { SideBarLeft, TopBar, Filters, Content } from './index'
 
@@ -22,7 +25,7 @@ class Search extends React.Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, handleLoadMore, history, location } = this.props;
     
     return (
       <div className={classes.root}>
@@ -32,6 +35,11 @@ class Search extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Content />
+          <Waypoint
+            onEnter={handleLoadMore(history, location, 'searchFilter')}
+            bottomOffset={"-10%"}
+          >
+          </Waypoint>
         </main>
       </div>
     );
@@ -44,18 +52,20 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  handleLoadMore: (history, location, filterOrigin) => (event) => {
+    dispatch(loadMore(event, history, location, filterOrigin))
+  },
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default withRouter(withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Search));
+)(Search)));
 
 /*
 
           <Filters 
-            filtersObjectPath={'upload'}
+            filterOrigin={'uploadFilter'}
           >
           </Filters>
 

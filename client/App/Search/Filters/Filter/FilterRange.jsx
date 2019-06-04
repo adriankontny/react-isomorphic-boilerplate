@@ -19,12 +19,12 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterReducer, classes, handleUpdateInput, history, location, filtersObjectPath } = props
+  const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props
   const { label, field } = filter;
-  const filterValues = filterReducer[filtersObjectPath].filterValues;
+  const filterValues = filterReducer[filterOrigin].filterValues;
 
-  switch (filtersObjectPath) {
-    case 'upload':
+  switch (filterOrigin) {
+    case 'uploadFilter':
       return (
         <TextField
           fullWidth
@@ -33,7 +33,7 @@ const FilterRange = props => {
           className={classes.marginBottom}
           label={label}
           value={filterValues[field] || ''}
-          onChange={handleUpdateInput(field, history, location, filtersObjectPath)}
+          onChange={handleUpdateInput(field, history, location, filterOrigin)}
         />
       )
 
@@ -58,7 +58,7 @@ const FilterRange = props => {
                 //variant="outlined"
                 label={'from'}
                 value={filterValues[`${field}:from`] || ''}
-                onChange={handleUpdateInput(`${field}:from`, history, location, filtersObjectPath)}
+                onChange={handleUpdateInput(`${field}:from`, history, location, filterOrigin)}
               />
             </Grid>
             <Grid xs={5} key={'to'} item>
@@ -68,7 +68,7 @@ const FilterRange = props => {
                 //variant="outlined"
                 label={'to'}
                 value={filterValues[`${field}:to`] || ''}
-                onChange={handleUpdateInput(`${field}:to`, history, location, filtersObjectPath)}
+                onChange={handleUpdateInput(`${field}:to`, history, location, filterOrigin)}
               />
             </Grid>
           </Grid>
@@ -82,8 +82,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, history, location, filtersObjectPath) => event => {
-    dispatch(updateInput(field, event.target.value, history, location, filtersObjectPath));
+  handleUpdateInput: (field, history, location, filterOrigin) => event => {
+    dispatch(updateInput(field, event.target.value, history, location, filterOrigin));
   },
 });
 

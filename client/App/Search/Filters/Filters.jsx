@@ -11,7 +11,7 @@ const styles = theme => ({
 });
 
 const Filters = props => {
-  const category = props.category ? props.category : props.filterReducer[props.filtersObjectPath].filterObject;
+  const category = props.category ? props.category : props.filterReducer[props.filterOrigin].filterObject;
   const { classes } = props;
   const { categories, select, filters } = category;
 

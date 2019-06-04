@@ -1,12 +1,12 @@
 import {
-  UPDATE_SEARCH
+  UPDATE_SEARCH, LOAD_MORE
 } from '../actions/search-actions'
 import {
   SELECT_CATEGORY, UPDATE_INPUT
 } from '../actions/filter-actions'
 import axios from 'axios';
 
-import { ofType } from 'redux-observable';
+import { combineEpics, ofType } from 'redux-observable';
 import {
   filter, map, switchMap, debounceTime, distinctUntilChanged, tap, takeUntil
 } from 'rxjs/operators';
@@ -21,11 +21,11 @@ const axiosGet = (action$, url, options = {}) => {
       tap(source.cancel)
     ))
   )
-}
+};
 
-const search = action$ => action$.pipe(
+const updateSearch = action$ => action$.pipe(
   ofType(UPDATE_SEARCH, SELECT_CATEGORY, UPDATE_INPUT),
-  filter( action => action.payload.filtersObjectPath === 'feed'),
+  filter(action => action.payload.filterOrigin === 'searchFilter'),
   map(action => action.payload.location.search),
   debounceTime(100),
   distinctUntilChanged(),
@@ -34,4 +34,15 @@ const search = action$ => action$.pipe(
   tap(console.log),
 );
 
-export default search;
+const loadMore = action$ => action$.pipe(
+  ofType(LOAD_MORE),
+  filter(action => action.payload.filterOrigin === 'searchFilter'),
+  map(action => action.payload),
+  tap(console.log),
+
+);
+
+export default combineEpics(
+  updateSearch,
+  loadMore
+);

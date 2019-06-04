@@ -11,28 +11,6 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import React from 'react';
 import { connect } from 'react-redux';
 
-const image = './audi.jpg';
-const tileData = [
-  {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: true,
-  },
-  {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: false,
-  },
-  {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: false,
-  },
-];
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -58,11 +36,12 @@ const styles = theme => ({
 });
 
 const Content = props => {
-  const { classes } = props;
+  const { classes, searchReducer } = props;
+  const { results } = searchReducer;
   return (
     <div className={classes.root}>
-      <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {tileData.map((tile, i) => (
+      <GridList cellHeight={200} spacing={1}>
+        {results.map((tile, i) => (
           <GridListTile key={tile.img + i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
@@ -84,7 +63,7 @@ const Content = props => {
 }
 
 const mapStateToProps = state => ({
-  state,
+  searchReducer: state.searchReducer,
 });
 
 const mapDispatchToProps = dispatch => ({

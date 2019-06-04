@@ -100,10 +100,47 @@ app.post('/api', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
+  const image = './audi.jpg';
+  const result = {
+    img: image,
+    title: 'Image',
+    author: 'author',
+    featured: false,
+  };
+  const resultFeatured = {
+    img: image,
+    title: 'Image',
+    author: 'author',
+    featured: true,
+  };
+  const response = {
+    results: [
+      result,
+      result,
+      result,
+      result,
+      resultFeatured,
+      result,
+      result,
+      result,
+      result,
+      resultFeatured,
+      result,
+      result,
+      resultFeatured,
+      result,
+      result,
+      resultFeatured,
+      result,
+      result,
+      result,
+      result,
+    ]
+  };
   const location = {
     search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
   };
-  res.react(createPreloadedState(location));
+  res.react(createPreloadedState(location, response));
 });
 
 app.set('port', process.env.PORT || 8000);
