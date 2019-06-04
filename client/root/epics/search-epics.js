@@ -37,7 +37,11 @@ const updateSearch = action$ => action$.pipe(
 const loadMore = action$ => action$.pipe(
   ofType(LOAD_MORE),
   filter(action => action.payload.filterOrigin === 'searchFilter'),
-  map(action => action.payload),
+  map(action => action.payload.location.search),
+  debounceTime(100),
+  distinctUntilChanged(),
+  switchMap(search => axiosGet(action$, '/api')),
+  map(response => ({ type: 'PONG', payload: response.data.payload })),
   tap(console.log),
 
 );
