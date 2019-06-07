@@ -9,7 +9,12 @@ import IconButton from '@material-ui/core/IconButton';
 import StarBorder from '@material-ui/icons/StarBorder';
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { loadMore } from '../../root/actions/search-actions'
+
+import { Waypoint } from 'react-waypoint';
 
 const styles = theme => ({
   root: {
@@ -36,13 +41,14 @@ const styles = theme => ({
 });
 
 const Content = props => {
-  const { classes, searchReducer } = props;
+  const { classes, searchReducer, handleLoadMore, history, location } = props;
   const { results } = searchReducer;
+  console.log('content')
   return (
     <div className={classes.root}>
       <GridList cellHeight={200} spacing={1}>
         {results.map((tile, i) => (
-          <GridListTile key={tile.img + i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
+          <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
               title={tile.title}
@@ -58,19 +64,28 @@ const Content = props => {
           </GridListTile>
         ))}
       </GridList>
+      <Waypoint
+        onEnter={handleLoadMore(history, location, 'searchFilter')}
+        bottomOffset={`-${300*(results.length/20)}`}
+      >
+      </Waypoint>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
   searchReducer: state.searchReducer,
+  filterObject: state.filterReducer.filterObject,
+  filterValues: state.filterReducer.filterValues,
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch,
+  handleLoadMore: (history, location, filterOrigin) => (event) => {
+    dispatch(loadMore(event, history, location, filterOrigin))
+  },
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default withRouter(withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Content));
+)(Content)));

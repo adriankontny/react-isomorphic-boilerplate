@@ -1,5 +1,8 @@
 import {
   UPDATE_SEARCH,
+  UPDATE_SEARCH_SIDE_EFFECTS,
+  LOAD_MORE,
+  LOAD_MORE_SIDE_EFFECTS,
   TOGGLE_SIDEBAR_LEFT
 } from '../actions/search-actions'
 import qs from 'qs';
@@ -18,10 +21,10 @@ const updateUrl = (state, history, location) => {
 }
 
 export const createSearchReducerPreloadedState = (location, response) => {
+  const { results } = response;
   return {
-    page: 0,
-    total: response.results.length,
-    results: response.results
+    total: results.length,
+    results: results
   };
 };
 
@@ -31,13 +34,36 @@ export function searchReducer(
     sidebarLeftIsVisible: false
   },
   { type, payload }) { // action: { type, payload }
-  let newState;
+  let newState, results;
   switch (type) {
+
     case UPDATE_SEARCH:
       newState = updateUrl( { ...state, search: payload.value }, payload.history, payload.location );
-      return newState
+      return newState;
+
+    case UPDATE_SEARCH_SIDE_EFFECTS:
+      results = payload.results;
+      newState = {
+        ...state,
+        page: 0,
+        total: results.length,
+        results: results
+      }
+      return newState;
+
+    case LOAD_MORE_SIDE_EFFECTS:
+      results = payload.results;
+      newState = {
+        ...state,
+        page: state.page + 1,
+        total: state.results.length + results.length,
+        results: [...state.results, ...results]
+      }
+      return newState;
+
     case TOGGLE_SIDEBAR_LEFT:
       return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
+
     default:
       return { ...state };
   };

@@ -88,59 +88,83 @@ app.use(express.static('dist'));
 
 // app.use('/', routes);
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+
+    // temporaryValue.img = './audi1.jpg'
+
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+const image = './audi.jpg';
+const result = {
+  img: image,
+  title: 'Image',
+  author: 'author',
+  featured: false,
+};
+const resultFeatured = {
+  img: image,
+  title: 'Image',
+  author: 'author',
+  featured: true,
+};
+const data = {
+  results: [
+    result,
+    result,
+    result,
+    result,
+    resultFeatured,
+    result,
+    result,
+    result,
+    result,
+    resultFeatured,
+    result,
+    result,
+    resultFeatured,
+    result,
+    result,
+    resultFeatured,
+    result,
+    result,
+    result,
+    result,
+  ]
+};
+
 app.get('/api', (req, res) => {
   console.log('>> api get');
   setTimeout(() => {
-    res.send('{"test api": "get"}');
-  }, 1000)
+    res.send(JSON.stringify({ results: shuffle(data.results) }));
+  }, 200)
 });
+
 app.post('/api', (req, res) => {
   console.log('>> api post');
   res.send('{"test api": "post"}');
 });
 
 app.get('/*', (req, res) => {
-  const image = './audi.jpg';
-  const result = {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: false,
-  };
-  const resultFeatured = {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: true,
-  };
-  const response = {
-    results: [
-      result,
-      result,
-      result,
-      result,
-      resultFeatured,
-      result,
-      result,
-      result,
-      result,
-      resultFeatured,
-      result,
-      result,
-      resultFeatured,
-      result,
-      result,
-      resultFeatured,
-      result,
-      result,
-      result,
-      result,
-    ]
-  };
   const location = {
     search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
   };
-  res.react(createPreloadedState(location, response));
+  res.react(createPreloadedState(location, data));
 });
 
 app.set('port', process.env.PORT || 8000);

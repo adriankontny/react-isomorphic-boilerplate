@@ -5,8 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { loadMore } from '../../root/actions/search-actions'
-import { Waypoint } from 'react-waypoint';
 
 import { SideBarLeft, TopBar, Filters, Content } from './index'
 
@@ -35,11 +35,6 @@ class Search extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Content />
-          <Waypoint
-            onEnter={handleLoadMore(history, location, 'searchFilter')}
-            bottomOffset={"-10%"}
-          >
-          </Waypoint>
         </main>
       </div>
     );

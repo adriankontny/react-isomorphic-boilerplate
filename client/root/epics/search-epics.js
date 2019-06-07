@@ -1,5 +1,8 @@
 import {
-  UPDATE_SEARCH, LOAD_MORE
+  UPDATE_SEARCH,
+  UPDATE_SEARCH_SIDE_EFFECTS,
+  LOAD_MORE,
+  LOAD_MORE_SIDE_EFFECTS
 } from '../actions/search-actions'
 import {
   SELECT_CATEGORY, UPDATE_INPUT
@@ -30,20 +33,15 @@ const updateSearch = action$ => action$.pipe(
   debounceTime(100),
   distinctUntilChanged(),
   switchMap(search => axiosGet(action$, '/api')),
-  map(response => ({ type: 'PONG', payload: response.data.payload })),
-  tap(console.log),
+  map(response => ({ type: UPDATE_SEARCH_SIDE_EFFECTS, payload: { ...response.data } })),
 );
 
 const loadMore = action$ => action$.pipe(
   ofType(LOAD_MORE),
   filter(action => action.payload.filterOrigin === 'searchFilter'),
   map(action => action.payload.location.search),
-  debounceTime(100),
-  distinctUntilChanged(),
   switchMap(search => axiosGet(action$, '/api')),
-  map(response => ({ type: 'PONG', payload: response.data.payload })),
-  tap(console.log),
-
+  map(response => ({ type: LOAD_MORE_SIDE_EFFECTS, payload: { ...response.data } })),
 );
 
 export default combineEpics(

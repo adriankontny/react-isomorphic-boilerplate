@@ -39,7 +39,7 @@ const mapFieldsToLabels = (fields = [], items = []) => {
   return labels;
 };
 
-const FilterMultiselect = props => {  
+const FilterMultiselect = props => {
   const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
   const filterValues = filterReducer[filterOrigin].filterValues;
