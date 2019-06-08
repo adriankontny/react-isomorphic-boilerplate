@@ -35,12 +35,14 @@ export const createFilterReducerPreloadedState = (location, response) => {
     searchFilter: {
       filterObject: filterBlueprint,
       location: {},
-      filtersArray: {},
+      filterValues: {},
+      categoriesArray: [],
     },
     uploadFilter: {
       filterObject: filterBlueprint,
       location: {},
-      filtersArray: {},
+      filterValues: {},
+      categoriesArray: [],
     },
   };
   const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['searchFilter'], location.search);
@@ -49,20 +51,18 @@ export const createFilterReducerPreloadedState = (location, response) => {
 };
 
 export function filterReducer(
-  state = {},
+  state,
   { type, payload },
-) { // action: { type, payload }
+) {
   let newState;
   switch (type) {
     case 'PING':
       return state;
 
     case INITIALIZE_FILTERS:
-      // todo: check cache, etc
-      if (process.env.NODE_ENV !== 'production' && module.hot) {
-        return createFilterReducerPreloadedState(payload.location);
-      }
-      return state;
+      newState = state;
+      newState = updateUrl(newState, payload.history, payload.location);
+      return newState;
 
     case SELECT_CATEGORY:
       newState = state;

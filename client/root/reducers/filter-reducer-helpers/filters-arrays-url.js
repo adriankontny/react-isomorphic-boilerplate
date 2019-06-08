@@ -36,7 +36,6 @@ const filtersArraysFromUrl = (state, search) => {
 
 const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, location) => {
   const newState = produce(state, draftState => {
-    draftState.categoriesArray = categoriesArray;
     draftState.location.search = {};
     const categoriesLength = categoriesArray.length;
     if (categoriesLength > 0) {

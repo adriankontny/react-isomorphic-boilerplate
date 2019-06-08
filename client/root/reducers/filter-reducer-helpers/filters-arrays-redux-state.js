@@ -21,8 +21,8 @@ const filtersArraysFromReduxState = (draftState) => {
   const terminalCategory = categoriesArray[categoriesArray.length - 1] || {};
   const draftItem = getItem(draftState.filterObject, filterBlueprintPaths[terminalCategory.field]);
 
-  const filtersArray = keys(draftState.filtersArray)
-    .map(filter => { return { field: filter, value: draftState.filtersArray[filter] } })
+  const filtersArray = keys(draftState.filterValues)
+    .map(filter => { return { field: filter, value: draftState.filterValues[filter] } })
     .filter(filter => filter.value)
     .filter(filter => some(draftItem.filters, ['field', filter.field.split(':')[0]]))
   return [categoriesArray, filtersArray];
@@ -44,9 +44,9 @@ const filtersArraysToReduxState = (state, [categoriesArray, filtersArray]) => {
     draftState.categoriesArray = categoriesArray;
     _categoriesArrayToReduxState(draftState, categoriesArray);
     filtersArray.forEach(filter => {
-      draftState.filtersArray[filter.field] = filter.value;
+      draftState.filterValues[filter.field] = filter.value;
     });
-    delete draftState.filtersArray.q
+    delete draftState.filterValues.q
   });
   return newState;
 }

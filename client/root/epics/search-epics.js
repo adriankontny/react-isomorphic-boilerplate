@@ -32,7 +32,7 @@ const updateSearch = (action$, state$) => action$.pipe(
   filter(action => action.payload.filterOrigin === 'searchFilter'),
   map(() => {
     const search = {
-      ...state$.value.filterReducer.searchFilter.filtersArray,
+      ...state$.value.filterReducer.searchFilter.filterValues,
       q: state$.value.searchReducer.search || undefined
     };
     return qs.stringify({ ...search }, { encode: true });

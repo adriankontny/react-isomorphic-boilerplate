@@ -80,7 +80,7 @@ const Content = props => {
 const mapStateToProps = state => ({
   searchReducer: state.searchReducer,
   filterObject: state.filterReducer.filterObject,
-  filtersArray: state.filterReducer.filtersArray,
+  filterValues: state.filterReducer.filterValues,
 });
 
 const mapDispatchToProps = dispatch => ({

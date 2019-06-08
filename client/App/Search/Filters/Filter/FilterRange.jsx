@@ -21,7 +21,7 @@ const styles = theme => ({
 const FilterRange = props => {
   const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props
   const { label, field } = filter;
-  const filtersArray = filterReducer[filterOrigin].filtersArray;
+  const filterValues = filterReducer[filterOrigin].filterValues;
 
   switch (filterOrigin) {
     case 'uploadFilter':
@@ -32,7 +32,7 @@ const FilterRange = props => {
           //variant="outlined"
           className={classes.marginBottom}
           label={label}
-          value={filtersArray[field] || ''}
+          value={filterValues[field] || ''}
           onChange={handleUpdateInput(field, history, location, filterOrigin)}
         />
       )
@@ -57,7 +57,7 @@ const FilterRange = props => {
                 className={classes.marginBottom}
                 //variant="outlined"
                 label={'from'}
-                value={filtersArray[`${field}:from`] || ''}
+                value={filterValues[`${field}:from`] || ''}
                 onChange={handleUpdateInput(`${field}:from`, history, location, filterOrigin)}
               />
             </Grid>
@@ -67,7 +67,7 @@ const FilterRange = props => {
                 className={classes.marginBottom}
                 //variant="outlined"
                 label={'to'}
-                value={filtersArray[`${field}:to`] || ''}
+                value={filterValues[`${field}:to`] || ''}
                 onChange={handleUpdateInput(`${field}:to`, history, location, filterOrigin)}
               />
             </Grid>
