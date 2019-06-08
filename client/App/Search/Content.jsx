@@ -12,7 +12,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loadMore } from '../../root/actions/search-actions'
+import { loadMore, loadMoreDone } from '../../root/actions/search-actions'
 
 import { Waypoint } from 'react-waypoint';
 
@@ -41,17 +41,21 @@ const styles = theme => ({
 });
 
 const Content = props => {
-  const { classes, searchReducer, handleLoadMore, history, location } = props;
+  const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, history, location } = props;
   const { results } = searchReducer;
-  console.log('content')
   return (
     <div className={classes.root}>
+      <Waypoint
+        onEnter={handleLoadMore(history, location, 'searchFilter')}
+        bottomOffset={0}
+      >
+      </Waypoint>
       <GridList cellHeight={200} spacing={1}>
         {results.map((tile, i) => (
           <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
             <GridListTileBar
-              title={tile.title}
+              title={tile.uuid}
               titlePosition="top"
               actionIcon={
                 <IconButton className={classes.icon}>
@@ -66,7 +70,7 @@ const Content = props => {
       </GridList>
       <Waypoint
         onEnter={handleLoadMore(history, location, 'searchFilter')}
-        bottomOffset={`-${300*(results.length/20)}`}
+        bottomOffset={0}
       >
       </Waypoint>
     </div>
@@ -76,12 +80,15 @@ const Content = props => {
 const mapStateToProps = state => ({
   searchReducer: state.searchReducer,
   filterObject: state.filterReducer.filterObject,
-  filterValues: state.filterReducer.filterValues,
+  filtersArray: state.filterReducer.filtersArray,
 });
 
 const mapDispatchToProps = dispatch => ({
   handleLoadMore: (history, location, filterOrigin) => (event) => {
     dispatch(loadMore(event, history, location, filterOrigin))
+  },
+  handleLoadMoreDone: (history, location, filterOrigin) => (event) => {
+    dispatch(loadMoreDone(event, history, location, filterOrigin))
   },
 });
 

@@ -8,7 +8,7 @@ import rootReducer, { createPreloadedState } from './reducers';
 import rootEpic from './epics';
 
 // eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 export { createPreloadedState };
 

@@ -8,6 +8,7 @@ import {
   SELECT_CATEGORY, UPDATE_INPUT
 } from '../actions/filter-actions'
 import axios from 'axios';
+import qs from 'qs';
 
 import { combineEpics, ofType } from 'redux-observable';
 import {
@@ -26,11 +27,17 @@ const axiosGet = (action$, url, options = {}) => {
   )
 };
 
-const updateSearch = action$ => action$.pipe(
+const updateSearch = (action$, state$) => action$.pipe(
   ofType(UPDATE_SEARCH, SELECT_CATEGORY, UPDATE_INPUT),
   filter(action => action.payload.filterOrigin === 'searchFilter'),
-  map(action => action.payload.location.search),
-  debounceTime(100),
+  map(() => {
+    const search = {
+      ...state$.value.filterReducer.searchFilter.filtersArray,
+      q: state$.value.searchReducer.search || undefined
+    };
+    return qs.stringify({ ...search }, { encode: true });
+  }),
+  debounceTime(300),
   distinctUntilChanged(),
   switchMap(search => axiosGet(action$, '/api')),
   map(response => ({ type: UPDATE_SEARCH_SIDE_EFFECTS, payload: { ...response.data } })),

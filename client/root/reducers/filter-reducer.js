@@ -35,12 +35,12 @@ export const createFilterReducerPreloadedState = (location, response) => {
     searchFilter: {
       filterObject: filterBlueprint,
       location: {},
-      filterValues: {},
+      filtersArray: {},
     },
     uploadFilter: {
       filterObject: filterBlueprint,
       location: {},
-      filterValues: {},
+      filtersArray: {},
     },
   };
   const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['searchFilter'], location.search);
@@ -63,6 +63,7 @@ export function filterReducer(
         return createFilterReducerPreloadedState(payload.location);
       }
       return state;
+
     case SELECT_CATEGORY:
       newState = state;
       newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);

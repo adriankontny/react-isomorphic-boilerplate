@@ -43,7 +43,7 @@ class Search extends React.Component {
 
 const mapStateToProps = state => ({
   filterObject: state.filterReducer.filterObject,
-  filterValues: state.filterReducer.filterValues,
+  filtersArray: state.filterReducer.filtersArray,
 });
 
 const mapDispatchToProps = dispatch => ({

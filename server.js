@@ -110,45 +110,37 @@ function shuffle(array) {
   return array;
 }
 
-const image = './audi.jpg';
-const result = {
-  img: image,
-  title: 'Image',
-  author: 'author',
-  featured: false,
-};
-const resultFeatured = {
-  img: image,
-  title: 'Image',
-  author: 'author',
-  featured: true,
-};
-const data = {
-  results: [
-    result,
-    result,
-    result,
-    result,
-    resultFeatured,
-    result,
-    result,
-    result,
-    result,
-    resultFeatured,
-    result,
-    result,
-    resultFeatured,
-    result,
-    result,
-    resultFeatured,
-    result,
-    result,
-    result,
-    result,
-  ]
-};
+const getData = (firstCursor, lastCursor, isReversed) => {
+
+  const page = 4;
+  const image = './audi.jpg';
+  const result = {
+    img: image,
+    title: 'Image',
+    author: 'author',
+    featured: false,
+  };
+  const resultFeatured = {
+    img: image,
+    title: 'Image',
+    author: 'author',
+    featured: true,
+  };
+  const data = {
+    results: []
+  };
+  for (let i = 0; i < 20; i++){
+    data.results.push({
+      ...result,
+      uuid: page*20 + i
+    })
+  }
+
+  return data;
+}
 
 app.get('/api', (req, res) => {
+  const data = getData();
   console.log('>> api get');
   setTimeout(() => {
     res.send(JSON.stringify({ results: shuffle(data.results) }));
@@ -161,6 +153,7 @@ app.post('/api', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
+  const data = getData();
   const location = {
     search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
   };

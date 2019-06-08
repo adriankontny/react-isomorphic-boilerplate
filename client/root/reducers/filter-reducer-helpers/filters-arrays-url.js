@@ -20,6 +20,7 @@ const filtersArraysFromUrl = (state, search) => {
   delete searchObject.c;
 
   const filtersArray = toPairs(searchObject)
+    .filter(item => item[1] || false)
     .map(item => {
       return {
         field: item[0],
@@ -27,20 +28,22 @@ const filtersArraysFromUrl = (state, search) => {
       };
     }) || [];
   const categoriesArray = _categoriesArrayFromUrl(state.filterObject, path);
-
   return [categoriesArray, filtersArray];
 }
 
 
 const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, location) => {
   const newState = produce(state, draftState => {
+    draftState.categoriesArray = categoriesArray;
     draftState.location.search = {};
     const categoriesLength = categoriesArray.length;
     if (categoriesLength > 0) {
       draftState.location.search.c = categoriesArray[categoriesLength - 1].field;
     }
     filtersArray.forEach(item => {
-      draftState.location.search[item.field] = Array.isArray(item.value) ? item.value.join(',') : item.value;
+      draftState.location.search[item.field] = Array.isArray(item.value)
+        ? item.value.join(',')
+        : item.value || undefined;
     });
   });
 
