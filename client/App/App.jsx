@@ -34,8 +34,8 @@ class App extends Component {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
-    const { handleInitializeFilters, history, location } = this.props;
-    handleInitializeFilters( history, location );
+    // const { handleInitializeFilters, history, location } = this.props;
+    // handleInitializeFilters( history, location );
   }
 
   render() {

@@ -27,7 +27,9 @@ const filtersArraysFromUrl = (state, search) => {
         value: item[1].split(',')
       };
     }) || [];
-  const categoriesArray = _categoriesArrayFromUrl(state.filterObject, path);
+  const categoriesArray = path
+    ? _categoriesArrayFromUrl(state.filterObject, path)
+    : [];
   return [categoriesArray, filtersArray];
 }
 
@@ -48,7 +50,7 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, loc
   });
 
   let search = {
-    q: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
+    q: qs.parse(location.search, { ignoreQueryPrefix: true }).q || undefined,
     ...newState.location.search
   };
 
