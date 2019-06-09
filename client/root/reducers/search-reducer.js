@@ -25,7 +25,7 @@ export const createSearchReducerPreloadedState = (location, response) => {
   return {
     total: results.length,
     results: results,
-    searchAfter: '',
+    searchAfter: results[results.length-1].uuid,
     search: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
     isLoaded: true,
     sidebarLeftIsVisible: false
@@ -55,7 +55,6 @@ export function searchReducer(
     case LOAD_MORE:
       newState = {
         ...state,
-        searchAfter: state.results[state.results.length-1].uuid,
         isLoaded: false
       }
       newState = updateUrl( newState, payload.history, payload.location );
@@ -75,6 +74,7 @@ export function searchReducer(
         total: state.results.length + results.length,
         results: [...state.results, ...results]
       }
+      newState.searchAfter = newState.results[newState.results.length-1].uuid;
       return newState;
 
     case TOGGLE_SIDEBAR_LEFT:

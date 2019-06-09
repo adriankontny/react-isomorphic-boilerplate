@@ -48,13 +48,15 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, loc
     });
   });
 
-  let search = {
-    q: qs.parse(location.search, { ignoreQueryPrefix: true }).q || undefined,
+  let originalQueryObject = qs.parse(location.search, { ignoreQueryPrefix: true });
+  let queryObject = {
+    q: originalQueryObject.q || undefined,
+    page: originalQueryObject.page || undefined,
     ...newState.location.search
   };
 
-  let searchString = qs.stringify({ ...search }, { encode: true });
-  history.replace({ search: searchString });
+  let query = qs.stringify({ ...queryObject }, { encode: true });
+  history.replace({ search: query });
 
   return newState;
 };

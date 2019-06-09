@@ -24,6 +24,7 @@ import webpackConfigDev from './webpack.config.dev';
 import App from './client/App';
 import createPreloadedStore, { createPreloadedState } from './client/root/store';
 
+import { get } from 'lodash';
 const app = express();
 const logger = debug('server.js');
 
@@ -88,31 +89,9 @@ app.use(express.static('dist'));
 
 // app.use('/', routes);
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+const getData = (query) => {
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-
-    // temporaryValue.img = './audi1.jpg'
-
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-const getData = (firstCursor, lastCursor, isReversed) => {
-
-  const page = 4;
+  const page = get(query, 'page', 0);
   const image = './audi.jpg';
   const result = {
     img: image,
@@ -132,7 +111,7 @@ const getData = (firstCursor, lastCursor, isReversed) => {
   for (let i = 0; i < 20; i++){
     data.results.push({
       ...result,
-      uuid: page*20 + i
+      uuid: +page + i + 1
     })
   }
 
@@ -140,10 +119,12 @@ const getData = (firstCursor, lastCursor, isReversed) => {
 }
 
 app.get('/api', (req, res) => {
-  const data = getData();
   console.log('>> api get');
+  console.log(req.originalUrl)
+  console.log(req.query)
+  const data = getData(req.query);
   setTimeout(() => {
-    res.send(JSON.stringify({ results: shuffle(data.results) }));
+    res.send(JSON.stringify({ results: data.results }));
   }, 200)
 });
 
@@ -153,7 +134,10 @@ app.post('/api', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  const data = getData();
+  console.log('>> * get');
+  console.log(req.originalUrl)
+  console.log(req.query)
+  const data = getData(req.query);
   const location = {
     search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
   };

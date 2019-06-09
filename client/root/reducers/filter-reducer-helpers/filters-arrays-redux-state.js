@@ -47,6 +47,7 @@ const filtersArraysToReduxState = (state, [categoriesArray, filtersArray]) => {
       draftState.filterValues[filter.field] = filter.value;
     });
     delete draftState.filterValues.q
+    delete draftState.filterValues.page
   });
   return newState;
 }
