@@ -12,9 +12,10 @@ const updateUrl = (state, history, location) => {
 
   let search = qs.parse(location.search, { ignoreQueryPrefix: true })
   search.q = state.search || undefined;
+  search.page = state.searchAfter || undefined;
 
   let searchString = qs.stringify({ ...search }, { encode: true });
-  history.replace({ search: searchString });
+  setImmediate(() => history.replace({ search: searchString }));
 
   return state;
 }
@@ -24,8 +25,7 @@ export const createSearchReducerPreloadedState = (location, response) => {
   return {
     total: results.length,
     results: results,
-    firstCursor: results[0].uuid,
-    lastCursor: results[results.length-1].uuid,
+    searchAfter: '',
     search: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
     isLoaded: true,
     sidebarLeftIsVisible: false
@@ -35,7 +35,7 @@ export const createSearchReducerPreloadedState = (location, response) => {
 export function searchReducer(
   state,
   { type, payload }) { // action: { type, payload }
-  let newState, results, firstCursor, lastCursor;
+  let newState, results;
   switch (type) {
 
     case UPDATE_SEARCH:
@@ -55,8 +55,10 @@ export function searchReducer(
     case LOAD_MORE:
       newState = {
         ...state,
+        searchAfter: state.results[state.results.length-1].uuid,
         isLoaded: false
       }
+      newState = updateUrl( newState, payload.history, payload.location );
       return newState;
 
     case LOAD_MORE_DONE:
