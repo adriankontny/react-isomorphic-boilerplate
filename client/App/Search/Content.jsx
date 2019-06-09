@@ -45,6 +45,12 @@ const Content = props => {
   const { results } = searchReducer;
   return (
     <div className={classes.root}>
+      <Waypoint
+        onEnter={handleLoadMore(history, location, 'searchFilter')}
+        onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        bottomOffset={0}
+      >
+      </Waypoint>
       <GridList cellHeight={200} spacing={1}>
         {results.map((tile, i) => (
           <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
@@ -65,6 +71,7 @@ const Content = props => {
       </GridList>
       <Waypoint
         onEnter={handleLoadMore(history, location, 'searchFilter')}
+        onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         bottomOffset={0}
       >
       </Waypoint>

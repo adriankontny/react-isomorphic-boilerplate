@@ -90,8 +90,7 @@ app.use(express.static('dist'));
 // app.use('/', routes);
 
 const getData = (query) => {
-
-  const page = get(query, 'page', 0);
+  const page = query.page ||  query.since || query.until || 0;
   const image = './audi.jpg';
   const result = {
     img: image,
@@ -108,11 +107,20 @@ const getData = (query) => {
   const data = {
     results: []
   };
-  for (let i = 0; i < 20; i++){
-    data.results.push({
-      ...result,
-      uuid: +page + i + 1
-    })
+  if (query.until) {
+    for (let i = 0; i < 20; i++){
+      data.results.unshift({
+        ...result,
+        uuid: +page - i -1
+      })
+    }
+  } else {
+    for (let i = 0; i < 20; i++){
+      data.results.push({
+        ...result,
+        uuid: +page + i + 1
+      })
+    }
   }
 
   return data;
@@ -124,7 +132,7 @@ app.get('/api', (req, res) => {
   console.log(req.query)
   const data = getData(req.query);
   setTimeout(() => {
-    res.send(JSON.stringify({ results: data.results }));
+    res.send(JSON.stringify({ results: data.results, reverse: req.query.until }));
   }, 200)
 });
 

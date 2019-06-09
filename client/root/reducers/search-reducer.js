@@ -8,16 +8,14 @@ import {
 } from '../actions/search-actions'
 import qs from 'qs';
 
-const updateUrl = (state, history, location) => {
-
+const updateUrl = (state, page, history, location) => {
   let search = qs.parse(location.search, { ignoreQueryPrefix: true })
   search.q = state.search || undefined;
-  search.page = state.searchAfter || undefined;
-
+  search.page = page || undefined;
   let searchString = qs.stringify({ ...search }, { encode: true });
   setImmediate(() => history.replace({ search: searchString }));
 
-  return state;
+  return { ...state, page };
 }
 
 export const createSearchReducerPreloadedState = (location, response) => {
@@ -25,7 +23,8 @@ export const createSearchReducerPreloadedState = (location, response) => {
   return {
     total: results.length,
     results: results,
-    searchAfter: results[results.length-1].uuid,
+    firstCursor: results[0].uuid,
+    lastCursor: results[results.length-1].uuid,
     search: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
     isLoaded: true,
     sidebarLeftIsVisible: false
@@ -40,7 +39,7 @@ export function searchReducer(
 
     case UPDATE_SEARCH:
       newState = { ...state, search: payload.value };
-      newState = updateUrl( newState, payload.history, payload.location );
+      newState = updateUrl( newState, newState.page, payload.history, payload.location );
       return newState;
 
     case UPDATE_SEARCH_SIDE_EFFECTS:
@@ -50,6 +49,8 @@ export function searchReducer(
         total: results.length,
         results: results
       }
+      newState.firstCursor = newState.results[0].uuid;
+      newState.lastCursor = newState.results[newState.results.length-1].uuid;
       return newState;
 
     case LOAD_MORE:
@@ -57,7 +58,9 @@ export function searchReducer(
         ...state,
         isLoaded: false
       }
-      newState = updateUrl( newState, payload.history, payload.location );
+      if (payload.event.previousPosition === 'below') {
+        newState = updateUrl(newState, newState.lastCursor, payload.history, payload.location);
+      }
       return newState;
 
     case LOAD_MORE_DONE:
@@ -72,9 +75,15 @@ export function searchReducer(
       newState = {
         ...state,
         total: state.results.length + results.length,
-        results: [...state.results, ...results]
+        page: state.results[state.results.length-1].uuid
       }
-      newState.searchAfter = newState.results[newState.results.length-1].uuid;
+      if (!payload.reverse) {
+        newState.results = [...state.results, ...results];
+      } else {
+        newState.results = [...results, ...state.results];
+      }
+      newState.firstCursor = newState.results[0].uuid;
+      newState.lastCursor = newState.results[newState.results.length-1].uuid;
       return newState;
 
     case TOGGLE_SIDEBAR_LEFT:

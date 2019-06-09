@@ -34,7 +34,7 @@ const updateSearch = (action$, state$) => action$.pipe(
     const queryObject = {
       ...state$.value.filterReducer.searchFilter.filterValues,
       q: state$.value.searchReducer.search || undefined,
-      page: state$.value.searchReducer.searchAfter || undefined
+      page: state$.value.searchReducer.page || undefined
     };
     const query =  qs.stringify({ ...queryObject }, { encode: true });
     const search = query ? ('?' + query) : '';
@@ -49,12 +49,17 @@ const updateSearch = (action$, state$) => action$.pipe(
 const loadMore = (action$, state$) => action$.pipe(
   ofType(LOAD_MORE),
   filter(action => action.payload.filterOrigin === 'searchFilter'),
-  map(() => {
+  filter(action => typeof(action.payload.event.previousPosition) !== 'undefined'),
+  map(action => {
     const queryObject = {
       ...state$.value.filterReducer.searchFilter.filterValues,
       q: state$.value.searchReducer.search || undefined,
-      page: state$.value.searchReducer.searchAfter || undefined
     };
+    if (action.payload.event.previousPosition === 'below') {
+      queryObject.since = state$.value.searchReducer.lastCursor || undefined
+    } else if (action.payload.event.previousPosition === 'above') {
+      queryObject.until = state$.value.searchReducer.firstCursor || undefined
+    }
     const query =  qs.stringify({ ...queryObject }, { encode: true });
     const search = query ? ('?' + query) : '';
     return search
