@@ -12,7 +12,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loadMore, loadMoreDone } from '../../root/actions/search-actions'
+import { loadMore, loadMoreDone, changePage } from '../../root/actions/search-actions'
 
 import { Waypoint } from 'react-waypoint';
 
@@ -41,20 +41,27 @@ const styles = theme => ({
 });
 
 const Content = props => {
-  const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, history, location } = props;
-  const { results } = searchReducer;
+  const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, handleChangePage, history, location } = props;
+  const { results, isScrolling } = searchReducer;
   return (
     <div className={classes.root}>
-      <Waypoint
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        bottomOffset={0}
-      >
-      </Waypoint>
       <GridList cellHeight={200} spacing={1}>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        >
+        </Waypoint>
         {results.map((tile, i) => (
           <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
+            {results.length > 20 && i % 20 === 1 &&
+              <Waypoint
+                scrollableAncestor={global}
+                onEnter={() => !isScrolling && handleChangePage(history, location, 'searchFilter')((results[i - 1] || results[i]).uuid)}
+              >
+              </Waypoint>
+            }
             <GridListTileBar
               title={tile.uuid}
               titlePosition="top"
@@ -68,13 +75,13 @@ const Content = props => {
             />
           </GridListTile>
         ))}
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        >
+        </Waypoint>
       </GridList>
-      <Waypoint
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        bottomOffset={0}
-      >
-      </Waypoint>
     </div>
   );
 }
@@ -91,6 +98,9 @@ const mapDispatchToProps = dispatch => ({
   },
   handleLoadMoreDone: (history, location, filterOrigin) => (event) => {
     dispatch(loadMoreDone(event, history, location, filterOrigin))
+  },
+  handleChangePage: (history, location, filterOrigin) => (value) => {
+    dispatch(changePage(value, history, location, filterOrigin))
   },
 });
 

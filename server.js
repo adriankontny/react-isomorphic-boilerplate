@@ -111,14 +111,14 @@ const getData = (query) => {
     for (let i = 0; i < 20; i++){
       data.results.unshift({
         ...result,
-        uuid: +page - i -1
+        uuid: `${+page - i -1}`
       })
     }
   } else {
     for (let i = 0; i < 20; i++){
       data.results.push({
         ...result,
-        uuid: +page + i + 1
+        uuid: `${+page + i + 1}`
       })
     }
   }
