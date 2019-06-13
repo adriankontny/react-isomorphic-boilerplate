@@ -49,7 +49,14 @@ const Content = props => {
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
-          onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        >
+        </Waypoint>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          topOffset={"-50%"}
         >
         </Waypoint>
         {results.map((tile, i) => (
@@ -78,7 +85,14 @@ const Content = props => {
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
-          onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          bottomOffset={"-50%"}
+        >
+        </Waypoint>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         >
         </Waypoint>
       </GridList>

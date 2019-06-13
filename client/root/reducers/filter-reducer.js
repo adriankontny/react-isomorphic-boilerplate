@@ -69,11 +69,13 @@ export function filterReducer(
       newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
+
     case UPDATE_INPUT:
       newState = state;
       newState = updateInput(newState, payload.field, payload.value, payload.filterOrigin);
       newState = updateUrl(newState, payload.history, payload.location);
       return newState;
+
     default:
       return { ...state };
   }
