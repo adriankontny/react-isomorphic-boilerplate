@@ -49,12 +49,6 @@ const Content = props => {
         scrollableAncestor={global}
         onEnter={handleLoadMore(history, location, 'searchFilter')}
         // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-      >
-      </Waypoint>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         topOffset={"-50%"}
       >
       </Waypoint>
@@ -66,6 +60,12 @@ const Content = props => {
       >
       </Waypoint>
       <GridList cellHeight={200} spacing={1}>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        >
+        </Waypoint>
         {results.map((tile, i) => (
           <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
             <img src={tile.img} alt={tile.title} />
@@ -89,6 +89,12 @@ const Content = props => {
             />
           </GridListTile>
         ))}
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+        >
+        </Waypoint>
       </GridList>
       <Waypoint
         scrollableAncestor={global}
@@ -102,12 +108,6 @@ const Content = props => {
         onEnter={handleLoadMore(history, location, 'searchFilter')}
         // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         bottomOffset={"-50%"}
-      >
-      </Waypoint>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
       >
       </Waypoint>
     </div>
