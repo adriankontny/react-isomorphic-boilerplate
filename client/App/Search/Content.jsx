@@ -44,72 +44,80 @@ const Content = props => {
   const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, handleChangePage, history, location } = props;
   const { results, isScrolling } = searchReducer;
   return (
-    <div className={classes.root}>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        topOffset={"-50%"}
-      >
-      </Waypoint>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        topOffset={"-100%"}
-      >
-      </Waypoint>
-      <GridList cellHeight={200} spacing={1}>
+    <div>
+      <div>
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
           // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         >
         </Waypoint>
-        {results.map((tile, i) => (
-          <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
-            <img src={tile.img} alt={tile.title} />
-            {results.length > 20 && i % 20 === 1 &&
-              <Waypoint
-                scrollableAncestor={global}
-                onEnter={() => !isScrolling && handleChangePage(history, location, 'searchFilter')((results[i - 1] || results[i]).uuid)}
-              >
-              </Waypoint>
-            }
-            <GridListTileBar
-              title={tile.uuid}
-              titlePosition="top"
-              actionIcon={
-                <IconButton className={classes.icon}>
-                  <StarBorder />
-                </IconButton>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          topOffset={"-50%"}
+        >
+        </Waypoint>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          topOffset={"-100%"}
+        >
+        </Waypoint>
+      </div>
+      
+      <div className={classes.root}>
+        <GridList cellHeight={200} spacing={1}>
+          {results.map((tile, i) => (
+            <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
+              <img src={tile.img} alt={tile.title} />
+              {results.length > 20 && i % 20 === 1 &&
+                <Waypoint
+                  scrollableAncestor={global}
+                  onEnter={() => !isScrolling && handleChangePage(history, location, 'searchFilter')((results[i - 1] || results[i]).uuid)}
+                >
+                </Waypoint>
               }
-              actionPosition="left"
-              className={classes.titleBar}
-            />
-          </GridListTile>
-        ))}
+              <GridListTileBar
+                title={tile.uuid}
+                titlePosition="top"
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <StarBorder />
+                  </IconButton>
+                }
+                actionPosition="left"
+                className={classes.titleBar}
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+
+      <div>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          bottomOffset={"-100%"}
+        >
+        </Waypoint>
+        <Waypoint
+          scrollableAncestor={global}
+          onEnter={handleLoadMore(history, location, 'searchFilter')}
+          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
+          bottomOffset={"-50%"}
+        >
+        </Waypoint>
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
           // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         >
         </Waypoint>
-      </GridList>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        bottomOffset={"-100%"}
-      >
-      </Waypoint>
-      <Waypoint
-        scrollableAncestor={global}
-        onEnter={handleLoadMore(history, location, 'searchFilter')}
-        // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        bottomOffset={"-50%"}
-      >
-      </Waypoint>
+      </div>
     </div>
   );
 }
