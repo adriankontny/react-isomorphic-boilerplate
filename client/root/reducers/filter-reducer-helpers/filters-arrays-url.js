@@ -3,7 +3,7 @@ import { filterBlueprintPaths } from '../filter-reducer-data/';
 import getItem from './getItem';
 import qs from 'qs';
 import { produce } from 'immer';
-import { toPairs } from 'lodash';
+import toPairs from 'lodash/toPairs';
 
 const _categoriesArrayFromUrl = (category, path = [], categoriesArray = []) => {
   categoriesArray = [getItem(category, path), ...categoriesArray];

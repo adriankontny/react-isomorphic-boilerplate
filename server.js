@@ -5,7 +5,7 @@ import debug from 'debug';
 import qs from 'qs';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { values } from 'lodash';
+import values from 'lodash/values';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router-dom';
 import {
@@ -24,7 +24,6 @@ import webpackConfigDev from './webpack.config.dev';
 import App from './client/App';
 import createPreloadedStore, { createPreloadedState } from './client/root/store';
 
-import { get } from 'lodash';
 const app = express();
 const logger = debug('server.js');
 
@@ -38,6 +37,8 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
 } else { // eslint-disable-next-line no-console
   logger(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }
+
+app.use(require('express-status-monitor')());
 
 const theme = createMuiTheme({
   typography: {
@@ -84,14 +85,13 @@ app.use((req, res, next) => {
 });
 
 app.use(morgan('combined'));
-
 app.use(express.static('dist'));
 
 // app.use('/', routes);
 
 const getData = (query) => {
-  const page = query.page ||  query.since || query.until || 0;
-  const image = './audi.jpg';
+  const page = query.page || query.since || query.until || 0;
+  const image = ((page / 2) % 20 === 0) || ((((+page - 1) / 2) % 20) === 0) ? './audi1.png' : './audi2.png' ;
   const result = {
     img: image,
     title: 'Image',

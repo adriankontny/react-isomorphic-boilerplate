@@ -19,7 +19,6 @@ import {
 } from './filter-reducer-helpers';
 import qs from 'qs';
 import { produce, original } from 'immer';
-import { get, keys, some, toPairs } from 'lodash';
 
 
 const updateUrl = (state, history, location) => {

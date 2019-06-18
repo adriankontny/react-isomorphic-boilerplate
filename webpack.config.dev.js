@@ -1,5 +1,6 @@
 const path = require('path');
 const AssetsPlugin = require('assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 
 module.exports = {
@@ -17,6 +18,7 @@ module.exports = {
       fullPath: false,
       path: path.join(__dirname, '/prod'),
     }),
+    new BundleAnalyzerPlugin({openAnalyzer: false}),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

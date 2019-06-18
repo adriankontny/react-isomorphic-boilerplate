@@ -1,5 +1,6 @@
 import { produce } from 'immer';
-import { get, set } from 'lodash';
+import get from 'lodash/get';
+import set from 'lodash/set';
 
 const updateInput = (state, field, value, filterOrigin) => {
   const filterValues = produce(state[filterOrigin].filterValues, draftState => {

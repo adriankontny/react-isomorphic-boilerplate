@@ -1,7 +1,8 @@
 import { filterBlueprintPaths } from '../filter-reducer-data/';
 import getItem from './getItem';
 import { produce } from 'immer';
-import { keys, some } from 'lodash';
+import keys from 'lodash/keys';
+import some from 'lodash/some';
 
 const _categoriesArrayFromReduxState = (draftState, draftItem = draftState, categoriesArray = []) => {
   if (draftItem.select !== '') {

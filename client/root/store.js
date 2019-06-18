@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware, ofType } from 'redux-observable';
 import { BehaviorSubject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
-import { some } from 'lodash';
+import some from 'lodash/some';
 import rootReducer, { createPreloadedState } from './reducers';
 import rootEpic from './epics';
 
