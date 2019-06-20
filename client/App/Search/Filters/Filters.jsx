@@ -1,19 +1,12 @@
-import withStyles from '@material-ui/core/styles/withStyles';
-import classNames from 'classnames';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
 
 import { Category, Filter } from './index'
 
-const styles = theme => ({
-});
-
 const Filters = props => {
 
   const category = props.category ? props.category : props.filterReducer[props.filterOrigin].filterObject;
-  const { classes } = props;
   const { categories, select, filters } = category;
 
   const categorySelected = find(categories, category => category.value === select);
@@ -41,7 +34,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-export default withStyles(styles, { withTheme: true })(connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Filters));
+)(Filters);

@@ -2,6 +2,7 @@ import React from 'react';
 import { FilterRange, FilterMultiselect } from './index';
 
 const Filter = props => {
+
   const { filter, filterOrigin } = props
   const { type } = filter;
 

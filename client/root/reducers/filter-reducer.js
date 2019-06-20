@@ -5,29 +5,19 @@ import {
 } from '../actions/filter-actions';
 import { filterBlueprint, filterBlueprintPaths } from './filter-reducer-data';
 import {
-  getItem,
   selectCategory,
-  // setFilters,
-  // setFiltersExternal,
-  // toggleExpander,
-  // searchItems,
   updateInput,
   filtersArraysFromUrl,
   filtersArraysToUrl,
   filtersArraysFromReduxState,
   filtersArraysToReduxState,
 } from './filter-reducer-helpers';
-import qs from 'qs';
-import { produce, original } from 'immer';
-
 
 const updateUrl = (state, history, location) => {
   const [categoriesArray, filtersArray] = filtersArraysFromReduxState(state['searchFilter']);
   const searchFilterState = filtersArraysToUrl(state['searchFilter'], [categoriesArray, filtersArray], history, location);
   return { ...state, searchFilter: searchFilterState };
 };
-
-const filterOrigins = ['searchFilter', 'uploadFilter'];
 
 export const createFilterReducerPreloadedState = (location, response) => {
   const state = {
@@ -55,9 +45,7 @@ export function filterReducer(
 ) {
   let newState;
   switch (type) {
-    case 'PING':
-      return state;
-
+    
     case INITIALIZE_FILTERS:
       newState = state;
       newState = updateUrl(newState, payload.history, payload.location);

@@ -44,7 +44,7 @@ const updateSearch = (action$, state$) => action$.pipe(
     const search = query ? ('?' + query) : '';
     return search
   }),
-  debounceTime(300),
+  debounceTime(100),
   distinctUntilChanged(),
   switchMap(search => axiosGet(action$, `/api${search}`)),
   map(response => ({ type: UPDATE_SEARCH_SIDE_EFFECTS, payload: { ...response.data } })),

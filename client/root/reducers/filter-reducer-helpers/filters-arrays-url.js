@@ -33,7 +33,6 @@ const filtersArraysFromUrl = (state, search) => {
   return [categoriesArray, filtersArray];
 }
 
-
 const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, location) => {
   const newState = produce(state, draftState => {
     draftState.location.search = {};
@@ -56,7 +55,7 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, loc
   };
 
   let query = qs.stringify({ ...queryObject }, { encode: true });
-  history.replace({ search: query });
+  setImmediate(() => history.replace({ search: query }));
 
   return newState;
 };

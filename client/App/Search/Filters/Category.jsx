@@ -8,7 +8,6 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../../root/actions/filter-actions';
 
-
 const styles = theme => ({
   marginTopBottom: {
     margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
