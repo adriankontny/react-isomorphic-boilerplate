@@ -15,7 +15,7 @@ const Filters = props => {
     (categorySelected
       ?
       (categories.map((category, index) => index === select &&
-        <Filters {...{ ...props, category }}>
+        <Filters key={index} {...{ ...props, category }}>
         </Filters>
       ))
       :
