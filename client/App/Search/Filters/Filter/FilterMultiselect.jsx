@@ -19,10 +19,10 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   chip: {
-    margin: theme.spacing.unit / 4,
+    margin: theme.spacing(0.25),
   },
   marginTopBottom: {
-    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
+    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px 0`,
   },
 });
 

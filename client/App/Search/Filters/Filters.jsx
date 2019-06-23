@@ -11,11 +11,11 @@ const Filters = props => {
 
   const categorySelected = find(categories, category => category.value === select);
   return ([
-    <Category {...{ ...props, category }}></Category>,
+    <Category key={category.label} {...{ ...props, category }}></Category>,
     (categorySelected
       ?
       (categories.map((category, index) => index === select &&
-        <Filters key={category.label} {...{ ...props, category }}>
+        <Filters {...{ ...props, category }}>
         </Filters>
       ))
       :

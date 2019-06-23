@@ -13,10 +13,10 @@ import VerifiedTextField from './VerifiedTextField';
 
 const styles = theme => ({
   marginTop: {
-    margin: `${theme.spacing.unit}px 0 0 0`,
+    margin: `${theme.spacing(1)}px 0 0 0`,
   },
   marginBottom: {
-    margin: `0 0 ${theme.spacing.unit}px 0`,
+    margin: `0 0 ${theme.spacing(1)}px 0`,
   },
 });
 
@@ -46,13 +46,13 @@ const FilterRange = props => {
 
     default:
       return ([
-        <Typography
+        <Typography key={'0' + field}
           className={classes.marginTop}
           variant="subtitle1"
         >
           {label}
         </Typography>,
-        <Grid
+        <Grid key={'1' + field}
           container
           alignItems="center"
           justify="space-between"

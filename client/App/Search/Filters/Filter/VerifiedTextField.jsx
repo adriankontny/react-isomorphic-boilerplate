@@ -11,7 +11,7 @@ const VerifiedTextField = props => {
       className={className}
       label={label}
       value={value}
-      error={error}
+      error={!!error}
       helperText={error}
       onChange={onChange}
     />

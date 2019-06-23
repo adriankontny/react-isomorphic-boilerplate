@@ -10,7 +10,7 @@ import { selectCategory } from '../../../root/actions/filter-actions';
 
 const styles = theme => ({
   marginTopBottom: {
-    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
+    margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px 0`,
   },
 });
 
