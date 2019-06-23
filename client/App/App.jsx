@@ -43,11 +43,6 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Link to="/">Home</Link>
-        {' | '}
-        <Link to="/search">Search</Link>
-        {' | '}
-        <Link to="/contact">Contact</Link>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/search" component={Search} />

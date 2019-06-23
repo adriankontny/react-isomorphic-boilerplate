@@ -5,8 +5,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-
 import StarBorder from '@material-ui/icons/StarBorder';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import React from 'react';
 import { withRouter } from 'react-router-dom';
@@ -20,6 +20,8 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
@@ -37,33 +39,28 @@ const styles = theme => ({
   },
   icon: {
     color: 'white',
-  },
+  }
 });
+
+const BorderLinearProgress = withStyles({
+  root: {
+    height: 10,
+  }
+})(LinearProgress);
 
 const Content = props => {
   const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, handleChangePage, history, location } = props;
-  const { results, isScrolling } = searchReducer;
+  const { results, isScrolling, isLoadingTop, isLoadingBottom } = searchReducer;
   return (
     <div>
       <div>
+        {isLoadingTop &&
+          <BorderLinearProgress variant="query" className={classes.linearProgress} />
+        }
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
           // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-        >
-        </Waypoint>
-        <Waypoint
-          scrollableAncestor={global}
-          onEnter={handleLoadMore(history, location, 'searchFilter')}
-          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-          topOffset={"-50%"}
-        >
-        </Waypoint>
-        <Waypoint
-          scrollableAncestor={global}
-          onEnter={handleLoadMore(history, location, 'searchFilter')}
-          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
-          topOffset={"-100%"}
         >
         </Waypoint>
       </div>
@@ -100,23 +97,23 @@ const Content = props => {
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
-          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
           bottomOffset={"-100%"}
         >
         </Waypoint>
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
-          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
           bottomOffset={"-50%"}
         >
         </Waypoint>
         <Waypoint
           scrollableAncestor={global}
           onEnter={handleLoadMore(history, location, 'searchFilter')}
-          // onLeave={handleLoadMoreDone(history, location, 'searchFilter')}
         >
         </Waypoint>
+        {isLoadingBottom &&
+          <BorderLinearProgress variant="query" className={classes.linearProgress} />
+        }
       </div>
     </div>
   );

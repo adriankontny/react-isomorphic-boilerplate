@@ -9,7 +9,11 @@ import {
   CHANGE_PAGE_SIDE_EFFECTS,
   TOGGLE_SIDEBAR_LEFT
 } from '../actions/search-actions'
+import {
+  UPDATE_INPUT
+} from '../actions/filter-actions'
 import qs from 'qs';
+import get from 'lodash/get'
 
 const updateUrl = (state, page, history, location) => {
   let search = qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -27,9 +31,11 @@ export const createSearchReducerPreloadedState = (location, response) => {
     total: results.length,
     results: results,
     firstCursor: results[0].uuid,
-    lastCursor: results[results.length-1].uuid,
+    lastCursor: results[results.length - 1].uuid,
     search: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
     isScrolling: false,
+    isLoadingTop: false,
+    isLoadingBottom: false,
     sidebarLeftIsVisible: false
   };
 };
@@ -42,7 +48,8 @@ export function searchReducer(
 
     case UPDATE_SEARCH:
       newState = { ...state, search: payload.value };
-      newState = updateUrl( newState, newState.page, payload.history, payload.location );
+      newState = updateUrl(newState, newState.page, payload.history, payload.location);
+      newState.isLoadingTop = true;
       return newState;
 
     case UPDATE_SEARCH_SIDE_EFFECTS:
@@ -53,7 +60,22 @@ export function searchReducer(
         results: results
       }
       newState.firstCursor = newState.results[0].uuid;
-      newState.lastCursor = newState.results[newState.results.length-1].uuid;
+      newState.lastCursor = newState.results[newState.results.length - 1].uuid;
+      newState.isLoadingTop = false;
+      return newState;
+
+    case UPDATE_INPUT: // filters action
+      newState = { ...state, isLoadingTop: true };
+      return newState;
+    
+    case LOAD_MORE:
+      newState = state;
+      if (get(payload, 'event.previousPosition') === "above") {
+        newState = { ...newState, isLoadingTop: true };
+      }
+      if (get(payload, 'event.previousPosition') === "below") {
+        newState = { ...newState, isLoadingBottom: true };
+      }
       return newState;
 
     case LOAD_MORE_SIDE_EFFECTS:
@@ -61,15 +83,16 @@ export function searchReducer(
       newState = {
         ...state,
         total: state.results.length + results.length,
-        page: state.results[state.results.length-1].uuid
+        page: state.results[state.results.length - 1].uuid
       }
-      if (!payload.reverse) {
-        newState.results = [...state.results, ...results];
-      } else {
+      if (payload.reverse) {
         newState.results = [...results, ...state.results];
+        newState.isLoadingTop = false;
+      } else {
+        newState.results = [...state.results, ...results];
       }
       newState.firstCursor = newState.results[0].uuid;
-      newState.lastCursor = newState.results[newState.results.length-1].uuid;
+      newState.lastCursor = newState.results[newState.results.length - 1].uuid;
       return newState;
 
     case CHANGE_PAGE:
@@ -89,6 +112,7 @@ export function searchReducer(
     case CHANGE_PAGE_SIDE_EFFECTS:
       newState = {
         ...state,
+        // isScrolling: false,
       };
       newState = updateUrl(newState, payload.value, payload.history, payload.location);
       return newState;
