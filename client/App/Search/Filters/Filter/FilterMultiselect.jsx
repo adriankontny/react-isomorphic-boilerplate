@@ -45,7 +45,7 @@ const FilterMultiselect = props => {
 
   const filterValue = mapFieldsToLabels(filterValues[field] || [], items);
 
-  const handleOnChange = (field, value) => handleUpdateInput(field, value, items, history, location, filterOrigin)
+  const handleOnChange = value => handleUpdateInput(field, value, items, history, location, filterOrigin)
 
   return (
     <Fragment>
@@ -55,7 +55,7 @@ const FilterMultiselect = props => {
           <InputLabel
             htmlFor="select-multiple-chip">{label}</InputLabel>
           <Verify
-            onChange={value => handleOnChange(field, value)}
+            onChange={handleOnChange}
             value={filterValue}
           >
             <VerifiedSelect

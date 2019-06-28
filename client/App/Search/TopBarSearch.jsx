@@ -1,7 +1,5 @@
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import InputBase from '@material-ui/core/InputBase';
-
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,6 +9,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { updateSearch } from '../../root/actions/search-actions'
+
+import Verify from './Verify'
+import VerifiedInputBase from './VerifiedInputBase'
 
 const styles = theme => ({
   inputInput: {
@@ -58,20 +59,26 @@ class TopBarSearch extends React.Component {
 
   render() {
     const { classes, search, handleUpdateSearch, history, location, filterOrigin } = this.props;
+    const handleOnChange = value => handleUpdateSearch(value, history, location, filterOrigin)
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
-        <InputBase
-          placeholder="Search…"
+        <Verify
           value={search}
-          onChange={handleUpdateSearch(history, location, filterOrigin)}
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-        />
+          onChange={handleOnChange}
+        >
+          <VerifiedInputBase
+            placeholder="Search…"
+            value={search}
+            onChange={handleOnChange}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+          />
+        </Verify>
       </div>
     );
   }
@@ -82,8 +89,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateSearch: (history, location, filterOrigin) => (event) => {
-    dispatch(updateSearch(event.target.value, history, location, filterOrigin))
+  handleUpdateSearch: (value, history, location, filterOrigin) => {
+    dispatch(updateSearch(value, history, location, filterOrigin))
   },
 });
 
