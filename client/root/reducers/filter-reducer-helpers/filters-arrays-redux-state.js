@@ -33,7 +33,9 @@ const _categoriesArrayToReduxState = (draftState, categoriesArray, _count = 0) =
   const path = categoriesArray.map(category => category.key).slice(0, _count + 1);
 
   const draftItem = getItem(draftState.filterObject, path.slice(0, -1));
-  draftItem.select = path.slice(-1)[0] || '';
+  draftItem.select = typeof path.slice(-1)[0] === 'undefined'
+    ? '' 
+    : path.slice(-1)[0];
 
   if (_count < categoriesArray.length - 1) {
     _categoriesArrayToReduxState(draftState, categoriesArray, ++_count);

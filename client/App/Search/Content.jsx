@@ -70,10 +70,10 @@ const Content = props => {
           {results.map((tile, i) => (
             <GridListTile key={i} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
               <img src={tile.img} alt={tile.title} />
-              {results.length > 20 && i % 20 === 1 &&
+              {results.length > 20 && i % 20 === 0 && !isScrolling &&
                 <Waypoint
                   scrollableAncestor={global}
-                  onEnter={() => !isScrolling && handleChangePage(history, location, 'searchFilter')((results[i - 1] || results[i]).uuid)}
+                  onEnter={() => handleChangePage(history, location, 'searchFilter')((results[i - 1] || results[i]).uuid)}
                 >
                 </Waypoint>
               }

@@ -34,11 +34,10 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
     publicPath: webpackConfigDev.output.publicPath,
   }));
   app.use(webpackHotMiddleware(compiler));
+  app.use(require('express-status-monitor')());
 } else { // eslint-disable-next-line no-console
   logger(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }
-
-app.use(require('express-status-monitor')());
 
 const theme = createMuiTheme({
   typography: {

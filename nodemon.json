@@ -2,7 +2,7 @@
   "watchWorks": true,
   "restartable": "rs",
   "ignore": [
-    "**/node_modules/**",
+    "node_modules/**",
     "client/**"
   ],
   "verbose": true,

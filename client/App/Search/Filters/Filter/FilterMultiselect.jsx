@@ -1,17 +1,16 @@
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateInput } from '../../../../root/actions/filter-actions';
 
+import Verify from './../../Verify';
+import VerifiedSelect from './VerifiedSelect';
 
 const styles = theme => ({
   chips: {
@@ -45,6 +44,9 @@ const FilterMultiselect = props => {
   const filterValues = filterReducer[filterOrigin].filterValues;
 
   const filterValue = mapFieldsToLabels(filterValues[field] || [], items);
+
+  const handleOnChange = (field, value) => handleUpdateInput(field, value, items, history, location, filterOrigin)
+
   return (
     <Fragment>
       <div className={classes.root}>
@@ -52,30 +54,26 @@ const FilterMultiselect = props => {
           fullWidth className={classes.marginTopBottom} >
           <InputLabel
             htmlFor="select-multiple-chip">{label}</InputLabel>
-          <Select
-            multiple
-            renderValue={selected => (
-              <div className={classes.chips}>
-                {selected.map(value => 
-                  <Chip key={value} label={value} className={classes.chip} />
-                )}
-              </div>
-            )}
-            fullWidth
-            //variant="outlined"
-            label={label}
+          <Verify
+            onChange={value => handleOnChange(field, value)}
             value={filterValue}
-            onChange={handleUpdateInput(field, history, location, filterOrigin, items)}
           >
-            {items.map((item, index) => 
-              <MenuItem key={index} value={item.label}>
-                <Checkbox
-                  checked={filterValue.indexOf(item.label) >= 0}
-                />
-                {item.label}
-              </MenuItem>
-            )}
-          </Select>
+            <VerifiedSelect
+              multiple
+              renderValue={selected => (
+                <div className={classes.chips}>
+                  {selected.map(value => 
+                    <Chip key={value} label={value} className={classes.chip} />
+                  )}
+                </div>
+              )}
+              fullWidth
+              //variant="outlined"
+              label={label}
+              items={items}
+            >
+            </VerifiedSelect>
+          </Verify>
         </FormControl>
       </div>
     </Fragment>
@@ -87,9 +85,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, history, location, filterOrigin, items) => event => {
-    const value = mapLabelsToFields(event.target.value, items);
-    dispatch(updateInput(field, value, history, location, filterOrigin));
+  handleUpdateInput: (field, value, items, history, location, filterOrigin) => {
+    const mappedValue = mapLabelsToFields(value, items);
+    dispatch(updateInput(field, mappedValue, history, location, filterOrigin));
   },
 });
 

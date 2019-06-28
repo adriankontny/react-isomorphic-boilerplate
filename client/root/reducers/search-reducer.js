@@ -46,6 +46,10 @@ export function searchReducer(
   let newState, results;
   switch (type) {
 
+    // case UPDATE_INPUT: // filters action
+    //   newState = { ...state, isLoadingTop: true };
+    //   return newState;
+
     case UPDATE_SEARCH:
       newState = { ...state, search: payload.value };
       newState = updateUrl(newState, newState.page, payload.history, payload.location);
@@ -62,10 +66,6 @@ export function searchReducer(
       newState.firstCursor = newState.results[0].uuid;
       newState.lastCursor = newState.results[newState.results.length - 1].uuid;
       newState.isLoadingTop = false;
-      return newState;
-
-    case UPDATE_INPUT: // filters action
-      newState = { ...state, isLoadingTop: true };
       return newState;
     
     case LOAD_MORE:

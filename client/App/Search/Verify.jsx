@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
+import flatten from 'lodash/flatten';
 
 const Verify = props => {
-  const { value, onChange } = props
+  const { value, onChange } = props;
 
   const debouncedHandleUpdateInput = useCallback(
     debounce(
-      value => onChange(value),
+      newValue => {
+        if (JSON.stringify(flatten([value])) !== JSON.stringify(flatten([newValue]))) {
+          onChange(newValue);
+        }
+      },
       300,
       { trailing: true }
-    ), [])
+    ), [props.value])
 
   useEffect(() => {
     return debouncedHandleUpdateInput.cancel();
