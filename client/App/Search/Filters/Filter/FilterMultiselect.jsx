@@ -3,9 +3,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import { withRouter } from 'react-router-dom';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { updateInput } from '../../../../root/actions/filter-actions';
 
@@ -38,6 +40,15 @@ const mapFieldsToLabels = (fields = [], items = []) => {
   return labels;
 };
 
+const MenuList = items => value => items.map((item, index) =>
+  <MenuItem key={index} value={item.label}>
+    <Checkbox
+      checked={value.indexOf(item.label) >= 0}
+    />
+    {item.label}
+  </MenuItem>
+)
+
 const FilterMultiselect = props => {
   const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
@@ -48,35 +59,34 @@ const FilterMultiselect = props => {
   const handleOnChange = value => handleUpdateInput(field, value, items, history, location, filterOrigin)
 
   return (
-    <Fragment>
-      <div className={classes.root}>
-        <FormControl
-          fullWidth className={classes.marginTopBottom} >
-          <InputLabel
-            htmlFor="select-multiple-chip">{label}</InputLabel>
-          <Verify
-            onChange={handleOnChange}
-            value={filterValue}
+    <div className={classes.root}>
+      <FormControl
+        fullWidth className={classes.marginTopBottom} >
+        <InputLabel
+          htmlFor="select-multiple-chip">{label}</InputLabel>
+        <Verify
+          onChange={handleOnChange}
+          value={filterValue}
+        >
+          <VerifiedSelect
+            multiple
+            renderValue={selected => (
+              <div className={classes.chips}>
+                {selected.map(value => 
+                  <Chip key={value} label={value} className={classes.chip} />
+                )}
+              </div>
+            )}
+            fullWidth
+            //variant="outlined"
+            label={label}
+            items={items}
+            component={MenuList(items)}
           >
-            <VerifiedSelect
-              multiple
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map(value => 
-                    <Chip key={value} label={value} className={classes.chip} />
-                  )}
-                </div>
-              )}
-              fullWidth
-              //variant="outlined"
-              label={label}
-              items={items}
-            >
-            </VerifiedSelect>
-          </Verify>
-        </FormControl>
-      </div>
-    </Fragment>
+          </VerifiedSelect>
+        </Verify>
+      </FormControl>
+    </div>
   )
 }
 
