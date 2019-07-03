@@ -11,7 +11,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { updateInput } from '../../../../root/actions/filter-actions';
 
-import Verify from './../../Verify';
+import Verify from '../../Verify';
 import VerifiedSelect from './VerifiedSelect';
 
 const styles = theme => ({

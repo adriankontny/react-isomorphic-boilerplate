@@ -6,9 +6,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loadMore } from '../../root/actions/search-actions'
+import { loadMore } from '../root/actions/search-actions'
 
-import { SideBarLeft, TopBar, Filters, Content } from './index'
+import SideBarLeft from './search/SideBarLeft'
+import TopBar from './search/TopBar'
+import Content from './search/Content'
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,

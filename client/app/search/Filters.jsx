@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
 
-import { Category, Filter } from './index'
+import Category from './filters/Category'
+import Filter from './filters/Filter'
 
 const Filters = props => {
 
