@@ -6,7 +6,7 @@ import selectCategory from './selectCategory';
 // import searchItems from './searchItems';
 import updateInput from './updateInput';
 import { filtersArraysFromUrl, filtersArraysToUrl } from './filters-arrays-url';
-import { filtersArraysFromReduxState, filtersArraysToReduxState } from './filters-arrays-redux-state';
+import { filtersArraysFromFilterState, filtersArraysToFilterState } from './filters-arrays-redux-state';
 
 export {
   getItem,
@@ -19,6 +19,6 @@ export {
   updateInput,
   filtersArraysFromUrl,
   filtersArraysToUrl,
-  filtersArraysFromReduxState,
-  filtersArraysToReduxState,
+  filtersArraysFromFilterState,
+  filtersArraysToFilterState,
 };

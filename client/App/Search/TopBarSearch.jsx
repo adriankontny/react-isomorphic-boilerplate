@@ -71,8 +71,6 @@ class TopBarSearch extends React.Component {
         >
           <VerifiedInputBase
             placeholder="Search…"
-            value={search}
-            onChange={handleOnChange}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,

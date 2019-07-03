@@ -1,5 +1,6 @@
 export default {
     label: "Category",
+    field: "category",
     filters: [
       {
         type: "range",

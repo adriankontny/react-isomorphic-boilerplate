@@ -1,5 +1,6 @@
 {
   "label": "Category",
+  "field": "category",
   "filters": [ { "type": "range", "label": "Price", "field": "price" } ],
   "categories": [
     {
