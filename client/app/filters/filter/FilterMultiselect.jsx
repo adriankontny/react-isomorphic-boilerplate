@@ -9,10 +9,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateInput } from '../../../../root/actions/filter-actions';
+import { updateInput } from '../../../root/actions/filter-actions';
 
-import Verify from '../../Verify';
-import VerifiedSelect from './VerifiedSelect';
+import Verify, { VerifiedSelect } from '../../Verify';
 
 const styles = theme => ({
   chips: {

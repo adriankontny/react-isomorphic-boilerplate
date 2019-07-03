@@ -6,10 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateInput } from '../../../../root/actions/filter-actions';
+import { updateInput } from '../../../root/actions/filter-actions';
 
-import Verify from '../../Verify';
-import VerifiedTextField from './VerifiedTextField';
+import Verify, { VerifiedTextField } from '../../Verify';
 
 const styles = theme => ({
   marginTop: {

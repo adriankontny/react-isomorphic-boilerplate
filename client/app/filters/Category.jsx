@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withRouter } from 'react-router-dom';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { selectCategory } from '../../../root/actions/filter-actions';
+import { selectCategory } from '../../root/actions/filter-actions';
 
 const styles = theme => ({
   marginTopBottom: {

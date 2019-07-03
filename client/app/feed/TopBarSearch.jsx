@@ -10,8 +10,7 @@ import { connect } from 'react-redux';
 
 import { updateSearch } from '../../root/actions/search-actions'
 
-import Verify from './Verify'
-import VerifiedInputBase from './VerifiedInputBase'
+import Verify, { VerifiedInputBase } from '../Verify'
 
 const styles = theme => ({
   inputInput: {

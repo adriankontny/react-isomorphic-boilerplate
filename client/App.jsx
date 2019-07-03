@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import Home from './app/Home';
-import Search from './app/Search';
+import Feed from './app/Feed';
 import Contact from './app/Contact';
 import NotFound from './app/NotFound';
 import { initializeFilters } from './root/actions/filter-actions';
@@ -48,7 +48,7 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/search" component={Search} />
+          <Route path="/search" component={Feed} />
           <Route path="/contact" component={Contact} />
           <RouteWithStatus statusCode={404} component={NotFound} />
         </Switch>

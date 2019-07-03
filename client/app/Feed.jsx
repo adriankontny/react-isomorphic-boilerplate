@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 
 import { loadMore } from '../root/actions/search-actions'
 
-import SideBarLeft from './search/SideBarLeft'
-import TopBar from './search/TopBar'
-import Content from './search/Content'
+import SideBarLeft from './feed/SideBarLeft'
+import TopBar from './feed/TopBar'
+import Content from './feed/Content'
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
