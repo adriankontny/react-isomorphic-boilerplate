@@ -12,7 +12,7 @@ const Verify = props => {
           onChange(newValue);
         }
       },
-      1000,
+      300,
       { trailing: true }
     ), [props.value])
 

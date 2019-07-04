@@ -3,8 +3,8 @@ import filterEpics from './filter-epics';
 import searchEpics from './search-epics';
 
 const rootEpic = combineEpics(
-  filterEpics,
-  searchEpics
+  // filterEpics,
+  // searchEpics
 );
 
 export default rootEpic;
