@@ -3,10 +3,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { loadMore } from '../root/actions/search-actions'
 
 import SideBarLeft from './feed/SideBarLeft'
 import TopBar from './feed/TopBar'
@@ -27,7 +23,7 @@ class Search extends React.Component {
 
   render() {
 
-    const { classes, handleLoadMore, history, location } = this.props;
+    const { classes } = this.props;
     
     return (
       <div className={classes.root}>
@@ -43,20 +39,7 @@ class Search extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  filterValues: state.filterReducer.filterValues,
-});
-
-const mapDispatchToProps = dispatch => ({
-  handleLoadMore: (history, location, filterOrigin) => (event) => {
-    dispatch(loadMore(event, history, location, filterOrigin))
-  },
-});
-
-export default withRouter(withStyles(styles, { withTheme: true })(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Search)));
+export default withStyles(styles, { withTheme: true })(Search);
 
 /*
 

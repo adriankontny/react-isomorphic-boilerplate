@@ -12,14 +12,14 @@ const Filter = props => {
       return (
         <FilterRange
           {...{ filter, filterOrigin }}
-        ></FilterRange>
+        />
       )
 
     case "multiselect":
       return (
         <FilterMultiselect
           {...{ filter, filterOrigin }}
-        ></FilterMultiselect>
+        />
       )
 
     default:
