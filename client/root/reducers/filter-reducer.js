@@ -22,16 +22,16 @@ const updateArrays = (state, history, location) => {
 export const createFilterReducerPreloadedState = (location, response) => {
   const state = {
     searchFilter: {
-      filterObject: filterBlueprint,
+      filterComponent: filterBlueprint,
+      filterComponentValues: {},
       location: {},
-      filterValues: {},
       filtersArray: [],
       categoriesArray: [],
     },
     uploadFilter: {
-      filterObject: filterBlueprint,
+      filterComponent: filterBlueprint,
+      filterComponentValues: {},
       location: {},
-      filterValues: {},
       filtersArray: [],
       categoriesArray: [],
     },

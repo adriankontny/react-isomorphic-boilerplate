@@ -3,12 +3,12 @@ import getItem from './getItem';
 import { filterBlueprintPaths } from './../filter-reducer-data';
 
 const selectCategory = (state, field, value, filterOrigin) => {
-  const filterObject = produce(state[filterOrigin].filterObject, draftState => {
+  const filterComponent = produce(state[filterOrigin].filterComponent, draftState => {
     const draftItem = getItem(draftState, filterBlueprintPaths[field]);
     draftItem.select = value;
   });
   
-  return { ...state, [filterOrigin]: { ...state[filterOrigin], filterObject} };
+  return { ...state, [filterOrigin]: { ...state[filterOrigin], filterComponent} };
 }
 
 export default selectCategory;

@@ -1,9 +1,9 @@
 import get from 'lodash/get';
 
-const getItem = (filterObject, path = []) => {
+const getItem = (filterComponent, path = []) => {
   return !path.length
-    ? filterObject
-    : get(filterObject, `categories[${path.join('].categories[')}]`) || filterObject;
+    ? filterComponent
+    : get(filterComponent, `categories[${path.join('].categories[')}]`) || filterComponent;
 };
 
 export default getItem;

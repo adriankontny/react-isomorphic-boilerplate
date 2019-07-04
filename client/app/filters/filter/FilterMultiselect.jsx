@@ -51,9 +51,9 @@ const MenuList = items => value => items.map((item, index) =>
 const FilterMultiselect = props => {
   const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
-  const filterValues = filterReducer[filterOrigin].filterValues;
+  const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
-  const filterValue = mapFieldsToLabels(filterValues[field] || [], items);
+  const filterValue = mapFieldsToLabels(filterComponentValues[field] || [], items);
 
   const handleOnChange = value => handleUpdateInput(field, value, items, history, location, filterOrigin)
 

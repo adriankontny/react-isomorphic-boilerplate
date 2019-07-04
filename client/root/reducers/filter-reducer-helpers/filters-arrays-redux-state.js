@@ -18,12 +18,12 @@ const _categoriesArrayFromFilterState = (draftState, draftItem = draftState, cat
 };
 
 const filtersArraysFromFilterState = (draftState) => {
-  const categoriesArray = _categoriesArrayFromFilterState(draftState.filterObject);
+  const categoriesArray = _categoriesArrayFromFilterState(draftState.filterComponent);
   const terminalCategory = categoriesArray[categoriesArray.length - 1] || {};
-  const draftItem = getItem(draftState.filterObject, filterBlueprintPaths[terminalCategory.field]);
+  const draftItem = getItem(draftState.filterComponent, filterBlueprintPaths[terminalCategory.field]);
 
-  const filtersArray = keys(draftState.filterValues)
-    .map(filter => { return { field: filter, value: draftState.filterValues[filter] } })
+  const filtersArray = keys(draftState.filterComponentValues)
+    .map(filter => { return { field: filter, value: draftState.filterComponentValues[filter] } })
     .filter(filter => filter.value)
     .filter(filter => some(draftItem.filters, ['field', filter.field.split(':')[0]]))
   return [categoriesArray, filtersArray];
@@ -32,7 +32,7 @@ const filtersArraysFromFilterState = (draftState) => {
 const _categoriesArrayToFilterState = (draftState, categoriesArray, _count = 0) => {
   const path = categoriesArray.map(category => category.key).slice(0, _count + 1);
 
-  const draftItem = getItem(draftState.filterObject, path.slice(0, -1));
+  const draftItem = getItem(draftState.filterComponent, path.slice(0, -1));
   draftItem.select = typeof path.slice(-1)[0] === 'undefined'
     ? '' 
     : path.slice(-1)[0];
@@ -48,10 +48,8 @@ const filtersArraysToFilterState = (state, [categoriesArray, filtersArray]) => {
     draftState.filtersArray = filtersArray;
     _categoriesArrayToFilterState(draftState, categoriesArray);
     filtersArray.forEach(filter => {
-      draftState.filterValues[filter.field] = filter.value;
+      draftState.filterComponentValues[filter.field] = filter.value;
     });
-    delete draftState.filterValues.q
-    delete draftState.filterValues.page
   });
   return newState;
 }

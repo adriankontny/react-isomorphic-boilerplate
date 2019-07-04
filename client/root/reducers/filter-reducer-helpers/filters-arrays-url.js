@@ -28,7 +28,7 @@ const filtersArraysFromUrl = (state, search) => {
       };
     }) || [];
   const categoriesArray = path
-    ? _categoriesArrayFromUrl(state.filterObject, path)
+    ? _categoriesArrayFromUrl(state.filterComponent, path)
     : [];
   return [categoriesArray, filtersArray];
 }
@@ -47,15 +47,8 @@ const filtersArraysToUrl = (state, [categoriesArray, filtersArray], history, loc
     });
   });
 
-  let originalQueryObject = qs.parse(location.search, { ignoreQueryPrefix: true });
-  let queryObject = {
-    q: originalQueryObject.q || undefined,
-    page: originalQueryObject.page || undefined,
-    ...newState.location.search
-  };
-
-  let query = qs.stringify({ ...queryObject }, { encode: true });
-  setImmediate(() => history.replace({ search: query }));
+  let query = qs.stringify({ ...newState.location.search }, { encode: true });
+  setImmediate(() => history.replace({ search: query })); // TODO
 
   return newState;
 };

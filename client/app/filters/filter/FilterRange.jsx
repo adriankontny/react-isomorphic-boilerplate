@@ -22,7 +22,7 @@ const styles = theme => ({
 const FilterRange = props => {
   const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props
   const { label, field } = filter;
-  const filterValues = filterReducer[filterOrigin].filterValues;
+  const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
   const handleOnChange = (field, value) => handleUpdateInput(field, value, history, location, filterOrigin)
 
@@ -31,7 +31,7 @@ const FilterRange = props => {
       return (
         <Verify
           key={label}
-          value={filterValues[field] || ''}
+          value={filterComponentValues[field] || ''}
           onChange={value => handleOnChange(field, value)}
         >
           <VerifiedTextField
@@ -58,7 +58,7 @@ const FilterRange = props => {
         >
           <Grid xs={5} key={'from'} item>
             <Verify
-              value={filterValues[`${field}:from`] || ''}
+              value={filterComponentValues[`${field}:from`] || ''}
               onChange={value => handleOnChange(`${field}:from`, value)}
             >
               <VerifiedTextField
@@ -71,7 +71,7 @@ const FilterRange = props => {
           </Grid>
           <Grid xs={5} key={'to'} item>
             <Verify
-              value={filterValues[`${field}:to`] || ''}
+              value={filterComponentValues[`${field}:to`] || ''}
               onChange={value => handleOnChange(`${field}:to`, value)}
             >
               <VerifiedTextField

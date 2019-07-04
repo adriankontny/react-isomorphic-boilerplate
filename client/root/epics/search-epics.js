@@ -36,7 +36,7 @@ const updateSearch = (action$, state$) => action$.pipe(
   filter(action => action.payload.filterOrigin === 'searchFilter'),
   map(() => {
     const queryObject = {
-      ...state$.value.filterReducer.searchFilter.filterValues,
+      ...state$.value.filterReducer.searchFilter.filterComponentValues,
       q: state$.value.searchReducer.search || undefined,
       page: state$.value.searchReducer.page || undefined
     };
@@ -57,7 +57,7 @@ const loadMore = (action$, state$) => action$.pipe(
   concatMap(action =>
     axiosGet(action$, () => {
       const queryObject = {
-        ...state$.value.filterReducer.searchFilter.filterValues,
+        ...state$.value.filterReducer.searchFilter.filterComponentValues,
         q: state$.value.searchReducer.search || undefined,
       };
       if (action.payload.event.previousPosition === 'below') {

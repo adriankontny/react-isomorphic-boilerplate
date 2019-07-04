@@ -121,8 +121,8 @@ const Content = props => {
 
 const mapStateToProps = state => ({
   searchReducer: state.searchReducer,
-  filterObject: state.filterReducer.filterObject,
-  filterValues: state.filterReducer.filterValues,
+  filterComponent: state.filterReducer.filterComponent,
+  filterComponentValues: state.filterReducer.filterComponentValues,
 });
 
 const mapDispatchToProps = dispatch => ({
