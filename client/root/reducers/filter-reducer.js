@@ -3,66 +3,58 @@ import {
   SELECT_CATEGORY,
   UPDATE_INPUT,
 } from '../actions/filter-actions';
-import { filterBlueprint } from './filter-reducer-data';
+import { filterBlueprintPaths, filterBlueprintCategories } from './filter-reducer-data';
 import {
   selectCategory,
   updateInput,
-  filtersArraysFromUrl,
-  filtersArraysToUrl,
-  filtersArraysFromFilterState,
-  filtersArraysToFilterState,
 } from './filter-reducer-helpers';
-
-const updateArrays = (state, history, location) => {
-  const [categoriesArray, filtersArray] = filtersArraysFromFilterState(state['searchFilter']);
-  const searchFilterState = filtersArraysToUrl(state['searchFilter'], [categoriesArray, filtersArray], history, location);
-  return { ...state, searchFilter: {...searchFilterState, categoriesArray, filtersArray} };
-};
+import produce from 'immer';
+import qs from 'qs';
 
 export const createFilterReducerPreloadedState = (location, response) => {
   const state = {
     searchFilter: {
-      filterComponent: filterBlueprint,
+      filterComponentCategories: filterBlueprintCategories,
       filterComponentValues: {},
-      location: {},
-      filtersArray: [],
-      categoriesArray: [],
     },
     uploadFilter: {
-      filterComponent: filterBlueprint,
+      filterComponentCategories: filterBlueprintCategories,
       filterComponentValues: {},
-      location: {},
-      filtersArray: [],
-      categoriesArray: [],
     },
   };
-  const [categoriesArray, filtersArray] = filtersArraysFromUrl(state['searchFilter'], location.search);
-  const searchFilterState = filtersArraysToFilterState(state['searchFilter'], [categoriesArray, filtersArray]);
-  return { ...state, searchFilter: searchFilterState };
+  const newState = state;
+ 
+  newState['searchFilter'] = produce(newState['searchFilter'], draftState => {
+    const search = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const path = filterBlueprintPaths[search.c] || []
+    const selectCategory = (category, path) => {
+      category.select = typeof path[0] === 'undefined' ? '' : path[0];
+      (path || []).length && selectCategory(category.categories[category.select], path.slice(1));
+    }
+    selectCategory(draftState.filterComponentCategories, path)
+    draftState.filterComponentValues = search;
+  })
+
+  return newState
 };
 
 export function filterReducer(
   state,
   { type, payload },
 ) {
-  let newState;
+  let newState = state;
   switch (type) {
     
     case INITIALIZE_FILTERS:
-      newState = state;
       newState = updateArrays(newState, payload.history, payload.location);
       return newState;
 
     case SELECT_CATEGORY:
-      newState = state;
       newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);
-      newState = updateArrays(newState, payload.history, payload.location);
       return newState;
 
     case UPDATE_INPUT:
-      newState = state;
       newState = updateInput(newState, payload.field, payload.value, payload.filterOrigin);
-      newState = updateArrays(newState, payload.history, payload.location);
       return newState;
 
     default:

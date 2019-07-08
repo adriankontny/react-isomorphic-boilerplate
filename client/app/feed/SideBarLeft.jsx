@@ -11,6 +11,10 @@ import { connect } from 'react-redux';
 import { toggleSidebarLeft } from '../../root/actions/search-actions';
 
 import Filters from '../Filters';
+import {
+  getCategoriesArray,
+  getFiltersArray,
+} from '../../root/reducers/filter-reducer-helpers';
 
 const drawerWidth = 280;
 
@@ -34,14 +38,15 @@ const styles = theme => ({
 class SideBarLeft extends React.Component {
 
   render() {
-    const { classes, theme, filterComponent, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
+    const { classes, theme, categories, filters, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <main className={classes.content}>
           <Filters
-            category={filterComponent}
+            categories={categories}
+            filters={filters}
             filterOrigin={'searchFilter'}
           >
           </Filters>
@@ -83,7 +88,8 @@ class SideBarLeft extends React.Component {
 
 const mapStateToProps = state => ({
   sidebarLeftIsVisible: state.searchReducer.sidebarLeftIsVisible,
-  filterComponent: state.filterReducer['searchFilter'].filterComponent,
+  categories: getCategoriesArray(state.filterReducer['searchFilter']),
+  filters: getFiltersArray(state.filterReducer['searchFilter']),
 });
 
 const mapDispatchToProps = dispatch => ({

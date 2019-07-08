@@ -8,6 +8,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../root/actions/filter-actions';
 
+
+import { filterBlueprint } from '../../root/reducers/filter-reducer-data';
+import {
+  getItem
+} from '../../root/reducers/filter-reducer-helpers';
+
 const styles = theme => ({
   marginTopBottom: {
     margin: `${theme.spacing(1)}px 0 ${theme.spacing(1)}px 0`,
@@ -15,8 +21,9 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { category, classes, handleSelectCategory, history, location, filterOrigin } = props;
-  const { label, path, categories, select, field } = category;
+  const { path, select, classes, handleSelectCategory, history, location, filterOrigin } = props;
+  const category = getItem(filterBlueprint, path);
+  const { label, categories, field } = category;
 
   return (
     <TextField
@@ -33,8 +40,8 @@ const Category = props => {
       {[<MenuItem key={'empty'} value="">
         <em>None</em>
       </MenuItem>,
-      ...categories.map(category =>
-        <MenuItem key={category.value} value={category.value}>
+      ...categories.map((category, index) =>
+        <MenuItem key={category.value} value={index}>
           {category.label}
         </MenuItem>
       )]}

@@ -1,0 +1,25 @@
+{
+  "field": "category",
+  "categories": [
+    {
+      "field": "automotive",
+      "categories": [
+        {
+          "field": "cars",
+          "categories": [
+            { "field": "sedan", "value": 0, "select": "", "categories": [] },
+            { "field": "suv", "value": 1, "select": "", "categories": [] }
+          ],
+          "value": 0,
+          "select": ""
+        },
+        { "field": "bikes", "value": 1, "select": "", "categories": [] }
+      ],
+      "value": 0,
+      "select": ""
+    },
+    { "field": "real-estate", "value": 1, "select": "", "categories": [] }
+  ],
+  "value": "",
+  "select": ""
+}
