@@ -7,8 +7,13 @@ const selectCategory = (state, field, value, filterOrigin) => {
     const draftItem = getItem(draftState, filterBlueprintPaths[field]);
     draftItem.select = value;
   });
+
+  const filterComponentCategories = produce(state[filterOrigin].filterComponentCategories, draftState => {
+    const draftItem = getItem(draftState, filterBlueprintPaths[field]);
+    draftItem.select = value;
+  });
   
-  return { ...state, [filterOrigin]: { ...state[filterOrigin], filterComponent} };
+  return { ...state, [filterOrigin]: { ...state[filterOrigin], filterComponent, filterComponentCategories} };
 }
 
 export default selectCategory;
