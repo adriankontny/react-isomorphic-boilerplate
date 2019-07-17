@@ -34,17 +34,13 @@ const styles = theme => ({
 class SideBarLeft extends React.Component {
 
   render() {
-    const { classes, theme, filterComponent, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
+    const { classes, theme, sidebarLeftIsVisible, handleToggleSidebarLeft } = this.props;
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <main className={classes.content}>
-          <Filters
-            category={filterComponent}
-            filterOrigin={'searchFilter'}
-          >
-          </Filters>
+          <Filters filterOrigin={'searchFilter'} />
         </main>
       </div>
     );
@@ -83,7 +79,6 @@ class SideBarLeft extends React.Component {
 
 const mapStateToProps = state => ({
   sidebarLeftIsVisible: state.searchReducer.sidebarLeftIsVisible,
-  filterComponent: state.filterReducer['searchFilter'].filterComponent,
 });
 
 const mapDispatchToProps = dispatch => ({

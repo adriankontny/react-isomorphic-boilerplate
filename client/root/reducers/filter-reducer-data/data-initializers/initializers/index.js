@@ -1,4 +1,7 @@
 export const _indexFiltersPaths = (category, paths, parentPath = []) => {
+  if (typeof paths[category.field] === 'undefined') {
+    paths[category.field] = [];
+  } 
   (category.categories || []).forEach((category, index) => {
     category.path = [...parentPath, index]
     category.field = category.field || category.label

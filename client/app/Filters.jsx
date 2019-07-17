@@ -1,41 +1,43 @@
 import React from 'react';
-import get from 'lodash/get';
+import { connect } from 'react-redux';
 
 import Category from './filters/Category'
 import Filter from './filters/Filter'
 
+import {
+  getCategoriesArray,
+  getFiltersArray,
+} from '../root/reducers/filter-reducer-helpers';
+
 const Filters = props => {
 
-  const { category, filterOrigin } = props;
-  const subCategoryExists = category.categories.length > 0
-  const subCategorySelected = get(category, `categories[${category.select}]`)
+  const { filterReducer, filterOrigin } = props;
+  const categories = getCategoriesArray(filterReducer[filterOrigin]);
+  const filters = getFiltersArray(filterReducer[filterOrigin]);
 
   return ([
-    subCategoryExists
-      ?
+    categories.map((category, index) =>
       <Category
-        key={category.label}
+        key={index}
         filterOrigin={filterOrigin}
-        category={category}
+        path={category.path}
+        select={category.select}
       />
-      :
-      null,
-    subCategorySelected
-      ?
-      <Filters
-        key={subCategorySelected.label}
+    ),
+    filters.map((filter, index) =>
+      <Filter
+        key={index}
         filterOrigin={filterOrigin}
-        category={subCategorySelected}
+        filter={filter}
       />
-      :
-      (category.filters.map((filter, index) =>
-        <Filter
-          key={index}
-          filterOrigin={filterOrigin}
-          filter={filter}
-        />
-      ))
+    )
   ])
 }
 
-export default Filters;
+const mapStateToProps = state => ({
+  filterReducer: state.filterReducer
+});
+
+export default connect(
+  mapStateToProps
+)(Filters);
