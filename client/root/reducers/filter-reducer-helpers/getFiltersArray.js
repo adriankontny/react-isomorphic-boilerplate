@@ -9,13 +9,7 @@ const getFiltersArray = (filterComponent) => {
   const path = (categoriesArray.slice(-1)[0] || []).path
   const filters = getItem(filterBlueprint, path).filters;
 
-  const filtersArray = filters.map(filter => ({
-    field: filter.field,
-    type: filter.type,
-    items: filter.items
-  }));
-
-  return filtersArray;
+  return filters.map(filter => pick(filter, ['field', 'type', 'items', 'label']));
 }
 
 export default getFiltersArray
