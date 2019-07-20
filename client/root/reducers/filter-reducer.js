@@ -3,13 +3,14 @@ import {
   SELECT_CATEGORY,
   UPDATE_INPUT,
 } from '../actions/filter-actions';
-import { filterBlueprintPaths, filterBlueprintCategories } from './filter-reducer-data';
+import { filterBlueprintCategories } from './filter-reducer-data';
 import {
+  setCategories,
+  setFilters,
+  
   selectCategory,
   updateInput,
 } from './filter-reducer-helpers';
-import produce from 'immer';
-import qs from 'qs';
 
 export const createFilterReducerPreloadedState = (location, response) => {
   const state = {
@@ -22,18 +23,12 @@ export const createFilterReducerPreloadedState = (location, response) => {
       filterComponentValues: {},
     },
   };
-  const newState = state;
+
+  let newState;
+
+  newState = setCategories(state, 'searchFilter', location);
+  newState = setFilters(newState, 'searchFilter', location);
  
-  newState['searchFilter'] = produce(newState['searchFilter'], draftState => {
-    const search = qs.parse(location.search, { ignoreQueryPrefix: true });
-    const path = filterBlueprintPaths[search.c] || []
-    const selectCategory = (category, path) => {
-      category.select = typeof path[0] === 'undefined' ? '' : path[0];
-      (path || []).length && selectCategory(category.categories[category.select], path.slice(1));
-    }
-    selectCategory(draftState.filterComponentCategories, path)
-    draftState.filterComponentValues = search;
-  })
 
   return newState
 };
@@ -49,6 +44,8 @@ export function filterReducer(
       return newState;
 
     case SELECT_CATEGORY:
+      console.log(payload.field);
+      console.log( payload.value);
       newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);
       return newState;
 

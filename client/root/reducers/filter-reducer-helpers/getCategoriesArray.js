@@ -19,4 +19,3 @@ const getCategoriesArray = (filterComponent) => {
 }
 
 export default getCategoriesArray
-export { _getCategoriesArray }
