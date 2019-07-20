@@ -1,21 +1,23 @@
 import {
   SET_CATEGORY,
-  SET_FILTER
+  SET_FILTER,
+  FILTERS_CHANGED
 } from '../actions/filter-actions'
-import {
-  UPDATE_SEARCH,
-} from '../actions/search-actions'
-
 import { combineEpics, ofType } from 'redux-observable';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
-const proxySearchEpic = (action$, state$) => action$.pipe(
+const exitEpic = (action$, state$) => action$.pipe(
   ofType(SET_CATEGORY, SET_FILTER),
-  tap(console.log),
   map(action => ({ ...action.payload })),
-  map(payload => ({ type: UPDATE_SEARCH, payload }))
+  map(payload => ({ type: FILTERS_CHANGED, payload: {
+    ...payload,
+    location: {
+      ...payload.location,
+      search: state$.value.filterReducer[payload.filterOrigin].filterComponentValues
+    }
+  }}))
 )
 
 export default combineEpics(
-  proxySearchEpic
+  exitEpic
 );

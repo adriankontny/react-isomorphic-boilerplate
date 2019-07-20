@@ -27,3 +27,13 @@ export function setFilter(field, value, history, location, filterOrigin) {
     }
   }
 }
+
+export const FILTERS_CHANGED = 'filter:filtersChanged';
+export function filtersChanged(field, value, history, location, filterOrigin) {
+  return {
+    type: FILTERS_CHANGED,
+    payload: {
+      field, value, history, location, filterOrigin
+    }
+  }
+}

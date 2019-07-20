@@ -6,6 +6,7 @@ import {
 import { filterBlueprintCategories, filterBlueprintPaths } from './filter-reducer-data';
 import qs from 'qs';
 import {
+  getCategory,
   setCategory,
   setFilters,
   setFilter,
@@ -41,8 +42,12 @@ export function filterReducer(
       return state;
 
     case SET_CATEGORY:
-      const path = [...filterBlueprintPaths[payload.field] || [], payload.value];
-      return setCategory(state, filterOrigin, path);
+      let newState = state;
+      const path = value !== '' ? [...filterBlueprintPaths[field], value] : filterBlueprintPaths[field]
+      const category = path.length ? getCategory(newState, filterOrigin, path).field : undefined;
+      newState = setFilter(newState, filterOrigin, 'c', category);
+      newState = setCategory(newState, filterOrigin, path);
+      return newState;
 
     case SET_FILTER:
       return setFilter(state, filterOrigin, field, value);
