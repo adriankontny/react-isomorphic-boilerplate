@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateInput } from '../../../root/actions/filter-actions';
+import { setFilter } from '../../../root/actions/filter-actions';
 
 import Verify, { VerifiedTextField } from '../../Verify';
 
@@ -20,11 +20,11 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props
+  const { filter, filterReducer, classes, handleSetFilter, history, location, filterOrigin } = props
   const { label, field } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
-  const handleOnChange = (field, value) => handleUpdateInput(field, value, history, location, filterOrigin)
+  const handleOnChange = (field, value) => handleSetFilter(field, value, history, location, filterOrigin)
 
   switch (filterOrigin) {
     case 'uploadFilter':
@@ -92,8 +92,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, value, history, location, filterOrigin) => {
-    dispatch(updateInput(field, value, history, location, filterOrigin));
+  handleSetFilter: (field, value, history, location, filterOrigin) => {
+    dispatch(setFilter(field, value, history, location, filterOrigin));
   },
 });
 

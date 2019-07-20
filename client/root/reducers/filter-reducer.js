@@ -1,19 +1,17 @@
 import {
   INITIALIZE_FILTERS,
-  SELECT_CATEGORY,
-  UPDATE_INPUT,
+  SET_CATEGORY,
+  SET_FILTER,
 } from '../actions/filter-actions';
-import { filterBlueprintCategories } from './filter-reducer-data';
+import { filterBlueprintCategories, filterBlueprintPaths } from './filter-reducer-data';
+import qs from 'qs';
 import {
-  setCategories,
+  setCategory,
   setFilters,
-  
-  selectCategory,
-  updateInput,
+  setFilter,
 } from './filter-reducer-helpers';
-
 export const createFilterReducerPreloadedState = (location, response) => {
-  const state = {
+  let state = {
     searchFilter: {
       filterComponentCategories: filterBlueprintCategories,
       filterComponentValues: {},
@@ -23,35 +21,31 @@ export const createFilterReducerPreloadedState = (location, response) => {
       filterComponentValues: {},
     },
   };
+  const search = qs.parse(location.search, { ignoreQueryPrefix: true });
+  const path = filterBlueprintPaths[search.c] || [];
 
-  let newState;
-
-  newState = setCategories(state, 'searchFilter', location);
-  newState = setFilters(newState, 'searchFilter', location);
+  state = setCategory(state, 'searchFilter', path);
+  state = setFilters(state, 'searchFilter', search);
  
-
-  return newState
+  return state;
 };
 
 export function filterReducer(
   state,
   { type, payload },
 ) {
-  let newState = state;
+  let { field, value, filterOrigin } = (payload || {});
   switch (type) {
     
     case INITIALIZE_FILTERS:
-      return newState;
+      return state;
 
-    case SELECT_CATEGORY:
-      console.log(payload.field);
-      console.log( payload.value);
-      newState = selectCategory(newState, payload.field, payload.value, payload.filterOrigin);
-      return newState;
+    case SET_CATEGORY:
+      const path = [...filterBlueprintPaths[payload.field] || [], payload.value];
+      return setCategory(state, filterOrigin, path);
 
-    case UPDATE_INPUT:
-      newState = updateInput(newState, payload.field, payload.value, payload.filterOrigin);
-      return newState;
+    case SET_FILTER:
+      return setFilter(state, filterOrigin, field, value);
 
     default:
       return { ...state };

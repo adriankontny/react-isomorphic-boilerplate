@@ -1,19 +1,15 @@
-import setCategories from './setCategories';
+import setCategory from './setCategory';
 import setFilters from './setFilters';
-
+import setFilter from './setFilter';
 import getItem from './getItem';
-import selectCategory from './selectCategory';
-import updateInput from './updateInput';
 import getCategoriesArray from './getCategoriesArray';
 import getFiltersArray from './getFiltersArray';
 
 export {
-  setCategories,
+  setCategory,
   setFilters,
-  
+  setFilter,
   getItem,
-  selectCategory,
-  updateInput,
   getCategoriesArray,
   getFiltersArray,
 };

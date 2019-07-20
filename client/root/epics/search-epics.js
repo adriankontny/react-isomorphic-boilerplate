@@ -8,7 +8,7 @@ import {
   CHANGE_PAGE_SIDE_EFFECTS
 } from '../actions/search-actions'
 import {
-  SELECT_CATEGORY, UPDATE_INPUT
+  SET_CATEGORY, SET_FILTER
 } from '../actions/filter-actions'
 import axios from 'axios';
 import qs from 'qs';
@@ -25,14 +25,14 @@ const axiosGet = (action$, url, options = {}) => {
   const targetUrl = typeof url === 'function' ? url() : url;
   return from(axios.get(targetUrl, {...options, cancelToken: source.token})).pipe(
     takeUntil(action$.pipe(
-      ofType(UPDATE_SEARCH, SELECT_CATEGORY, UPDATE_INPUT),
+      ofType(UPDATE_SEARCH, SET_CATEGORY, SET_FILTER),
       tap(source.cancel)
     ))
   )
 };
 
 const updateSearch = (action$, state$) => action$.pipe(
-  ofType(UPDATE_SEARCH, SELECT_CATEGORY, UPDATE_INPUT),
+  ofType(UPDATE_SEARCH, SET_CATEGORY, SET_FILTER),
   filter(action => action.payload.filterOrigin === 'searchFilter'),
   map(() => {
     const queryObject = {
@@ -70,7 +70,7 @@ const loadMore = (action$, state$) => action$.pipe(
       return `/api${search}`
     }).pipe(
       takeUntil(action$.pipe(
-        ofType(UPDATE_SEARCH, SELECT_CATEGORY, UPDATE_INPUT),
+        ofType(UPDATE_SEARCH, SET_CATEGORY, SET_FILTER),
       ))
     )),
   map(response => ({ type: LOAD_MORE_SIDE_EFFECTS, payload: { ...response.data } })),

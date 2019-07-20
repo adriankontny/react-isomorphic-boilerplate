@@ -4,7 +4,7 @@ import qs from 'qs';
 
 const setFilters = (newState, filterOrigin, location) => {
   newState[filterOrigin] = produce(newState[filterOrigin], draftState => {
-    const search = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const search = qs.parse(search, { ignoreQueryPrefix: true });
     draftState.filterComponentValues = search;
   })
 

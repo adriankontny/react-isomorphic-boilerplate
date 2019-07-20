@@ -9,7 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateInput } from '../../../root/actions/filter-actions';
+import { setFilter } from '../../../root/actions/filter-actions';
 
 import Verify, { VerifiedSelect } from '../../Verify';
 
@@ -49,13 +49,13 @@ const MenuList = items => value => items.map((item, index) =>
 )
 
 const FilterMultiselect = props => {
-  const { filter, filterReducer, classes, handleUpdateInput, history, location, filterOrigin } = props;
+  const { filter, filterReducer, classes, handleSetFilter, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
   const filterValue = mapFieldsToLabels(filterComponentValues[field] || [], items);
 
-  const handleOnChange = value => handleUpdateInput(field, value, items, history, location, filterOrigin)
+  const handleOnChange = value => handleSetFilter(field, value, items, history, location, filterOrigin)
 
   return (
     <div className={classes.root}>
@@ -94,9 +94,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateInput: (field, value, items, history, location, filterOrigin) => {
+  handleSetFilter: (field, value, items, history, location, filterOrigin) => {
     const mappedValue = mapLabelsToFields(value, items);
-    dispatch(updateInput(field, mappedValue, history, location, filterOrigin));
+    dispatch(setFilter(field, mappedValue, history, location, filterOrigin));
   },
 });
 

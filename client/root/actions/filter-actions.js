@@ -8,20 +8,20 @@ export const initializeFilters = (history, location, filterOrigin) => {
   };
 };
 
-export const SELECT_CATEGORY = 'filter:selectCategory';
-export function selectCategory(field, value, history, location, filterOrigin) {
+export const SET_CATEGORY = 'filter:setCategory';
+export function setCategory(field, value, history, location, filterOrigin) {
   return {
-    type: SELECT_CATEGORY,
+    type: SET_CATEGORY,
     payload: {
       field, value, history, location, filterOrigin
     }
   }
 }
 
-export const UPDATE_INPUT = 'filter:updateInput';
-export function updateInput(field, value, history, location, filterOrigin) {
+export const SET_FILTER = 'filter:setFilter';
+export function setFilter(field, value, history, location, filterOrigin) {
   return {
-    type: UPDATE_INPUT,
+    type: SET_FILTER,
     payload: {
       field, value, history, location, filterOrigin
     }

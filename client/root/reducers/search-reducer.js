@@ -10,7 +10,7 @@ import {
   TOGGLE_SIDEBAR_LEFT
 } from '../actions/search-actions'
 import {
-  UPDATE_INPUT
+  SET_FILTER
 } from '../actions/filter-actions'
 import qs from 'qs';
 import get from 'lodash/get'
@@ -46,7 +46,7 @@ export function searchReducer(
   let newState, results;
   switch (type) {
 
-    // case UPDATE_INPUT: // filters action
+    // case SET_FILTER: // filters action
     //   newState = { ...state, isLoadingTop: true };
     //   return newState;
 
