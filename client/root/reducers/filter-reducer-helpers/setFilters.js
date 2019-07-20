@@ -1,14 +1,6 @@
-
-import produce from 'immer';
-import qs from 'qs';
-
-const setFilters = (newState, filterOrigin, location) => {
-  newState[filterOrigin] = produce(newState[filterOrigin], draftState => {
-    const search = qs.parse(search, { ignoreQueryPrefix: true });
-    draftState.filterComponentValues = search;
-  })
-
-  return newState
+const setFilters = (newState, filterOrigin, search) => {
+  const filterComponentValues = search;
+  return { ...newState, [filterOrigin]: { ...newState[filterOrigin], filterComponentValues} };
 }
 
 export default setFilters;
