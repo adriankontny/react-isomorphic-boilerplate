@@ -53,7 +53,8 @@ const FilterMultiselect = props => {
   const { label, field, items } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
-  const filterValue = mapFieldsToLabels(filterComponentValues[field] || [], items);
+  const fields = filterComponentValues[field] ? filterComponentValues[field].split(',') : [];
+  const filterValue = mapFieldsToLabels(fields, items);
 
   const handleOnChange = value => handleSetFilter(field, value, items, history, location, filterOrigin)
 
@@ -95,7 +96,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleSetFilter: (field, value, items, history, location, filterOrigin) => {
-    const mappedValue = mapLabelsToFields(value, items);
+    const mappedValue = mapLabelsToFields(value, items).join(',');
     dispatch(setFilter(field, mappedValue, history, location, filterOrigin));
   },
 });

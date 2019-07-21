@@ -15,7 +15,7 @@ const exitEpic = (action$, state$) => action$.pipe(
       payload: {
         ...payload,
         field: payload.filterOrigin,
-        value: getLocation(state$.value.filterReducer[payload.filterOrigin]).search
+        value: getLocation(state$.value.filterReducer, payload.filterOrigin).search
       }
     })
   )

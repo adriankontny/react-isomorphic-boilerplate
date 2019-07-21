@@ -1,11 +1,12 @@
 import pickBy from 'lodash/pickBy'
 import identity from 'lodash/identity'
-import getCategoriesArray from './getCategoriesArray';
 import getFiltersArray from './getFiltersArray';
 
-const getLocation = (filterComponent) => {
-  const categoriesArray = getCategoriesArray(filterComponent);
-  const category = categoriesArray[categoriesArray.length -1].field;
+const getLocation = (state, filterOrigin) => {
+
+  const filterComponent = state[filterOrigin];
+
+  const category = filterComponent.filterComponentValues.c;
 
   const filtersArray = getFiltersArray(filterComponent);
   const filters = pickBy(
