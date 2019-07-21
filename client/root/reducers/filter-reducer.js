@@ -22,7 +22,10 @@ export const createFilterReducerPreloadedState = (location, response) => {
       filterComponentValues: {},
     },
   };
-  const search = qs.parse(location.search, { ignoreQueryPrefix: true });
+
+  const search = qs.parse(
+    qs.parse(location.search, { ignoreQueryPrefix: true })['searchFilter']
+  )
   const path = filterBlueprintPaths[search.c] || [];
 
   state = setCategory(state, 'searchFilter', path);

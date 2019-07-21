@@ -146,7 +146,7 @@ app.get('/*', (req, res) => {
   console.log(req.query)
   const data = getData(req.query);
   const location = {
-    search: `?${qs.stringify({ ...req.query }, { encode: false })}`,
+    search: `?${qs.stringify({ ...req.query }, { encode: true })}`,
   };
   res.react(createPreloadedState(location, data));
 });
