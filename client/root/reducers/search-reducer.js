@@ -10,19 +10,16 @@ import {
   TOGGLE_SIDEBAR_LEFT
 } from '../actions/search-actions'
 import {
-  SET_FILTER
+  FILTERS_CHANGED
 } from '../actions/filter-actions'
 import qs from 'qs';
 import get from 'lodash/get'
 
-const updateUrl = (state, page, history, location) => {
+const updateUrl = (field, value, history, location) => {
   let search = qs.parse(location.search, { ignoreQueryPrefix: true })
-  search.q = state.search || undefined;
-  search.page = page || undefined;
+  search[field] = value ? qs.stringify({ ...value }, { encode: true }) : undefined;
   let searchString = qs.stringify({ ...search }, { encode: true });
   setImmediate(() => history.replace({ search: searchString }));
-
-  return { ...state, page };
 }
 
 export const createSearchReducerPreloadedState = (location, response) => {
@@ -40,19 +37,20 @@ export const createSearchReducerPreloadedState = (location, response) => {
   };
 };
 
-export function searchReducer(
+export function searchReducer( 
   state,
   { type, payload }) { // action: { type, payload }
-  let newState, results;
+  let newState = state ;
+  let { field, value, history, loacation, filterOrigin, results } = (payload || {});
   switch (type) {
 
-    // case SET_FILTER: // filters action
-    //   newState = { ...state, isLoadingTop: true };
-    //   return newState;
-
+    case FILTERS_CHANGED:
+      updateUrl(field, value, history, location);
+      return newState;
+  
     case UPDATE_SEARCH:
       newState = { ...state, search: payload.value };
-      newState = updateUrl(newState, newState.page, payload.history, payload.location);
+      // updateUrl
       newState.isLoadingTop = true;
       return newState;
 
@@ -114,7 +112,7 @@ export function searchReducer(
         ...state,
         // isScrolling: false,
       };
-      newState = updateUrl(newState, payload.value, payload.history, payload.location);
+      // updateUrl
       return newState;
 
     case TOGGLE_SIDEBAR_LEFT:
