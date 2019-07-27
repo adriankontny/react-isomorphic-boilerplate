@@ -19,27 +19,22 @@ const styles = theme => ({
   },
 });
 
-class Search extends React.Component {
+const Feed = ({classes}) => {
 
-  render() {
-
-    const { classes } = this.props;
-    
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <TopBar />
-        <SideBarLeft />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Content />
-        </main>
-      </div>
-    );
-  }
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <TopBar />
+      <SideBarLeft />
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Content />
+      </main>
+    </div>
+  );
 }
 
-export default withStyles(styles, { withTheme: true })(Search);
+export default withStyles(styles, { withTheme: true })(Feed);
 
 /*
 
