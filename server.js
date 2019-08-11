@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express from 'express';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -27,7 +28,7 @@ import createPreloadedStore, { createPreloadedState } from './client/root/store'
 const app = express();
 const logger = debug('server.js');
 
-if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-console
+if (process.env.NODE_ENV === 'development') {
   logger(`process.env is '${process.env.NODE_ENV}', connecting webpack middlewares.`);
   const compiler = webpack(webpackConfigDev);
   app.use(webpackDevMiddleware(compiler, {
@@ -35,7 +36,7 @@ if (process.env.NODE_ENV === 'development') { // eslint-disable-next-line no-con
   }));
   app.use(webpackHotMiddleware(compiler));
   app.use(require('express-status-monitor')());
-} else { // eslint-disable-next-line no-console
+} else {
   logger(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }
 
@@ -90,60 +91,54 @@ app.use(express.static('dist'));
 
 const getData = (query) => {
   const page = query.page || query.since || query.until || 0;
-  const image = ((page / 2) % 20 === 0) || ((((+page - 1) / 2) % 20) === 0) ? './audi1.png' : './audi2.png' ;
+  const image = ((page / 2) % 20 === 0) || ((((+page - 1) / 2) % 20) === 0) ? './audi1.png' : './audi2.png';
   const result = {
     img: image,
     title: 'Image',
     author: 'author',
     featured: false,
   };
-  const resultFeatured = {
-    img: image,
-    title: 'Image',
-    author: 'author',
-    featured: true,
-  };
   const data = {
-    results: []
+    results: [],
   };
   if (query.until) {
-    for (let i = 0; i < 20; i++){
+    for (let i = 0; i < 20; i += 1) {
       data.results.unshift({
         ...result,
-        uuid: `${+page - i -1}`
-      })
+        uuid: `${+page - i - 1}`,
+      });
     }
   } else {
-    for (let i = 0; i < 20; i++){
+    for (let i = 0; i < 20; i += 1) {
       data.results.push({
         ...result,
-        uuid: `${+page + i + 1}`
-      })
+        uuid: `${+page + i + 1}`,
+      });
     }
   }
 
   return data;
-}
+};
 
 app.get('/api', (req, res) => {
-  console.log('>> api get');
-  console.log(req.originalUrl)
-  console.log(req.query)
+  // console.log('>> api get');
+  // console.log(req.originalUrl);
+  // console.log(req.query);
   const data = getData(req.query);
   setTimeout(() => {
     res.send(JSON.stringify({ results: data.results, reverse: req.query.until }));
-  }, 200)
+  }, 200);
 });
 
 app.post('/api', (req, res) => {
-  console.log('>> api post');
+  // console.log('>> api post');
   res.send('{"test api": "post"}');
 });
 
 app.get('/*', (req, res) => {
-  console.log('>> * get');
-  console.log(req.originalUrl)
-  console.log(req.query)
+  // console.log('>> * get');
+  // console.log(req.originalUrl);
+  // console.log(req.query);
   const data = getData(req.query);
   const location = {
     search: `?${qs.stringify({ ...req.query }, { encode: true })}`,
@@ -153,5 +148,5 @@ app.get('/*', (req, res) => {
 
 app.set('port', process.env.PORT || 8000);
 app.listen(app.get('port'), () => { // eslint-disable-next-line no-console
-  console.log(`Express started on http://localhost:${app.get('port')}; press Ctrl-C to terminate.`);
+  logger(`Express started on http://localhost:${app.get('port')}; press Ctrl-C to terminate.`);
 });

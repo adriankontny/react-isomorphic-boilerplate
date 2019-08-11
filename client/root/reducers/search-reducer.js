@@ -1,3 +1,5 @@
+import qs from 'qs';
+import get from 'lodash/get';
 import {
   UPDATE_SEARCH,
   UPDATE_SEARCH_SIDE_EFFECTS,
@@ -7,47 +9,47 @@ import {
   CHANGE_PAGE,
   CHANGE_PAGE_DONE,
   CHANGE_PAGE_SIDE_EFFECTS,
-  TOGGLE_SIDEBAR_LEFT
-} from '../actions/search-actions'
+  TOGGLE_SIDEBAR_LEFT,
+} from '../actions/search-actions';
 import {
-  FILTERS_CHANGED
-} from '../actions/filter-actions'
-import qs from 'qs';
-import get from 'lodash/get'
+  FILTERS_CHANGED,
+} from '../actions/filter-actions';
 
 const updateUrl = (field, value, history, location) => {
-  let search = qs.parse(location.search, { ignoreQueryPrefix: true })
+  const search = qs.parse(location.search, { ignoreQueryPrefix: true });
   search[field] = value ? qs.stringify({ ...value }, { encode: true }) : undefined;
-  let searchString = qs.stringify({ ...search }, { encode: true });
+  const searchString = qs.stringify({ ...search }, { encode: true });
   setImmediate(() => history.replace({ search: searchString }));
-}
+};
 
 export const createSearchReducerPreloadedState = (location, response) => {
   const { results } = response;
   return {
     total: results.length,
-    results: results,
+    results,
     firstCursor: results[0].uuid,
     lastCursor: results[results.length - 1].uuid,
     search: qs.parse(location.search, { ignoreQueryPrefix: true }).q,
     isScrolling: false,
     isLoadingTop: false,
     isLoadingBottom: false,
-    sidebarLeftIsVisible: false
+    sidebarLeftIsVisible: false,
   };
 };
 
-export function searchReducer( 
+export function searchReducer(
   state,
-  { type, payload }) { // action: { type, payload }
-  let newState = state ;
-  let { field, value, history, loacation, filterOrigin, results } = (payload || {});
+  { type, payload }, // action: { type, payload }
+) {
+  let newState = state;
+  let {
+    field, value, history, loacation, filterOrigin, results,
+  } = (payload || {});
   switch (type) {
-
     case FILTERS_CHANGED:
       updateUrl(field, value, history, location);
       return newState;
-  
+
     case UPDATE_SEARCH:
       newState = { ...state, search: payload.value };
       // updateUrl
@@ -59,19 +61,19 @@ export function searchReducer(
       newState = {
         ...state,
         total: results.length,
-        results: results
-      }
+        results,
+      };
       newState.firstCursor = newState.results[0].uuid;
       newState.lastCursor = newState.results[newState.results.length - 1].uuid;
       newState.isLoadingTop = false;
       return newState;
-    
+
     case LOAD_MORE:
       newState = state;
-      if (get(payload, 'event.previousPosition') === "above") {
+      if (get(payload, 'event.previousPosition') === 'above') {
         newState = { ...newState, isLoadingTop: true };
       }
-      if (get(payload, 'event.previousPosition') === "below") {
+      if (get(payload, 'event.previousPosition') === 'below') {
         newState = { ...newState, isLoadingBottom: true };
       }
       return newState;
@@ -81,8 +83,8 @@ export function searchReducer(
       newState = {
         ...state,
         total: state.results.length + results.length,
-        page: state.results[state.results.length - 1].uuid
-      }
+        page: state.results[state.results.length - 1].uuid,
+      };
       if (payload.reverse) {
         newState.results = [...results, ...state.results];
         newState.isLoadingTop = false;
@@ -96,15 +98,15 @@ export function searchReducer(
     case CHANGE_PAGE:
       newState = {
         ...state,
-        isScrolling: true
-      }
+        isScrolling: true,
+      };
       return newState;
 
     case CHANGE_PAGE_DONE:
       newState = {
         ...state,
         isScrolling: false,
-      }
+      };
       return newState;
 
     case CHANGE_PAGE_SIDE_EFFECTS:
@@ -120,5 +122,5 @@ export function searchReducer(
 
     default:
       return { ...state };
-  };
-};
+  }
+}

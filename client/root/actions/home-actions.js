@@ -4,7 +4,7 @@ export function setQuery(newQuery) {
   return {
     type: SET_QUERY,
     payload: {
-      query: newQuery
-    }
-  }
+      query: newQuery,
+    },
+  };
 }

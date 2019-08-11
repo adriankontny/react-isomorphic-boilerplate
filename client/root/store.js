@@ -13,7 +13,6 @@ const composeEnhancers = (process.env.NODE_ENV !== 'production' && typeof window
 export { createPreloadedState };
 
 export default function createPreloadedStore(preloadedState) {
-  
   const epicMiddleware = createEpicMiddleware();
 
   const middlewares = [epicMiddleware];
@@ -23,28 +22,25 @@ export default function createPreloadedStore(preloadedState) {
   const composedEnhancers = composeEnhancers(...enhancers);
 
   const store = createStore(rootReducer, preloadedState, composedEnhancers);
-  
+
   const epic$ = new BehaviorSubject(rootEpic);
-  const hotReloadingEpic = (action$, ...rest) =>
-  epic$.pipe(
-    mergeMap(epic =>
-      epic(action$, ...rest).pipe(
-        takeUntil(action$.pipe(
-          ofType('EPIC_END')
-        ))
-      )
-    )
+  const hotReloadingEpic = (action$, ...rest) => epic$.pipe(
+    mergeMap((epic) => epic(action$, ...rest).pipe(
+      takeUntil(action$.pipe(
+        ofType('EPIC_END'),
+      )),
+    )),
   );
   epicMiddleware.run(hotReloadingEpic);
 
   if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept(['./reducers', './epics'], modules => {
+    module.hot.accept(['./reducers', './epics'], (modules) => {
       store.dispatch({ type: 'EPIC_END' });
       epic$.next(rootEpic);
-      if (some(modules, m => m.indexOf('/epics') === -1)) {
+      if (some(modules, (m) => m.indexOf('/epics') === -1)) {
         store.replaceReducer(rootReducer);
       }
     });
   }
   return store;
-};
+}

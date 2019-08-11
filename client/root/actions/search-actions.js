@@ -15,68 +15,68 @@ export function updateSearch(value, history, location, filterOrigin) {
   return {
     type: UPDATE_SEARCH,
     payload: {
-      value, history, location, filterOrigin
-    }
-  }
+      value, history, location, filterOrigin,
+    },
+  };
 }
 
 export function updateSearchSideEffects(response) {
   return {
     type: UPDATE_SEARCH,
     payload: {
-      response
-    }
-  }
+      response,
+    },
+  };
 }
 
 export function loadMore(event, history, location, filterOrigin) {
   return {
     type: LOAD_MORE,
     payload: {
-      event, history, location, filterOrigin
-    }
-  }
+      event, history, location, filterOrigin,
+    },
+  };
 }
 
 export function loadMoreDone(event, history, location, filterOrigin) {
   return {
     type: LOAD_MORE_DONE,
     payload: {
-      event, history, location, filterOrigin
-    }
-  }
+      event, history, location, filterOrigin,
+    },
+  };
 }
 
 export function loadMoreSideEffects(response) {
   return {
     type: LOAD_MORE_SIDE_EFFECTS,
     payload: {
-      response
-    }
-  }
+      response,
+    },
+  };
 }
 
 export function changePage(value, history, location, filterOrigin) {
   return {
     type: CHANGE_PAGE,
     payload: {
-      value, history, location, filterOrigin
-    }
-  }
+      value, history, location, filterOrigin,
+    },
+  };
 }
 
 export function changePageSideEffects(value, history, location, filterOrigin) {
   return {
     type: CHANGE_PAGE_SIDE_EFFECTS,
     payload: {
-      value, history, location, filterOrigin
-    }
-  }
+      value, history, location, filterOrigin,
+    },
+  };
 }
 
 export function toggleSidebarLeft() {
   return {
     type: TOGGLE_SIDEBAR_LEFT,
-    payload: {}
-  }
+    payload: {},
+  };
 }
