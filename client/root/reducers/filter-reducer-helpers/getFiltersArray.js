@@ -1,5 +1,4 @@
 import pick from 'lodash/pick';
-import identity from 'lodash/identity';
 import { getItem } from './getCategory';
 import { filterBlueprint } from '../filter-reducer-data';
 import getCategoriesArray from './getCategoriesArray';

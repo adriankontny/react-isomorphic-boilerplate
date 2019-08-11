@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "express-status-monitor": "^1.2.6",
     "immer": "^3.1.2",
+    "json-beautify": "^1.1.0",
     "jss": "^9.8.7",
     "lodash": "^4.17.11",
     "morgan": "^1.9.1",
@@ -42,7 +43,10 @@
     "react-waypoint": "^9.0.2",
     "redux": "^4.0.1",
     "redux-observable": "^1.1.0",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.5.2",
+    "webpack": "^4.32.2",
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -60,13 +64,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "json-beautify": "^1.1.0",
     "nodemon": "^1.19.1",
-    "webpack": "^4.32.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-middleware": "^3.7.0",
-    "webpack-hot-middleware": "^2.25.0",
     "webpack-node-externals": "^1.7.2"
   }
 }

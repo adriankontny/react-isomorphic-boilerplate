@@ -17,6 +17,7 @@ import {
   ThemeProvider,
 } from '@material-ui/styles';
 import { grey, blueGrey } from '@material-ui/core/colors';
+import expressStatusMonitor from 'express-status-monitor';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -35,7 +36,7 @@ if (process.env.NODE_ENV === 'development') {
     publicPath: webpackConfigDev.output.publicPath,
   }));
   app.use(webpackHotMiddleware(compiler));
-  app.use(require('express-status-monitor')());
+  app.use(expressStatusMonitor());
 } else {
   logger(`process.env is '${process.env.NODE_ENV}', using client bundle created with 'npm run build'.`);
 }

@@ -9,17 +9,17 @@ const getLocation = (state, filterOrigin) => {
 
   const filtersArray = getFiltersArray(filterComponent);
   const filters = pickBy(
-    filtersArray.reduce((filters, item) => {
+    filtersArray.reduce((filtersAcc, item) => {
       const values = filterComponent.filterComponentValues;
       switch (item.type) {
         case 'range':
           return {
-            ...filters,
+            ...filtersAcc,
             [`${item.field}:from`]: values[`${item.field}:from`],
             [`${item.field}:to`]: values[`${item.field}:to`],
           };
         default:
-          return { ...filters, [item.field]: values[item.field] };
+          return { ...filtersAcc, [item.field]: values[item.field] };
       }
     }, {}),
     identity,

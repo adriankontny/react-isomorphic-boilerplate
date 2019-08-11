@@ -11,5 +11,5 @@ export default combineReducers({
 
 export const createPreloadedState = (location, response) => ({
   searchReducer: createSearchReducerPreloadedState(location, response),
-  filterReducer: createFilterReducerPreloadedState(location, response),
+  filterReducer: createFilterReducerPreloadedState(location),
 });

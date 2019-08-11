@@ -6,4 +6,7 @@ const getItem = (filterComponent, path = []) => (!path.length
 
 export { getItem };
 
-export default (state, filterOrigin, path = []) => getItem(state[filterOrigin].filterComponentCategories, path);
+export default (state, filterOrigin, path = []) => getItem(
+  state[filterOrigin].filterComponentCategories,
+  path,
+);
