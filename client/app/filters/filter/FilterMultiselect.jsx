@@ -44,14 +44,14 @@ const component = (items, value) => items.map((item, index) =>
 )
 
 const FilterMultiselect = props => {
-  const { filter, filterReducer, classes, handleSetFilterInput, history, location, filterOrigin } = props;
+  const { filter, filterReducer, classes, handleSetFilterInput, history, filterOrigin } = props;
   const { label, field, items } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
   const fields = filterComponentValues[field] ? filterComponentValues[field].split(',') : [];
   const filterValue = mapFieldsToLabels(fields, items);
 
-  const handleOnChange = value => handleSetFilterInput(field, value, items, history, location, filterOrigin)
+  const handleOnChange = value => handleSetFilterInput({ history, filterOrigin }, field, value, items)
 
   return (
     <div className={classes.root}>
@@ -85,9 +85,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSetFilterInput: (field, value, items, history, location, filterOrigin) => {
+  handleSetFilterInput: ({ history, filterOrigin }, field, value, items) => {
     const mappedValue = mapLabelsToFields(value, items).join(',');
-    dispatch(setFilterInput(field, mappedValue, history, location, filterOrigin));
+    dispatch(setFilterInput({ history, filterOrigin }, field, mappedValue));
   },
 });
 

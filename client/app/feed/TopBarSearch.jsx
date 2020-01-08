@@ -58,7 +58,7 @@ class TopBarSearch extends React.Component {
 
   render() {
     const { classes, search, handleSetSearchInput, history, location, filterOrigin } = this.props;
-    const handleOnChange = value => handleSetSearchInput(value, history, location, filterOrigin)
+    const handleOnChange = value => handleSetSearchInput({ history, filterOrigin }, value)
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -86,8 +86,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetSearchInput: (value, history, location, filterOrigin) => {
-    dispatch(setSearchInput(value, history, location, filterOrigin))
+  handleSetSearchInput: ({ history, filterOrigin }, value) => {
+    dispatch(setSearchInput({ history, filterOrigin }, value))
   },
 });
 

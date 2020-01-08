@@ -12,7 +12,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { loadMore, loadMoreDone, changePage } from '../../root/actions/search-actions'
+import { loadMore, loadMoreDone, changePage } from '../../root/actions/feed-actions'
 
 import { Waypoint } from 'react-waypoint';
 
@@ -49,8 +49,8 @@ const BorderLinearProgress = withStyles({
 })(LinearProgress);
 
 const Content = props => {
-  const { classes, searchReducer, handleLoadMore, handleLoadMoreDone, handleChangePage, history, location } = props;
-  const { results, isScrolling, isLoadingTop, isLoadingBottom } = searchReducer;
+  const { classes, feedReducer, handleLoadMore, handleLoadMoreDone, handleChangePage, history, location } = props;
+  const { results, isScrolling, isLoadingTop, isLoadingBottom } = feedReducer;
   return (
     <div>
       <div>
@@ -120,7 +120,7 @@ const Content = props => {
 }
 
 const mapStateToProps = state => ({
-  searchReducer: state.searchReducer,
+  feedReducer: state.feedReducer,
   filterComponent: state.filterReducer.filterComponent,
   filterComponentValues: state.filterReducer.filterComponentValues,
 });

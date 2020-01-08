@@ -20,11 +20,11 @@ const styles = theme => ({
 });
 
 const FilterRange = props => {
-  const { filter, filterReducer, classes, handleSetFilterInput, history, location, filterOrigin } = props
+  const { filter, filterReducer, classes, handleSetFilterInput, history, filterOrigin } = props
   const { label, field } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
-  const handleOnChange = (field, value) => handleSetFilterInput(field, value, history, location, filterOrigin)
+  const handleOnChange = (field, value) => handleSetFilterInput({ history, filterOrigin }, field, value)
 
   switch (filterOrigin) {
     case 'uploadFilter':
@@ -92,8 +92,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSetFilterInput: (field, value, history, location, filterOrigin) => {
-    dispatch(setFilterInput(field, value, history, location, filterOrigin));
+  handleSetFilterInput: ({ history, filterOrigin }, field, value) => {
+    dispatch(setFilterInput({ history, filterOrigin }, field, value));
   },
 });
 

@@ -10,12 +10,13 @@ import getLocation from '../reducers/filter-reducer-helpers/getLocation';
 const exitEpic = (action$, state$) => action$.pipe(
   ofType(SET_FILTER_CATEGORY, SET_FILTER_INPUT),
   map((action) => action.payload),
-  map((payload) => ({
+  map(({ filterOrigin, history }) => ({
     type: ON_FILTERS_CHANGE,
     payload: {
-      ...payload,
-      field: payload.filterOrigin,
-      value: getLocation(state$.value.filterReducer, payload.filterOrigin).search,
+      filterOrigin,
+      history,
+      field: 'filter',
+      value: getLocation(state$.value.filterReducer, filterOrigin),
     },
   })),
 );

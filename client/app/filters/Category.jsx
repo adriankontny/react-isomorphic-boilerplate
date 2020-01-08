@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { path, select, classes, handleSetFilterCategory, history, location, filterOrigin } = props;
+  const { path, select, classes, handleSetFilterCategory, history, filterOrigin } = props;
 
   const category = getItem(filterBlueprint, path);
   const { label, categories, field } = category;
@@ -33,7 +33,7 @@ const Category = props => {
       //variant="outlined"
       label={`Category${field ? ` in ${label}` : ''}`}
       value={select}
-      onChange={handleSetFilterCategory(field, history, location, filterOrigin)}
+      onChange={handleSetFilterCategory({ history, filterOrigin }, field)}
     >
       {[<MenuItem key={'empty'} value="">
         <em>None</em>
@@ -48,8 +48,8 @@ const Category = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSetFilterCategory: (field, history, location, filterOrigin) => event => {
-    dispatch(setFilterCategory(field, event.target.value, history, location, filterOrigin));
+  handleSetFilterCategory: ({ history, filterOrigin }, field) => event => {
+    dispatch(setFilterCategory({ history, filterOrigin }, field, event.target.value));
   }
 });
 

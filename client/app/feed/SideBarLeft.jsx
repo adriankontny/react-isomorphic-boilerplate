@@ -8,7 +8,7 @@ import Hidden from '@material-ui/core/Hidden';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { toggleSidebarLeft } from '../../root/actions/search-actions';
+import { toggleSidebarLeft } from '../../root/actions/feed-actions';
 
 import Filters from '../Filters';
 
@@ -78,7 +78,7 @@ class SideBarLeft extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  sidebarLeftIsVisible: state.searchReducer.sidebarLeftIsVisible,
+  sidebarLeftIsVisible: state.feedReducer.sidebarLeftIsVisible,
 });
 
 const mapDispatchToProps = dispatch => ({

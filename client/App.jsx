@@ -39,7 +39,7 @@ class App extends Component {
     }
     if (!module.hot) {
       const { handleSetFilterInitialState, history, location } = this.props;
-      handleSetFilterInitialState( history, location );
+      handleSetFilterInitialState( { history, location }  );
     }
   }
 
@@ -62,8 +62,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetFilterInitialState: ( history, location ) => {
-    dispatch(setFilterInitialState( history, location ));
+  handleSetFilterInitialState: ( { history, location } ) => {
+    dispatch(setFilterInitialState( { history, location } ));
   },
 });
 
