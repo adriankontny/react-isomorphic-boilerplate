@@ -8,7 +8,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { updateSearch } from '../../root/actions/search-actions'
+import { setSearchInput } from '../../root/actions/search-actions'
 
 import Verify, { VerifiedInputBase } from '../Verify'
 
@@ -57,8 +57,8 @@ const styles = theme => ({
 class TopBarSearch extends React.Component {
 
   render() {
-    const { classes, search, handleUpdateSearch, history, location, filterOrigin } = this.props;
-    const handleOnChange = value => handleUpdateSearch(value, history, location, filterOrigin)
+    const { classes, search, handleSetSearchInput, history, location, filterOrigin } = this.props;
+    const handleOnChange = value => handleSetSearchInput(value, history, location, filterOrigin)
     return (
       <div className={classes.search}>
         <div className={classes.searchIcon}>
@@ -86,8 +86,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleUpdateSearch: (value, history, location, filterOrigin) => {
-    dispatch(updateSearch(value, history, location, filterOrigin))
+  handleSetSearchInput: (value, history, location, filterOrigin) => {
+    dispatch(setSearchInput(value, history, location, filterOrigin))
   },
 });
 

@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { setCategory } from '../../root/actions/filter-actions';
+import { setFilterCategory } from '../../root/actions/filter-actions';
 
 import { filterBlueprint } from '../../root/reducers/filter-reducer-data';
 import { getItem } from '../../root/reducers/filter-reducer-helpers';
@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 const Category = props => {
-  const { path, select, classes, handleSetCategory, history, location, filterOrigin } = props;
+  const { path, select, classes, handleSetFilterCategory, history, location, filterOrigin } = props;
 
   const category = getItem(filterBlueprint, path);
   const { label, categories, field } = category;
@@ -33,7 +33,7 @@ const Category = props => {
       //variant="outlined"
       label={`Category${field ? ` in ${label}` : ''}`}
       value={select}
-      onChange={handleSetCategory(field, history, location, filterOrigin)}
+      onChange={handleSetFilterCategory(field, history, location, filterOrigin)}
     >
       {[<MenuItem key={'empty'} value="">
         <em>None</em>
@@ -48,8 +48,8 @@ const Category = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSetCategory: (field, history, location, filterOrigin) => event => {
-    dispatch(setCategory(field, event.target.value, history, location, filterOrigin));
+  handleSetFilterCategory: (field, history, location, filterOrigin) => event => {
+    dispatch(setFilterCategory(field, event.target.value, history, location, filterOrigin));
   }
 });
 

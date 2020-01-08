@@ -1,0 +1,11 @@
+version: "3.1"
+
+services:
+
+  web:
+    build: .
+    environment:
+      - PORT=8000
+      - ENV=development
+    ports:
+      - "8000:8000"

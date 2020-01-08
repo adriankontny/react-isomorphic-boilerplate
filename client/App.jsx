@@ -6,7 +6,7 @@ import Home from './app/Home';
 import Feed from './app/Feed';
 import Contact from './app/Contact';
 import NotFound from './app/NotFound';
-import { initializeFilters } from './root/actions/filter-actions';
+import { setFilterInitialState } from './root/actions/filter-actions';
 
 const RouteWithStatus = (props) => {
   const { children, component, statusCode } = props;
@@ -38,8 +38,8 @@ class App extends Component {
       jssStyles.parentNode.removeChild(jssStyles);
     }
     if (!module.hot) {
-      const { handleInitializeFilters, history, location } = this.props;
-      handleInitializeFilters( history, location );
+      const { handleSetFilterInitialState, history, location } = this.props;
+      handleSetFilterInitialState( history, location );
     }
   }
 
@@ -62,8 +62,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleInitializeFilters: ( history, location ) => {
-    dispatch(initializeFilters( history, location ));
+  handleSetFilterInitialState: ( history, location ) => {
+    dispatch(setFilterInitialState( history, location ));
   },
 });
 

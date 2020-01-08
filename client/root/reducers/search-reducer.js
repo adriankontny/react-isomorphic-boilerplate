@@ -1,7 +1,7 @@
 import qs from 'qs';
 import get from 'lodash/get';
 import {
-  UPDATE_SEARCH,
+  SET_SEARCH_INPUT,
   UPDATE_SEARCH_SIDE_EFFECTS,
   LOAD_MORE,
   LOAD_MORE_DONE,
@@ -12,7 +12,7 @@ import {
   TOGGLE_SIDEBAR_LEFT,
 } from '../actions/search-actions';
 import {
-  FILTERS_CHANGED,
+  ON_FILTERS_CHANGE,
 } from '../actions/filter-actions';
 
 const updateUrl = (field, value, history, location) => {
@@ -46,11 +46,11 @@ export function searchReducer(
     field, value, history, loacation, filterOrigin, results,
   } = (payload || {});
   switch (type) {
-    case FILTERS_CHANGED:
+    case ON_FILTERS_CHANGE:
       updateUrl(field, value, history, location);
       return newState;
 
-    case UPDATE_SEARCH:
+    case SET_SEARCH_INPUT:
       newState = { ...state, search: payload.value };
       // updateUrl
       newState.isLoadingTop = true;

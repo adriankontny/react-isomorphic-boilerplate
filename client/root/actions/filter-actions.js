@@ -1,35 +1,35 @@
-export const INITIALIZE_FILTERS = 'filters:initializeFilters';
-export const initializeFilters = (history, location, filterOrigin) => ({
-  type: INITIALIZE_FILTERS,
+export const SET_FILTER_INITIAL_STATE = 'filters:setFilterInitialState';
+export const setFilterInitialState = (history, location, filterOrigin) => ({
+  type: SET_FILTER_INITIAL_STATE,
   payload: {
     history, location, filterOrigin,
   },
 });
 
-export const SET_CATEGORY = 'filter:setCategory';
-export function setCategory(field, value, history, location, filterOrigin) {
+export const SET_FILTER_CATEGORY = 'filter:setFilterCategory';
+export function setFilterCategory(field, value, history, location, filterOrigin) {
   return {
-    type: SET_CATEGORY,
+    type: SET_FILTER_CATEGORY,
     payload: {
       field, value, history, location, filterOrigin,
     },
   };
 }
 
-export const SET_FILTER = 'filter:setFilter';
-export function setFilter(field, value, history, location, filterOrigin) {
+export const SET_FILTER_INPUT = 'filter:setFilterInput';
+export function setFilterInput(field, value, history, location, filterOrigin) {
   return {
-    type: SET_FILTER,
+    type: SET_FILTER_INPUT,
     payload: {
       field, value, history, location, filterOrigin,
     },
   };
 }
 
-export const FILTERS_CHANGED = 'filter:filtersChanged';
-export function filtersChanged(field, value, history, location, filterOrigin) {
+export const ON_FILTERS_CHANGE = 'filter:onFiltersChange';
+export function onFiltersChange(field, value, history, location, filterOrigin) {
   return {
-    type: FILTERS_CHANGED,
+    type: ON_FILTERS_CHANGE,
     payload: {
       field, value, history, location, filterOrigin,
     },

@@ -7,10 +7,10 @@ import {
 } from 'rxjs/operators';
 import { from } from 'rxjs';
 import {
-  FILTERS_CHANGED,
+  ON_FILTERS_CHANGE,
 } from '../actions/filter-actions';
 import {
-  UPDATE_SEARCH,
+  SET_SEARCH_INPUT,
   UPDATE_SEARCH_SIDE_EFFECTS,
   LOAD_MORE,
   LOAD_MORE_SIDE_EFFECTS,
@@ -25,14 +25,14 @@ const axiosGet = (action$, url, options = {}) => {
   const targetUrl = typeof url === 'function' ? url() : url;
   return from(axios.get(targetUrl, { ...options, cancelToken: source.token })).pipe(
     takeUntil(action$.pipe(
-      ofType(UPDATE_SEARCH, FILTERS_CHANGED),
+      ofType(SET_SEARCH_INPUT, ON_FILTERS_CHANGE),
       tap(source.cancel),
     )),
   );
 };
 
-const updateSearch = (action$, state$) => action$.pipe(
-  ofType(UPDATE_SEARCH, FILTERS_CHANGED),
+const setSearchInput = (action$, state$) => action$.pipe(
+  ofType(SET_SEARCH_INPUT, ON_FILTERS_CHANGE),
   filter((action) => action.payload.filterOrigin === 'searchFilter'),
   map(() => {
     const queryObject = {
@@ -69,7 +69,7 @@ const loadMore = (action$, state$) => action$.pipe(
     return `/api${search}`;
   }).pipe(
     takeUntil(action$.pipe(
-      ofType(UPDATE_SEARCH, FILTERS_CHANGED),
+      ofType(SET_SEARCH_INPUT, ON_FILTERS_CHANGE),
     )),
   )),
   map((response) => ({ type: LOAD_MORE_SIDE_EFFECTS, payload: { ...response.data } })),
@@ -90,7 +90,7 @@ const changePage = (action$) => action$.pipe(
 );
 
 export default combineEpics(
-  updateSearch,
+  setSearchInput,
   changePageWait,
   changePage,
   loadMore,

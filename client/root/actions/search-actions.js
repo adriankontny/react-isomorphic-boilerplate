@@ -1,4 +1,4 @@
-export const UPDATE_SEARCH = 'search:updateSearch';
+export const SET_SEARCH_INPUT = 'search:setSearchInput';
 export const UPDATE_SEARCH_SIDE_EFFECTS = 'search:updateSearchSideEffects';
 
 export const LOAD_MORE = 'search:loadMore';
@@ -11,9 +11,9 @@ export const CHANGE_PAGE_SIDE_EFFECTS = 'search:changePageSideEffects';
 
 export const TOGGLE_SIDEBAR_LEFT = 'search:toggleSidebarLeft';
 
-export function updateSearch(value, history, location, filterOrigin) {
+export function setSearchInput(value, history, location, filterOrigin) {
   return {
-    type: UPDATE_SEARCH,
+    type: SET_SEARCH_INPUT,
     payload: {
       value, history, location, filterOrigin,
     },
@@ -22,7 +22,7 @@ export function updateSearch(value, history, location, filterOrigin) {
 
 export function updateSearchSideEffects(response) {
   return {
-    type: UPDATE_SEARCH,
+    type: UPDATE_SEARCH_SIDE_EFFECTS,
     payload: {
       response,
     },

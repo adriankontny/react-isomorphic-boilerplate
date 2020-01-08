@@ -7,7 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
-import { setFilter } from '../../../root/actions/filter-actions';
+import { setFilterInput } from '../../../root/actions/filter-actions';
 
 import Verify, { VerifiedSelect } from '../../Verify';
 
@@ -44,14 +44,14 @@ const component = (items, value) => items.map((item, index) =>
 )
 
 const FilterMultiselect = props => {
-  const { filter, filterReducer, classes, handleSetFilter, history, location, filterOrigin } = props;
+  const { filter, filterReducer, classes, handleSetFilterInput, history, location, filterOrigin } = props;
   const { label, field, items } = filter;
   const filterComponentValues = filterReducer[filterOrigin].filterComponentValues;
 
   const fields = filterComponentValues[field] ? filterComponentValues[field].split(',') : [];
   const filterValue = mapFieldsToLabels(fields, items);
 
-  const handleOnChange = value => handleSetFilter(field, value, items, history, location, filterOrigin)
+  const handleOnChange = value => handleSetFilterInput(field, value, items, history, location, filterOrigin)
 
   return (
     <div className={classes.root}>
@@ -85,9 +85,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSetFilter: (field, value, items, history, location, filterOrigin) => {
+  handleSetFilterInput: (field, value, items, history, location, filterOrigin) => {
     const mappedValue = mapLabelsToFields(value, items).join(',');
-    dispatch(setFilter(field, mappedValue, history, location, filterOrigin));
+    dispatch(setFilterInput(field, mappedValue, history, location, filterOrigin));
   },
 });
 

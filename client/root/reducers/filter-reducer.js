@@ -1,9 +1,9 @@
 /* eslint-disable no-case-declarations */
 import qs from 'qs';
 import {
-  INITIALIZE_FILTERS,
-  SET_CATEGORY,
-  SET_FILTER,
+  SET_FILTER_INITIAL_STATE,
+  SET_FILTER_CATEGORY,
+  SET_FILTER_INPUT,
 } from '../actions/filter-actions';
 import { filterBlueprintCategories, filterBlueprintPaths } from './filter-reducer-data';
 import {
@@ -43,17 +43,17 @@ export function filterReducer(
   const { field, value, filterOrigin } = (payload || {});
   let newState = state;
   switch (type) {
-    case INITIALIZE_FILTERS:
+    case SET_FILTER_INITIAL_STATE:
       return newState;
 
-    case SET_CATEGORY:
+    case SET_FILTER_CATEGORY:
       const path = value !== '' ? [...filterBlueprintPaths[field], value] : filterBlueprintPaths[field];
       const category = path.length ? getCategory(newState, filterOrigin, path).field : undefined;
       newState = setFilter(newState, filterOrigin, 'c', category);
       newState = setCategory(newState, filterOrigin, path);
       return newState;
 
-    case SET_FILTER:
+    case SET_FILTER_INPUT:
       return setFilter(newState, filterOrigin, field, value);
 
     default:
