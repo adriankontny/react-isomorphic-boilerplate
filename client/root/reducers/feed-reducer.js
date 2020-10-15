@@ -1,13 +1,10 @@
 import qs from 'qs';
 import get from 'lodash/get';
 import {
-  UPDATE_SEARCH_SIDE_EFFECTS,
+  UPDATE_QUERY_SIDE_EFFECTS,
   LOAD_MORE,
-  LOAD_MORE_DONE,
   LOAD_MORE_SIDE_EFFECTS,
   CHANGE_PAGE,
-  CHANGE_PAGE_DONE,
-  CHANGE_PAGE_SIDE_EFFECTS,
   TOGGLE_SIDEBAR_LEFT,
 } from '../actions/feed-actions';
 import {
@@ -52,7 +49,6 @@ export function feedReducer(
     field, value, history, loacation, filterOrigin, results,
   } = (payload || {});
   switch (type) {
-
     case TOGGLE_SIDEBAR_LEFT:
       return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
 
@@ -61,14 +57,7 @@ export function feedReducer(
       updateUrl({ filterOrigin, history }, field, value);
       return newState;
 
-    default:
-      return { ...state };
-  }
-}
-
-/*
-
-    case UPDATE_SEARCH_SIDE_EFFECTS:
+    case UPDATE_QUERY_SIDE_EFFECTS:
       results = payload.results;
       newState = {
         ...state,
@@ -107,25 +96,7 @@ export function feedReducer(
       newState.lastCursor = newState.results[newState.results.length - 1].uuid;
       return newState;
 
-    case CHANGE_PAGE:
-      newState = {
-        ...state,
-        isScrolling: true,
-      };
-      return newState;
-
-    case CHANGE_PAGE_DONE:
-      newState = {
-        ...state,
-        isScrolling: false,
-      };
-      return newState;
-
-    case CHANGE_PAGE_SIDE_EFFECTS:
-      newState = {
-        ...state,
-        // isScrolling: false,
-      };
-      // updateUrl
-      return newState;
-*/
+    default:
+      return { ...state };
+  }
+}

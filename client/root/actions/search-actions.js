@@ -8,4 +8,12 @@ export function setSearchInput({ history, filterOrigin }, value) {
   };
 }
 
-export const ON_SEARCH_CHANGE = 'filter:onSearchChange';
+export const ON_SEARCH_CHANGE = 'search:onSearchChange';
+export function onSearchChange({ history, filterOrigin }, field, value) {
+  return {
+    type: ON_SEARCH_CHANGE,
+    payload: {
+      history, filterOrigin, value, field,
+    },
+  };
+}

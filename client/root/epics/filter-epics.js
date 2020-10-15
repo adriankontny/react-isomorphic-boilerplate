@@ -3,22 +3,18 @@ import { map } from 'rxjs/operators';
 import {
   SET_FILTER_CATEGORY,
   SET_FILTER_INPUT,
-  ON_FILTERS_CHANGE,
+  onFiltersChange,
 } from '../actions/filter-actions';
 import getLocation from '../reducers/filter-reducer-helpers/getLocation';
 
 const exitEpic = (action$, state$) => action$.pipe(
   ofType(SET_FILTER_CATEGORY, SET_FILTER_INPUT),
   map((action) => action.payload),
-  map(({ filterOrigin, history }) => ({
-    type: ON_FILTERS_CHANGE,
-    payload: {
-      filterOrigin,
-      history,
-      field: 'filter',
-      value: getLocation(state$.value.filterReducer, filterOrigin),
-    },
-  })),
+  map(({ filterOrigin, history }) => {
+    const field = 'filter';
+    const value = getLocation(state$.value.filterReducer, filterOrigin);
+    return onFiltersChange({ filterOrigin, history }, field, value);
+  }),
 );
 
 export default combineEpics(

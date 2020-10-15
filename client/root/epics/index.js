@@ -6,7 +6,7 @@ import feedEpics from './feed-epics';
 const rootEpic = combineEpics(
   filterEpics,
   searchEpics,
-  // feedEpics,
+  feedEpics,
 );
 
 export default rootEpic;

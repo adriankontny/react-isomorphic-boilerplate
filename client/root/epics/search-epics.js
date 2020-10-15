@@ -2,21 +2,17 @@ import { combineEpics, ofType } from 'redux-observable';
 import { map } from 'rxjs/operators';
 import {
   SET_SEARCH_INPUT,
-  ON_SEARCH_CHANGE,
+  onSearchChange,
 } from '../actions/search-actions';
 
 const exitEpic = (action$, state$) => action$.pipe(
   ofType(SET_SEARCH_INPUT),
   map((action) => action.payload),
-  map(({ filterOrigin, history }) => ({
-    type: ON_SEARCH_CHANGE,
-    payload: {
-      filterOrigin,
-      history,
-      field: 'search',
-      value: { search: state$.value.searchReducer.search },
-    },
-  })),
+  map(({ filterOrigin, history }) => {
+    const field = 'search';
+    const value = { search: state$.value.searchReducer.search };
+    return onSearchChange({ filterOrigin, history }, field, value);
+  }),
 );
 
 export default combineEpics(

@@ -55,7 +55,7 @@ const theme = createMuiTheme({
 app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(compression());
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   res.react = (preloadedState) => {
     const sheets = new ServerStyleSheets();
     const store = createPreloadedStore(preloadedState);
