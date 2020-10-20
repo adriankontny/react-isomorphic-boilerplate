@@ -133,7 +133,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loadMoreDone(event, history, location, filterOrigin))
   },
   handleChangePage: (history, location, filterOrigin) => (value) => {
-    dispatch(changePage(value, history, location, filterOrigin))
+    dispatch(changePage('page', { search: value }, history, location, filterOrigin))
   },
 });
 

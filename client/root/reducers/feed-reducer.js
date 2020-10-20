@@ -52,6 +52,7 @@ export function feedReducer(
     case TOGGLE_SIDEBAR_LEFT:
       return { ...state, sidebarLeftIsVisible: !state.sidebarLeftIsVisible };
 
+    case CHANGE_PAGE:
     case ON_SEARCH_CHANGE:
     case ON_FILTERS_CHANGE:
       updateUrl({ filterOrigin, history }, field, value);

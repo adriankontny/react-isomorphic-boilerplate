@@ -50,11 +50,11 @@ export function loadMoreSideEffects(response) {
   };
 }
 
-export function changePage(value, history, location, filterOrigin) {
+export function changePage(field, value, history, location, filterOrigin) {
   return {
     type: CHANGE_PAGE,
     payload: {
-      value, history, location, filterOrigin,
+      field, value, history, location, filterOrigin,
     },
   };
 }
